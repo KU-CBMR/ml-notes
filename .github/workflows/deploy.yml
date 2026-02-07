@@ -23,7 +23,7 @@ jobs:
           submodules: true
       - uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "0.125.7"
+          hugo-version: "0.146.0"
           extended: true
       - run: hugo --minify
       - uses: actions/upload-pages-artifact@v3
