@@ -1,24 +1,6 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Posts on LLM/ML Systems Notes</title>
-    <link>http://localhost:1313/posts/</link>
-    <description>Recent content in Posts on LLM/ML Systems Notes</description>
-    <generator>Hugo -- 0.155.2</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Hello World</title>
-      <link>http://localhost:1313/posts/hello-world/</link>
-      <pubDate>Fri, 06 Feb 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/hello-world/</guid>
-      <description>&lt;p&gt;这是第一篇文章。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on LLM/ML Systems Notes</title><link>https://ku-cbmr.github.io/ml-notes/posts/</link><description>Recent content in Posts on LLM/ML Systems Notes</description><generator>Hugo -- 0.155.2</generator><language>en-us</language><lastBuildDate>Fri, 06 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://ku-cbmr.github.io/ml-notes/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Hello World</title><link>https://ku-cbmr.github.io/ml-notes/posts/hello-world/</link><pubDate>Fri, 06 Feb 2026 00:00:00 +0000</pubDate><guid>https://ku-cbmr.github.io/ml-notes/posts/hello-world/</guid><description>&lt;p&gt;这是第一篇文章。&lt;/p&gt;
 &lt;p&gt;行内公式：$x^2 + y^2$&lt;br&gt;
 块公式：&lt;/p&gt;
 &lt;p&gt;$$
 \mathcal{L} = -\sum_i y_i \log \hat{y}_i
-$$&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+$$&lt;/p&gt;</description></item></channel></rss>
