@@ -110,8 +110,9 @@ and then write down the gradient descent update rules.
 Start from:
 
 $$
-g(z) = \frac{1}{1 + e^{-z}} = \bigl(1 + e^{-z}\bigr)^{-1}.
+g(z) = \frac{1}{1 + e^{-z}} = (1 + e^{-z})^{-1}.
 $$
+
 
 Differentiate:
 
