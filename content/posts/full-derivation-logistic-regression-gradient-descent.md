@@ -118,9 +118,10 @@ Differentiate:
 
 $$
 g'(z)
-= -1 \cdot \bigl(1 + e^{-z}\bigr)^{-2}
-   \cdot \frac{\mathrm{d}}{\mathrm{d}z}\bigl(1 + e^{-z}\bigr).
+= -1 \cdot (1 + e^{-z})^{-2}
+   \cdot \frac{d}{dz}(1 + e^{-z}).
 $$
+
 
 Since
 
