@@ -164,7 +164,7 @@ $$
 
 ---
 
-## Gradient of a Single Example w.r.t. \(w_j\): \(\partial \ell^{(i)}/\partial w_j\)
+## Gradient of a Single Example w.r.t. $w_j$: $\partial \ell^{(i)}/\partial w_j$
 
 Start from (1):
 
