@@ -86,8 +86,9 @@ $$
 So the optimal training loss as a function of degree is *non-increasing*:
 
 $$
-L_{\text{emp}}^{*}(1) \ge L_{\text{emp}}^{*}(2) \ge L_{\text{emp}}^{*}(3) \ge \dots
+L_{\mathrm{emp}}^{\star}(1) \ge L_{\mathrm{emp}}^{\star}(2) \ge L_{\mathrm{emp}}^{\star}(3) \ge \cdots
 $$
+
 
 Intuitively, a higher-degree polynomial can always imitate the best lower-degree solution (by setting extra coefficients to zero), and in addition it has more freedom to adjust the curve to reduce the training error even further. Therefore, higher-degree polynomials can usually fit the training data better.
 
