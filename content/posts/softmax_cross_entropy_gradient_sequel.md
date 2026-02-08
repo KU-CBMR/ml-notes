@@ -19,7 +19,7 @@ Here we derive the gradient of the single-example loss with respect to each logi
 
 We want the gradient of the loss $L$ with respect to the raw score (logit) $z_i$:
 
-- $\frac{\partial L}{\partial z_i} = \; ?$
+- $\frac{\partial L}{\partial z_i} = ?$
 
 ---
 
