@@ -353,7 +353,7 @@ $$
 \theta := \theta - \alpha \frac{\partial J}{\partial \theta},
 $$
 
-where \(\alpha\) is the learning rate.
+where $\alpha$ is the learning rate.
 
 So,
 
