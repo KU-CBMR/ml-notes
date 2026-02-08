@@ -172,19 +172,17 @@ Start from (1):
 
 $$
 \ell^{(i)}(w,b)
-= - \Bigl[
-   y^{(i)} \log f^{(i)}
-   + (1 - y^{(i)}) \log (1 - f^{(i)})
-  \Bigr].
+= - \big[ y^{(i)} \log f^{(i)} + (1 - y^{(i)}) \log (1 - f^{(i)}) \big].
 $$
 
-### Step 1: \(\partial \ell^{(i)}/\partial f^{(i)}\)
+### Step 1: $\partial \ell^{(i)}/\partial f^{(i)}$
 
-Treat \(f^{(i)}\) as scalar \(f\):
+Treat $f^{(i)}$ as scalar $f$:
 
 $$
-\ell(f) = - \bigl[ y \log f + (1-y)\log(1-f) \bigr].
+\ell(f) = - \big[ y \log f + (1-y)\log(1-f) \big].
 $$
+
 
 Differentiate:
 
