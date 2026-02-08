@@ -135,7 +135,7 @@ $$
 g'(z)= \frac{e^{-z}}{\bigl(1 + e^{-z}\bigr)^2}.
 $$
 
-### Step 2: Rewrite in terms of \(g(z)\)
+### Step 2: Rewrite in terms of $g(z)$
 
 From
 
