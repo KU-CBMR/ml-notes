@@ -211,7 +211,7 @@ $$
 \qquad (5)
 $$
 
-### Step 3: \(\partial z^{(i)}/\partial w_j\)
+### Step 3: $\partial z^{(i)}/\partial w_j$
 
 $$
 z^{(i)} = w^\top x^{(i)} + b = \sum_{k=1}^n w_k x_k^{(i)} + b,
