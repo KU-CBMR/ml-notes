@@ -12,8 +12,9 @@ description = "Derive the gradients of logistic regression (log loss) w.r.t. wei
 Training set:
 
 $$
-\left\{ (x^{(i)}, y^{(i)}) \mid i = 1,2,\dots,m \right\}
+\{(x^{(i)}, y^{(i)}) \mid i = 1,2,\dots,m\}
 $$
+
 
 where
 
