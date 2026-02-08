@@ -2,6 +2,7 @@
 title = "Full Derivation of Logistic Regression Gradient Descent"
 date = 2026-02-08
 draft = false
+math = true
 categories = ["Classical ML", "Optimization"]
 tags = ["logistic-regression", "gradient-descent", "derivation", "ml-math"]
 description = "A full, step-by-step derivation of logistic regression gradients and gradient descent updates."
@@ -12,7 +13,7 @@ description = "A full, step-by-step derivation of logistic regression gradients 
 The training set is
 
 $$
-\left\{ \bigl(x^{(i)}, y^{(i)}\bigr) \mid i = 1,2,\dots,m \right\},
+\left\{ \bigl(x^{(i)}, y^{(i)}\bigr) \mid i = 1,2,\dots,m \right\}
 $$
 
 where
@@ -50,7 +51,7 @@ The logistic regression model is
 $$
 z^{(i)} = w^\top x^{(i)} + b,
 \qquad
-f_{w,b}\bigl(x^{(i)}\bigr) = g\!\left(z^{(i)}\right),
+f_{w,b}\bigl(x^{(i)}\bigr) = g\!\left(z^{(i)}\right)
 $$
 
 where $g(z)$ is the sigmoid function:
@@ -95,7 +96,7 @@ Our goal is to derive
 $$
 \frac{\partial J}{\partial w_j}
 \quad\text{and}\quad
-\frac{\partial J}{\partial b},
+\frac{\partial J}{\partial b}
 $$
 
 and then write down the gradient descent update rules.
@@ -441,8 +442,10 @@ where $\alpha$ is the learning rate.
 For $w_j$ and $b$ we have
 
 $$
-w_j := w_j - \alpha \frac{\partial J}{\partial w_j},
+w_j := w_j - \alpha \frac{\partial J}{\partial w_j}
 $$
+
+and
 
 $$
 b   := b   - \alpha \frac{\partial J}{\partial b}.
