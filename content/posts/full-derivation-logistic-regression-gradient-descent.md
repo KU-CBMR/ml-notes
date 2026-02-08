@@ -72,16 +72,16 @@ $$
 
 ## Cost Function
 
-Single-example loss (log loss) for \((x^{(i)}, y^{(i)})\):
+Single-example loss (log loss) for \((x^{(i)}, y^{(i)})\): (1)
 
 $$
 \ell^{(i)}(w,b)
-= - \Bigl[
+= - \left[
    y^{(i)} \log f^{(i)}
    + (1 - y^{(i)}) \log (1 - f^{(i)})
-  \Bigr].
-\qquad (1)
+  \right].
 $$
+
 
 Overall (average) cost:
 
