@@ -370,17 +370,18 @@ $$
 w_j := w_j
  - \alpha \left[
    \frac{1}{m} \sum_{i=1}^m
-   \bigl(f_{w,b}(x^{(i)}) - y^{(i)}\bigr) x_j^{(i)}
- \right],
+   \left(f_{w,b}(x^{(i)}) - y^{(i)}\right) x_j^{(i)}
+ \right]
 $$
 
 $$
 b := b
  - \alpha \left[
    \frac{1}{m} \sum_{i=1}^m
-   \bigl(f_{w,b}(x^{(i)}) - y^{(i)}\bigr)
- \right].
+   \left(f_{w,b}(x^{(i)}) - y^{(i)}\right)
+ \right]
 $$
+
 
 Vector form:
 
