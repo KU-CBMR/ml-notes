@@ -103,7 +103,7 @@ and then write down the gradient descent update rules.
 
 ---
 
-## Sigmoid Derivative: \(g'(z) = g(z)\bigl(1-g(z)\bigr)\)
+## Sigmoid Derivative: $g'(z) = g(z)\bigl(1-g(z)\bigr)$
 
 ### Step 1: Differentiate the definition
 
