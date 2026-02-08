@@ -73,10 +73,13 @@ $$
 L_{\text{emp}}^{*}(m) = \min_{f \in \mathcal{H}_m} L_{\text{emp}}(f).
 $$
 
-Because $\mathcal{H}_m \subset \mathcal{H}_{m+1}$, when we move from degree $m$ to degree $m+1$, we are minimizing over a *larger* set of functions:
+Because $\mathcal{H}(m) \subset \mathcal{H}(m+1)$, when we move from degree $m$ to degree $m+1$, we are minimizing over a *larger* set of functions:
 
 $$
-L_{\mathrm{emp}}^*(m+1)=\min_{f\in\mathcal{H}_{m+1}}L_{\mathrm{emp}}(f)\le\min_{f\in\mathcal{H}_m}L_{\mathrm{emp}}(f)=L_{\mathrm{emp}}^*(m).
+L_{\mathrm{emp}}^{\star}(m+1)
+= \min_{f \in \mathcal{H}(m+1)} L_{\mathrm{emp}}(f)
+\le \min_{f \in \mathcal{H}(m)} L_{\mathrm{emp}}(f)
+= L_{\mathrm{emp}}^{\star}(m).
 $$
 
 
