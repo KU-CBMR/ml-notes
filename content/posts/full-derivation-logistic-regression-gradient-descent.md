@@ -367,13 +367,10 @@ $$
 Substitute (8) and (11):
 
 $$
-w_j := w_j
- - \alpha \left[ \frac{1}{m} \sum_{i=1}^m (f_{w,b}(x^{(i)}) - y^{(i)}) x_j^{(i)} \right]
-$$
-
-$$
-b := b
- - \alpha \left[ \frac{1}{m} \sum_{i=1}^m (f_{w,b}(x^{(i)}) - y^{(i)}) \right]
+\begin{aligned}
+w_j &\leftarrow w_j - \alpha \left[ \frac{1}{m} \sum_{i=1}^m \left(f_{w,b}(x^{(i)}) - y^{(i)}\right) x_j^{(i)} \right] \\
+b   &\leftarrow b   - \alpha \left[ \frac{1}{m} \sum_{i=1}^m \left(f_{w,b}(x^{(i)}) - y^{(i)}\right) \right]
+\end{aligned}
 $$
 
 
