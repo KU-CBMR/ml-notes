@@ -12,8 +12,9 @@ description = "Derive the gradients of logistic regression (log loss) w.r.t. wei
 Training set:
 
 $$
-\left\{ \bigl(x^{(i)}, y^{(i)}\bigr) \mid i = 1,2,\dots,m \right\},
+\{(x^{(i)}, y^{(i)}) \mid i = 1,2,\dots,m\}
 $$
+
 
 where
 
@@ -71,16 +72,12 @@ $$
 
 ## Cost Function
 
-Single-example loss (log loss) for \((x^{(i)}, y^{(i)})\):
+Single-example loss (log loss) for $(x^{(i)}, y^{(i)})$: (1)
 
 $$
-\ell^{(i)}(w,b)
-= - \Bigl[
-   y^{(i)} \log f^{(i)}
-   + (1 - y^{(i)}) \log (1 - f^{(i)})
-  \Bigr].
-\qquad (1)
+\ell^{(i)}(w,b) = -\left[y^{(i)}\log f^{(i)} + (1-y^{(i)})\log(1-f^{(i)})\right].
 $$
+
 
 Overall (average) cost:
 
@@ -106,23 +103,25 @@ and then write down the gradient descent update rules.
 
 ---
 
-## Sigmoid Derivative: \(g'(z) = g(z)\bigl(1-g(z)\bigr)\)
+## Sigmoid Derivative: $g'(z) = g(z)\bigl(1-g(z)\bigr)$
 
 ### Step 1: Differentiate the definition
 
 Start from:
 
 $$
-g(z) = \frac{1}{1 + e^{-z}} = \bigl(1 + e^{-z}\bigr)^{-1}.
+g(z) = \frac{1}{1 + e^{-z}} = (1 + e^{-z})^{-1}.
 $$
+
 
 Differentiate:
 
 $$
 g'(z)
-= -1 \cdot \bigl(1 + e^{-z}\bigr)^{-2}
-   \cdot \frac{\mathrm{d}}{\mathrm{d}z}\bigl(1 + e^{-z}\bigr).
+= -1 \cdot (1 + e^{-z})^{-2}
+   \cdot \frac{d}{dz}(1 + e^{-z}).
 $$
+
 
 Since
 
@@ -136,7 +135,7 @@ $$
 g'(z)= \frac{e^{-z}}{\bigl(1 + e^{-z}\bigr)^2}.
 $$
 
-### Step 2: Rewrite in terms of \(g(z)\)
+### Step 2: Rewrite in terms of $g(z)$
 
 From
 
@@ -167,25 +166,23 @@ $$
 
 ---
 
-## Gradient of a Single Example w.r.t. \(w_j\): \(\partial \ell^{(i)}/\partial w_j\)
+## Gradient of a Single Example w.r.t. $w_j$: $\partial \ell^{(i)}/\partial w_j$
 
 Start from (1):
 
 $$
 \ell^{(i)}(w,b)
-= - \Bigl[
-   y^{(i)} \log f^{(i)}
-   + (1 - y^{(i)}) \log (1 - f^{(i)})
-  \Bigr].
+= - \big[ y^{(i)} \log f^{(i)} + (1 - y^{(i)}) \log (1 - f^{(i)}) \big].
 $$
 
-### Step 1: \(\partial \ell^{(i)}/\partial f^{(i)}\)
+### Step 1: $\partial \ell^{(i)}/\partial f^{(i)}$
 
-Treat \(f^{(i)}\) as scalar \(f\):
+Treat $f^{(i)}$ as scalar $f$:
 
 $$
-\ell(f) = - \bigl[ y \log f + (1-y)\log(1-f) \bigr].
+\ell(f) = - \big[ y \log f + (1-y)\log(1-f) \big].
 $$
+
 
 Differentiate:
 
@@ -203,9 +200,10 @@ $$
 \qquad (4)
 $$
 
-### Step 2: \(\partial f^{(i)}/\partial z^{(i)}\)
+### Step 2: $\partial f^{(i)}/\partial z^{(i)}$
 
-Since \(f^{(i)} = g(z^{(i)})\), using (3):
+
+Since $f^{(i)} = g(z^{(i)})$, using (3):
 
 $$
 \frac{\partial f^{(i)}}{\partial z^{(i)}}
@@ -213,7 +211,7 @@ $$
 \qquad (5)
 $$
 
-### Step 3: \(\partial z^{(i)}/\partial w_j\)
+### Step 3: $\partial z^{(i)}/\partial w_j$
 
 $$
 z^{(i)} = w^\top x^{(i)} + b = \sum_{k=1}^n w_k x_k^{(i)} + b,
@@ -261,7 +259,8 @@ $$
 
 ---
 
-## Gradient of the Overall Cost w.r.t. \(w_j\): \(\partial J/\partial w_j\)
+## Gradient of the Overall Cost w.r.t. $w_j$: $\frac{\partial J}{\partial w_j}$
+
 
 Because
 
@@ -290,9 +289,10 @@ $$
 
 ---
 
-## Gradient w.r.t. Bias \(b\): \(\partial J/\partial b\)
+## Gradient w.r.t. Bias $b$: $\frac{\partial J}{\partial b}$
 
-### Step 1: Single-example gradient \(\partial \ell^{(i)}/\partial b\)
+### Step 1: Single-example gradient $\frac{\partial \ell^{(i)}}{\partial b}$
+
 
 Again by the chain rule,
 
@@ -353,7 +353,7 @@ $$
 \theta := \theta - \alpha \frac{\partial J}{\partial \theta},
 $$
 
-where \(\alpha\) is the learning rate.
+where $\alpha$ is the learning rate.
 
 So,
 
@@ -367,20 +367,13 @@ $$
 Substitute (8) and (11):
 
 $$
-w_j := w_j
- - \alpha \left[
-   \frac{1}{m} \sum_{i=1}^m
-   \bigl(f_{w,b}(x^{(i)}) - y^{(i)}\bigr) x_j^{(i)}
- \right],
+\begin{aligned}
+w_j &\coloneqq w_j - \alpha \left[ \frac{1}{m} \sum_{i=1}^m \left(f_{w,b}(x^{(i)}) - y^{(i)}\right) x_j^{(i)} \right] \\
+b   &\coloneqq b   - \alpha \left[ \frac{1}{m} \sum_{i=1}^m \left(f_{w,b}(x^{(i)}) - y^{(i)}\right) \right]
+\end{aligned}
 $$
 
-$$
-b := b
- - \alpha \left[
-   \frac{1}{m} \sum_{i=1}^m
-   \bigl(f_{w,b}(x^{(i)}) - y^{(i)}\bigr)
- \right].
-$$
+
 
 Vector form:
 
