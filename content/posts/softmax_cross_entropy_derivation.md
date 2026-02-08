@@ -1,6 +1,6 @@
 ---
 title: "Derivation of Softmax Regression and Cross-Entropy Loss"
-date: 2026-02-08
+date: 2026-01-12
 draft: false
 tags: ["softmax", "cross-entropy", "logits", "backprop", "ml"]
 categories: ["ML Basics"]
@@ -15,7 +15,7 @@ In multi-class classification (where we have $N$ classes), the neural network ou
 
 For a specific class $k$, the predicted probability $a_k$ is defined as:
 
-$a_k = \operatorname{Softmax}(z)_k = \dfrac{e^{z_k}}{\sum_{j=1}^{N} e^{z_j}}$.
+- $a_k = \operatorname{Softmax}(z)_k = \dfrac{e^{z_k}}{\sum_{j=1}^{N} e^{z_j}}$
 
 
 **Properties:**
