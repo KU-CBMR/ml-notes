@@ -17,8 +17,9 @@ $$
 
 In polynomial regression, we approximate the relationship between $x$ and $y$ with a polynomial of degree $m$:
 
+
 $$
-\mathcal{H}_m = \{ f_m(x) = \sum_{k=0}^{m} w_k x^k \mid w_0,\ldots,w_m \in \mathbb{R} \}.
+\mathcal{H}(m) = \{ f_m(x) = \sum_{k=0}^{m} w_k x^k \mid w_0,\ldots,w_m \in \mathbb{R} \}.
 $$
 
 
