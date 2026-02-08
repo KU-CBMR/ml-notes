@@ -18,9 +18,9 @@ $$
 In polynomial regression, we approximate the relationship between $x$ and $y$ with a polynomial of degree $m$:
 
 $$
-f_m(x) = w_0 + w_1 x + w_2 x^2 + \dots + w_m x^m
-      = \sum_{k=0}^{m} w_k x^k,
+\mathcal{H}_m = \{ f_m(x) = \sum_{k=0}^{m} w_k x^k \mid w_0,\ldots,w_m \in \mathbb{R} \}.
 $$
+
 
 where the coefficients $w_0, \dots, w_m$ are parameters learned from data.
 
