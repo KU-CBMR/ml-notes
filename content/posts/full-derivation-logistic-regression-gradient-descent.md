@@ -259,7 +259,8 @@ $$
 
 ---
 
-## Gradient of the Overall Cost w.r.t. \(w_j\): \(\partial J/\partial w_j\)
+## Gradient of the Overall Cost w.r.t. $w_j$: $\frac{\partial J}{\partial w_j}$
+
 
 Because
 
