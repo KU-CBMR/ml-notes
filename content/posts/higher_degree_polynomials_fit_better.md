@@ -32,7 +32,7 @@ Let $\mathcal{H}_m$ denote the hypothesis space of all degree-$m$ polynomials:
 
 $$
 \mathcal{H}_m =
-\left\{ f_m(x) = \sum_{k=0}^{m} w_k x^k \;\big|\; w_0,\ldots,w_m \in \mathbb{R} \right\}.
+\left\{ f_m(x) = \sum_{k=0}^{m} w_k x^k \mid w_0,\ldots,w_m \in \mathbb{R} \right\}.
 $$
 
 If we compare $\mathcal{H}_1$ and $\mathcal{H}_2$, we see that every linear function
