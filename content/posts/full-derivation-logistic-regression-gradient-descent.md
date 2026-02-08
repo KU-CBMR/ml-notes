@@ -289,9 +289,10 @@ $$
 
 ---
 
-## Gradient w.r.t. Bias \(b\): \(\partial J/\partial b\)
+## Gradient w.r.t. Bias $b$: $\frac{\partial J}{\partial b}$
 
-### Step 1: Single-example gradient \(\partial \ell^{(i)}/\partial b\)
+### Step 1: Single-example gradient $\frac{\partial \ell^{(i)}}{\partial b}$
+
 
 Again by the chain rule,
 
