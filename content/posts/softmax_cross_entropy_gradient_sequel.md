@@ -12,7 +12,6 @@ description: "A step-by-step derivation of the Softmax + Cross-Entropy gradient.
 This post is a continuation of the previous note on Softmax and cross-entropy.  
 Here we derive the gradient of the single-example loss with respect to each logit $z_i$.
 
-> **Rendering note (Hugo/KaTeX):** If your theme only renders math reliably inside list items, this note intentionally places key equations inside list bullets.
 
 ---
 
@@ -70,7 +69,7 @@ Now consider two cases.
 = \frac{e^{z_i}}{\Sigma}\cdot\frac{\Sigma - e^{z_i}}{\Sigma}
 = a_i(1-a_i)$
 
-### Case 2: $k\neq i$
+### Case 2: $k \neq i$
 
 - $\frac{\partial a_k}{\partial z_i}
 = \frac{0\cdot\Sigma - e^{z_k}e^{z_i}}{\Sigma^2}
@@ -96,7 +95,7 @@ Use Case 1:
 = -(1-a_y)
 = a_y - 1$
 
-### Scenario B: $i\neq y$ (Incorrect classes)
+### Scenario B: $i \neq y$ (Incorrect classes)
 
 Use Case 2:
 
