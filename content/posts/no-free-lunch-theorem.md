@@ -1,6 +1,6 @@
 +++
 title = "The No Free Lunch Theorem (Learning Theory)"
-date = 2026-02-08
+date = 2026-01-05
 draft = false
 categories = ["Classical ML", "Theory"]
 tags = ["learning-theory", "generalization", "no-free-lunch"]

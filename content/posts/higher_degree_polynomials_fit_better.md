@@ -1,6 +1,6 @@
 +++
 title = "Why Higher-Degree Polynomials Fit the Training Data Better"
-date = 2026-02-08
+date = 2026-01-07
 draft = false
 categories = ["Classical ML", "Theory"]
 tags = ["polynomial-regression", "overfitting", "bias-variance", "hypothesis-space"]

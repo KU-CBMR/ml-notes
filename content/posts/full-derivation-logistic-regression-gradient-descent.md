@@ -1,6 +1,6 @@
 +++
 title = "Logistic Regression Gradients (Derivation)"
-date = 2026-02-08
+date = 2026-01-10
 draft = false
 categories = ["Classical ML", "Theory"]
 tags = ["logistic-regression", "gradient-descent", "derivation"]
