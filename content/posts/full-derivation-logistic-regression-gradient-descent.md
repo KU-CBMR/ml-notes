@@ -13,7 +13,7 @@ description = "A full, step-by-step derivation of logistic regression gradients 
 The training set is
 
 $$
-\left\{ \bigl(x^{(i)}, y^{(i)}\bigr) \mid i = 1,2,\dots,m \right\}
+\left\\{ \bigl(x^{(i)}, y^{(i)}\bigr) \mid i = 1,2,\dots,m \right\\}
 $$
 
 where
@@ -28,7 +28,7 @@ x^{(i)}_n
 \end{bmatrix}
 \in \mathbb{R}^n,
 \qquad
-y^{(i)} \in \{0,1\}.
+y^{(i)} \in \\{0,1\\}.
 $$
 
 The parameters are
