@@ -4,7 +4,7 @@ date: 2026-02-08
 draft: false
 tags: ["softmax", "cross-entropy", "logits", "backprop", "ml"]
 categories: ["ML Basics"]
-description: "A clean derivation of Softmax, cross-entropy (MLE + information theory views), and the gradient a - y."
+description: "A clean derivation of Softmax, cross-entropy (MLE + information theory views), and the gradient."
 ---
 
 # Derivation of Softmax Regression and Cross-Entropy Loss
@@ -14,7 +14,6 @@ description: "A clean derivation of Softmax, cross-entropy (MLE + information th
 In multi-class classification (where we have $N$ classes), the neural network outputs a vector of raw scores, known as **logits**, denoted as $z$. Since these scores range from $(-\infty, +\infty)$, they are difficult to interpret. We use the Softmax function to convert them into a probability distribution.
 
 For a specific class $k$, the predicted probability $a_k$ is defined as:
-
 $$
 a_k = \mathrm{Softmax}(z)_k = \frac{e^{z_k}}{\sum_{j=1}^{N} e^{z_j}}.
 $$
