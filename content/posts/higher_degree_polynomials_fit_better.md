@@ -28,12 +28,12 @@ where the coefficients $w_0, \dots, w_m$ are parameters learned from data.
 
 ## Hypothesis spaces grow with the degree
 
-Let $\mathcal{H}_m$ denote the hypothesis space of all degree-$m$ polynomials:
+Let $\mathcal{H}_m$ denote the hypothesis space of all polynomials of degree $m$:
 
 $$
-\mathcal{H}_m =
-\left\{ f_m(x) = \sum_{k=0}^{m} w_k x^k \mid w_0,\ldots,w_m \in \mathbb{R} \right\}.
+\mathcal{H}_m = \{ f_m(x) = \sum_{k=0}^{m} w_k x^k \mid w_0,\ldots,w_m \in \mathbb{R} \}.
 $$
+
 
 If we compare $\mathcal{H}_1$ and $\mathcal{H}_2$, we see that every linear function
 
