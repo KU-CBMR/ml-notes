@@ -20,11 +20,11 @@ It helps you quickly identify whether you are CPU-bound, GPU-bound, or queueing-
 
 ---
 
-## Download (paid)
+## Download
 
 I’ve packaged this checklist + a benchmark template into a downloadable bundle:
 
-- 👉 Buy the bundle: YOUR_GUMROAD_OR_LEMONSQUEEZY_LINK
+- 👉 Buy the bundle: https://mlnotes.gumroad.com/l/LLMLatencyDebuggingChecklist 
 
 > Disclosure: The link above is a paid product link. If you purchase, I earn revenue.
 
