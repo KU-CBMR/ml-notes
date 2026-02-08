@@ -200,7 +200,8 @@ $$
 \qquad (4)
 $$
 
-### Step 2: \(\partial f^{(i)}/\partial z^{(i)}\)
+### Step 2: $\partial f^{(i)}/\partial z^{(i)}$
+
 
 Since \(f^{(i)} = g(z^{(i)})\), using (3):
 
