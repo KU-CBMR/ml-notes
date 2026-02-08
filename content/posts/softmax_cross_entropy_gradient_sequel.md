@@ -7,7 +7,7 @@ categories: ["ML Basics"]
 description: "A step-by-step derivation of the Softmax + Cross-Entropy gradient."
 ---
 
-# Softmax + Cross-Entropy: Gradient Derivation ($a_i - y_i$)
+# Softmax + Cross-Entropy: Gradient Derivation
 
 This post is a continuation of the previous note on Softmax and cross-entropy.  
 Here we derive the gradient of the single-example loss with respect to each logit $z_i$.
@@ -19,7 +19,7 @@ Here we derive the gradient of the single-example loss with respect to each logi
 
 We want the gradient of the loss $L$ with respect to the raw score (logit) $z_i$:
 
-- $\frac{\partial L}{\partial z_i} = ?$
+- $\frac{\partial L}{\partial z_i} = \; ?$
 
 ---
 
@@ -62,14 +62,18 @@ First compute the derivative of $\Sigma$ with respect to $z_i$:
 
 Now consider two cases.
 
-### Case 1: $k=i$
+### Case 1: k equals i
+
+(That is, $k=i$.)
 
 - $\frac{\partial a_i}{\partial z_i}
 = \frac{e^{z_i}\Sigma - e^{z_i}e^{z_i}}{\Sigma^2}
 = \frac{e^{z_i}}{\Sigma}\cdot\frac{\Sigma - e^{z_i}}{\Sigma}
 = a_i(1-a_i)$
 
-### Case 2: $k \neq i$
+### Case 2: k not equal to i
+
+(That is, $k\neq i$.)
 
 - $\frac{\partial a_k}{\partial z_i}
 = \frac{0\cdot\Sigma - e^{z_k}e^{z_i}}{\Sigma^2}
@@ -86,18 +90,18 @@ Plug the Softmax derivative into the chain rule:
 
 We evaluate two scenarios.
 
-### Scenario A: $i=y$ (Correct class)
+### Scenario A: i equals y (correct class)
 
-Use Case 1:
+(That is, $i=y$.)
 
 - $\frac{\partial L}{\partial z_y}
 = \left(-\frac{1}{a_y}\right)\cdot a_y(1-a_y)
 = -(1-a_y)
 = a_y - 1$
 
-### Scenario B: $i \neq y$ (Incorrect classes)
+### Scenario B: i not equal to y (incorrect classes)
 
-Use Case 2:
+(That is, $i\neq y$.)
 
 - $\frac{\partial L}{\partial z_i}
 = \left(-\frac{1}{a_y}\right)\cdot(-a_y a_i)
