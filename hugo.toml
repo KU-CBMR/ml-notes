@@ -3,7 +3,8 @@ languageCode = "en-us"
 title = "LLM/ML Systems Notes"
 theme = "PaperMod"
 
-canonifyURLs = true
+# canonifyURLs = true
+canonifyURLs = false
 relativeURLs = false
 
 
