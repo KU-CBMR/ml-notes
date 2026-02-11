@@ -1,9 +1,49 @@
+# baseURL = "https://ku-cbmr.github.io/ml-notes/"
+# languageCode = "en-us"
+# title = "LLM/ML Systems Notes"
+# theme = "PaperMod"
+
+# # canonifyURLs = true
+# canonifyURLs = false
+# relativeURLs = false
+
+
+# [params]
+#   ShowReadingTime = true
+#   ShowCodeCopyButtons = true
+#   ShowToc = true
+#   TocOpen = true
+#   defaultTheme = "auto"
+
+# [menu]
+#   [[menu.main]]
+#     name = "Posts"
+#     url = "/ml-notes/posts/"
+#     weight = 1
+
+#   [[menu.main]]
+#     name = "Categories"
+#     url = "/ml-notes/categories/"
+#     weight = 2
+
+#   [[menu.main]]
+#     name = "Tags"
+#     url = "/ml-notes/tags/"
+#     weight = 3
+
+#   [[menu.main]]
+#     name = "About"
+#     url = "/ml-notes/about/"
+#     weight = 4
+
 baseURL = "https://ku-cbmr.github.io/ml-notes/"
 languageCode = "en-us"
 title = "LLM/ML Systems Notes"
 theme = "PaperMod"
-canonifyURLs = true
+
+canonifyURLs = false
 relativeURLs = false
+
 [params]
   ShowReadingTime = true
   ShowCodeCopyButtons = true
@@ -12,6 +52,8 @@ relativeURLs = false
   defaultTheme = "auto"
 
 [menu]
+  # 关键：去掉开头的 /ml-notes/ 和开头的斜杠
+  # 这样 Hugo 会根据 baseURL 自动生成正确的绝对路径
   [[menu.main]]
     name = "Posts"
     url = "posts/"
@@ -31,3 +73,81 @@ relativeURLs = false
     name = "About"
     url = "about/"
     weight = 4
+
+    
+# baseURL = "https://ku-cbmr.github.io/ml-notes/"
+# languageCode = "en-us"
+# title = "LLM/ML Systems Notes"
+# theme = "PaperMod"
+
+# # 必须设为 false，防止在子路径下产生路径重叠
+# canonifyURLs = false
+# # 建议设为 false，让 Hugo 依赖 baseURL 生成绝对路径
+# relativeURLs = false
+
+# [params]
+#   ShowReadingTime = true
+#   ShowCodeCopyButtons = true
+#   ShowToc = true
+#   TocOpen = true
+#   defaultTheme = "auto"
+
+# [menu]
+#   # 注意：url 删除了开头的斜杠，这样 Hugo 会自动补全 baseURL
+#   [[menu.main]]
+#     name = "Posts"
+#     url = "posts/"
+#     weight = 1
+
+#   [[menu.main]]
+#     name = "Categories"
+#     url = "categories/"
+#     weight = 2
+
+#   [[menu.main]]
+#     name = "Tags"
+#     url = "tags/"
+#     weight = 3
+
+#   [[menu.main]]
+#     name = "About"
+#     url = "about/"
+#     weight = 4
+
+
+# baseURL = "https://ku-cbmr.github.io/ml-notes/"
+# languageCode = "en-us"
+# title = "LLM/ML Systems Notes"
+# theme = "PaperMod"
+# canonifyURLs = true
+# relativeURLs = false
+
+
+# [params]
+#   ShowReadingTime = true
+#   ShowCodeCopyButtons = true
+#   ShowToc = true
+#   TocOpen = true
+#   defaultTheme = "auto"
+
+    
+# [menu]
+#   [[menu.main]]
+#     name = "Posts"
+#     url = "/ml-notes/posts/"
+#     weight = 1
+
+#   [[menu.main]]
+#     name = "Categories"
+#     url = "categories/"
+#     weight = 2
+
+#   [[menu.main]]
+#     name = "Tags"
+#     url = "tags/"
+#     weight = 3
+
+#   [[menu.main]]
+#     name = "About"
+#     url = "about/"
+#     weight = 4
