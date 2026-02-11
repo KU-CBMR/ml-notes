@@ -41,9 +41,9 @@ languageCode = "en-us"
 title = "LLM/ML Systems Notes"
 theme = "PaperMod"
 
-# 必须设为 false，防止在子路径下产生路径重叠
-canonifyURLs = false
-# 建议设为 false，让 Hugo 依赖 baseURL 生成绝对路径
+# 将其设为 true，强制 Hugo 把所有分页链接（Prev/Next）补全为绝对路径
+# 这通常能解决 PaperMod 在子目录下的跳转问题
+canonifyURLs = true
 relativeURLs = false
 
 [params]
@@ -54,7 +54,8 @@ relativeURLs = false
   defaultTheme = "auto"
 
 [menu]
-  # 注意：url 删除了开头的斜杠，这样 Hugo 会自动补全 baseURL
+  # 注意：在 canonifyURLs = true 的情况下，url 绝对不能写 /ml-notes/
+  # 直接写相对于 baseURL 的路径，Hugo 会自动帮你拼成正确的地址
   [[menu.main]]
     name = "Posts"
     url = "posts/"
@@ -74,6 +75,46 @@ relativeURLs = false
     name = "About"
     url = "about/"
     weight = 4
+
+    
+# baseURL = "https://ku-cbmr.github.io/ml-notes/"
+# languageCode = "en-us"
+# title = "LLM/ML Systems Notes"
+# theme = "PaperMod"
+
+# # 必须设为 false，防止在子路径下产生路径重叠
+# canonifyURLs = false
+# # 建议设为 false，让 Hugo 依赖 baseURL 生成绝对路径
+# relativeURLs = false
+
+# [params]
+#   ShowReadingTime = true
+#   ShowCodeCopyButtons = true
+#   ShowToc = true
+#   TocOpen = true
+#   defaultTheme = "auto"
+
+# [menu]
+#   # 注意：url 删除了开头的斜杠，这样 Hugo 会自动补全 baseURL
+#   [[menu.main]]
+#     name = "Posts"
+#     url = "posts/"
+#     weight = 1
+
+#   [[menu.main]]
+#     name = "Categories"
+#     url = "categories/"
+#     weight = 2
+
+#   [[menu.main]]
+#     name = "Tags"
+#     url = "tags/"
+#     weight = 3
+
+#   [[menu.main]]
+#     name = "About"
+#     url = "about/"
+#     weight = 4
 
 
 # baseURL = "https://ku-cbmr.github.io/ml-notes/"
