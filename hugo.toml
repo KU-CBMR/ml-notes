@@ -2,8 +2,10 @@ baseURL = "https://ku-cbmr.github.io/ml-notes/"
 languageCode = "en-us"
 title = "LLM/ML Systems Notes"
 theme = "PaperMod"
-canonifyURLs = true
-relativeURLs = false
+# canonifyURLs = true
+# relativeURLs = false
+canonifyURLs = false
+relativeURLs = true
 [params]
   ShowReadingTime = true
   ShowCodeCopyButtons = true
