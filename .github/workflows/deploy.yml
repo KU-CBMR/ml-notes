@@ -25,7 +25,8 @@ jobs:
         with:
           hugo-version: "0.146.0"
           extended: true
-      - run: hugo --minify
+      # - run: hugo --minify
+      - run: hugo --minify --baseURL "https://ku-cbmr.github.io/ml-notes/"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
