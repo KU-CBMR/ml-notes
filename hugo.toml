@@ -41,7 +41,6 @@ languageCode = "en-us"
 title = "LLM/ML Systems Notes"
 theme = "PaperMod"
 
-# 关键：设为 false。开启 true 时 Hugo 有时会错误地剥离路径
 canonifyURLs = false
 relativeURLs = false
 
@@ -53,25 +52,26 @@ relativeURLs = false
   defaultTheme = "auto"
 
 [menu]
-  # 注意：这里我们手动加上子目录路径，确保链接始终正确
+  # 关键：去掉开头的 /ml-notes/ 和开头的斜杠
+  # 这样 Hugo 会根据 baseURL 自动生成正确的绝对路径
   [[menu.main]]
     name = "Posts"
-    url = "/ml-notes/posts/"
+    url = "posts/"
     weight = 1
 
   [[menu.main]]
     name = "Categories"
-    url = "/ml-notes/categories/"
+    url = "categories/"
     weight = 2
 
   [[menu.main]]
     name = "Tags"
-    url = "/ml-notes/tags/"
+    url = "tags/"
     weight = 3
 
   [[menu.main]]
     name = "About"
-    url = "/ml-notes/about/"
+    url = "about/"
     weight = 4
 
     
