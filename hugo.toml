@@ -17,7 +17,7 @@ relativeURLs = false
 [menu]
   [[menu.main]]
     name = "Posts"
-    url = "posts/"
+    url = "/ml-notes/posts/"
     weight = 1
 
   [[menu.main]]
