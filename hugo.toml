@@ -14,23 +14,21 @@ relativeURLs = false
 [menu]
   [[menu.main]]
     name = "Posts"
-    url = "/ml-notes/posts/"
+    url = "/posts/"
     weight = 1
-
   [[menu.main]]
     name = "Categories"
-    url = "/ml-notes/categories/"
+    url = "/categories/"
     weight = 2
-
   [[menu.main]]
     name = "Tags"
-    url = "/ml-notes/tags/"
+    url = "/tags/"
     weight = 3
-
   [[menu.main]]
     name = "About"
-    url = "/ml-notes/about/"
+    url = "/about/"
     weight = 4
+
     
 # [menu]
 #   [[menu.main]]
