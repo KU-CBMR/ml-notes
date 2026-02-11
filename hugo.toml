@@ -2,8 +2,11 @@ baseURL = "https://ku-cbmr.github.io/ml-notes/"
 languageCode = "en-us"
 title = "LLM/ML Systems Notes"
 theme = "PaperMod"
-canonifyURLs = true
-relativeURLs = false
+# canonifyURLs = true
+# relativeURLs = false
+canonifyURLs = false
+relativeURLs = true
+
 [params]
   ShowReadingTime = true
   ShowCodeCopyButtons = true
@@ -11,27 +14,34 @@ relativeURLs = false
   TocOpen = true
   defaultTheme = "auto"
 
-    
+
 [menu]
-  [[menu.main]]
-    name = "Posts"
-    url = "posts/"
-    weight = 1
+  [[menu.main]]; name="Posts";       url="/posts/";       weight=1
+  [[menu.main]]; name="Categories";  url="/categories/";  weight=2
+  [[menu.main]]; name="Tags";        url="/tags/";        weight=3
+  [[menu.main]]; name="About";       url="/about/";       weight=4
 
-  [[menu.main]]
-    name = "Categories"
-    url = "categories/"
-    weight = 2
+    
+# [menu]
+#   [[menu.main]]
+#     name = "Posts"
+#     url = "posts/"
+#     weight = 1
 
-  [[menu.main]]
-    name = "Tags"
-    url = "tags/"
-    weight = 3
+#   [[menu.main]]
+#     name = "Categories"
+#     url = "categories/"
+#     weight = 2
 
-  [[menu.main]]
-    name = "About"
-    url = "about/"
-    weight = 4
+#   [[menu.main]]
+#     name = "Tags"
+#     url = "tags/"
+#     weight = 3
+
+#   [[menu.main]]
+#     name = "About"
+#     url = "about/"
+#     weight = 4
 
 
 
