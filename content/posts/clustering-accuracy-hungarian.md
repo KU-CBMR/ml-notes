@@ -1,6 +1,6 @@
 +++
 title = "Clustering Accuracy (ACC) with the Hungarian Algorithm"
-date = 2026-02-12
+date = 2026-01-17
 draft = false
 tags = ["clustering", "evaluation", "hungarian", "unsupervised"]
 categories = ["Machine Learning"]
