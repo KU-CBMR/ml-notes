@@ -53,9 +53,9 @@ So we must first find the **best mapping** from cluster IDs → class IDs.
 
 2. Find a one-to-one assignment that **maximizes matches**:
 
-\[
+$$
 ACC = \frac{\max_{\pi} \sum_i W[i, \pi(i)]}{n}
-\]
+$$
 
 This is a **linear assignment problem**, solvable with the **Hungarian algorithm**.
 In Python, use `scipy.optimize.linear_sum_assignment`, which returns the optimal assignment.
