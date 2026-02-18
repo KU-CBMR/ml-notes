@@ -20,6 +20,8 @@ git status
 git commit -m 'Add periods to the end of sentences.'
 ```
 
+These code and idea come from the course on coursera "Introduction to Git and GitHub"
+
 I’m going to explain what each one does, _why it exists_, and what to look for in the output—because Git is 10x easier when you know what it’s storing under the hood.
 
 ---

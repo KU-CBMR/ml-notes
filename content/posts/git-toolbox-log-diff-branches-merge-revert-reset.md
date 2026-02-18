@@ -38,6 +38,8 @@ git merge even-better-feature
 git merge --abort
 ```
 
+These code and idea come from the course on coursera "Introduction to Git and GitHub"
+
 Same deal as before: what it does, why it exists, and how to use it without pain.
 
 ---
