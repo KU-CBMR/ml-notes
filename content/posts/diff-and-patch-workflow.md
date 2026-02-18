@@ -1,6 +1,6 @@
 ---
 title: "From `diff` to `patch`: a tiny but powerful GitHub-era workflow"
-date: 2026-01-18
+date: 2025-12-18
 tags: ["git", "github", "unix", "diff", "patch"]
 ---
 

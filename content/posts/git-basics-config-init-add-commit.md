@@ -1,6 +1,6 @@
 ---
 title: "Your First Real Git Repo: config, init, add, status, commit (and what `.git/` is really doing)"
-date: 2026-01-18
+date: 2025-12-19
 tags: ["git", "github", "cli", "version-control", "workflow"]
 ---
 
