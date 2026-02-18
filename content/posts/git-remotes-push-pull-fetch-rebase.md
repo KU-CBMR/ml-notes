@@ -22,6 +22,7 @@ git remote update
 git remote
 git rebase master
 git rebase --continue
+git rebase -i master
 git fetch
 git branch -r
 

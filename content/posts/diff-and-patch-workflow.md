@@ -217,3 +217,8 @@ In real projects you’ll encounter situations like:
 - you want to apply a fix without copy-pasting code blocks
 
 This workflow is lightweight, universal, and works basically everywhere.
+
+Here are some useful commands:
+
+- touch
+- Ctrl-o, Enter key, and Ctrl-x
