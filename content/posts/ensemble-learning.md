@@ -293,13 +293,13 @@ Most commonly: **logit / probability averaging**.
 For a classification model with logits $z_m(x)$ from model $m$:
 
 $
-p(y\mid x) \;=\; \frac{1}{M}\sum_{m=1}^{M} \text{softmax}(z_m(x))
+p(y\mid x) = \frac{1}{M}\sum_{m=1}^{M} \text{softmax}(z_m(x))
 $
 
 For text generation (language modeling), you can ensemble next-token distributions:
 
 $
-p(t_{k}\mid t_{<k}) \;=\; \frac{1}{M}\sum_{m=1}^{M} p_m(t_{k}\mid t_{<k})
+p(t_{k}\mid t_{<k}) = \frac{1}{M}\sum_{m=1}^{M} p_m(t_{k}\mid t_{<k})
 $
 
 This is simple and effective—but costs $M$ forward passes per decoding step, so it can get expensive.
