@@ -49,13 +49,13 @@ A useful mental model is the **bias–variance tradeoff**:
 For regression, the simplest ensemble is an **average**:
 
 $
-\hat{y}(x) \;=\; \frac{1}{M}\sum_{m=1}^{M} f_m(x)
+\hat{y}(x) = \frac{1}{M}\sum_{m=1}^{M} f_m(x)
 $
 
 For classification, a common approach is **average probabilities** (or **vote**):
 
 $
-p(y\mid x) \;=\; \frac{1}{M}\sum_{m=1}^{M} p_m(y\mid x)
+p(y\mid x) = \frac{1}{M}\sum_{m=1}^{M} p_m(y\mid x)
 $
 
 The practical lesson: **ensembles help most when models are accurate _and diverse_.**
