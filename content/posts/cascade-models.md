@@ -323,6 +323,42 @@ class EarlyExitEncoder(nn.Module):
 - **Cascade R-CNN / Cascade Mask R-CNN** (multi-stage detectors)
 - **Early-exit Transformers (e.g., DeeBERT)**
 
+## 12) Does a cascade improve accuracy (or only efficiency)?
+
+Yes—**cascades can improve accuracy**, not just speed, but it depends on the _type_ of cascade.
+
+### When accuracy often improves
+
+**1) Multi-stage refinement cascades (quality gets better stage by stage).**  
+Here, later stages are not “cheaper substitutes”—they are **specialized for harder cases** and trained to be **more strict / higher quality**.
+
+- **Cascade R-CNN / Cascade Mask R-CNN:** later heads are trained with higher IoU thresholds, which typically improves localization quality and overall mAP.
+- **Boosted / hard-negative cascades (Viola–Jones style):** later stages focus on false positives from earlier stages, reducing errors on difficult negatives.
+
+Intuition: a cascade implicitly splits data by difficulty, so later stages spend capacity on the decision boundary (hard examples).
+
+**2) Retrieval / ranking cascades (cheap candidate generation → expensive re-ranking).**  
+A strong re-ranker (often a Transformer cross-encoder) applied to a small candidate set usually **improves final ranking metrics** (e.g., NDCG/MRR/Recall@K) compared to using only the first stage.
+
+**3) Heterogeneous cascades (different inductive biases per stage).**  
+Combining stages with different features or model families (e.g., rules + ML, trees + neural nets) can also add accuracy, especially when each stage corrects a different error mode.
+
+### When accuracy may stay flat (or drop)
+
+**1) Early-exit / anytime prediction is primarily an efficiency trick.**  
+Early-exit Transformers (e.g., DeeBERT) often trade a small amount of accuracy for lower average latency, because some samples exit before the deepest layers.
+
+**2) Gating mistakes are irreversible.**  
+If the gate lets a hard case exit early, later stages never get a chance to fix it.
+
+**3) Thresholds can be brittle under distribution shift.**  
+If the “easy vs. hard” mix changes in production, exit rates drift and accuracy can degrade unless you recalibrate thresholds.
+
+### Practical takeaway
+
+- If your cascade is **refinement-focused** (hard-negative mining, higher-quality later stages, re-ranking), accuracy often **improves**.
+- If your cascade is **early-exit-focused**, you usually get **efficiency**, and you must tune/calibrate gates to avoid accuracy loss.
+
 ---
 
 ## References
