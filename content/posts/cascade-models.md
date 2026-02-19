@@ -26,8 +26,7 @@ A cascade is a **pipeline of models** (or model heads) indexed by stage $k = 1..
 A common abstraction:
 
 $
-\hat{y}(x) = f\_{k^_(x)}(x), \quad
-k^_(x) = \min \{k \;|\; g_k(x) = \text{exit}\}
+\hat{y}(x) = f\_{k^_(x)}(x), \quad k^_(x) = \min \{k \;|\; g_k(x) = \text{exit}\}
 $
 
 where:
@@ -39,9 +38,9 @@ where:
 
 The expected inference cost becomes:
 
-    $
-    \mathbb{E}[\text{cost}] = \sum\_{k=1}^{K} \Pr(\text{reach stage } k)\cdot \text{cost}\_k
-    $
+$
+\mathbb{E}[\text{cost}] = \sum\_{k=1}^{K} \Pr(\text{reach stage } k)\cdot \text{cost}\_k
+$
 
 If many samples exit early, **average latency and FLOPs drop a lot**—without sacrificing much accuracy.
 
