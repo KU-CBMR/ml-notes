@@ -39,9 +39,9 @@ where:
 
 The expected inference cost becomes:
 
-$
-\mathbb{E}[\text{cost}] = \sum\_{k=1}^{K} \Pr(\text{reach stage } k)\cdot \text{cost}\_k
-$
+    $
+    \mathbb{E}[\text{cost}] = \sum\_{k=1}^{K} \Pr(\text{reach stage } k)\cdot \text{cost}\_k
+    $
 
 If many samples exit early, **average latency and FLOPs drop a lot**—without sacrificing much accuracy.
 
