@@ -84,6 +84,7 @@ The practical lesson: **ensembles help most when models are accurate _and divers
 - Doesn’t fix systematic bias as effectively as boosting.
 
 **Classic representative:** **Bagging** (Breiman) [1]
+
 **Practical superstar:** **Random Forests** (Breiman) [3]
 
 ### B) Boosting (sequential training)
