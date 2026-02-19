@@ -35,9 +35,9 @@ You have:
 
 A common “canonical” MoE combination is the weighted sum:
 
-$\[
+$
 f(x) = \sum\_{i=1}^{E} w_i(x)\, f_i(x), \quad w_i(x)\ge 0
-\]$
+$
 
 This basic structure (experts + gating function + combination) is described in standard references. citeturn0search0
 
@@ -71,9 +71,9 @@ Modern deep-learning MoE is often used for **conditional computation**: to reduc
 
 So instead of summing over all \(E\) experts, we sum only over a selected set \(S(x)\) with \(|S(x)| = k \ll E\):
 
-$\[
+$
 f(x) = \sum\_{i\in S(x)} \tilde{w}\_i(x)\, f_i(x), \quad |S(x)| = k
-\]$
+$
 
 This is exactly the point we emphasized: **routing becomes the key design choice** in deep-learning MoE—how to route a batch of queries to the best experts while controlling cost and avoiding bottlenecks. citeturn0search0
 
