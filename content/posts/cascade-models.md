@@ -1,5 +1,5 @@
 ---
-title: "Cascade Models: Multi-Stage Learning for Accuracy *and* Efficiency"
+title: "Cascade Models: Multi-Stage Learning for Accuracy and Efficiency"
 date: 2026-02-16
 tags:
   ["ml", "ensemble", "efficiency", "computer-vision", "transformers", "cascade"]
