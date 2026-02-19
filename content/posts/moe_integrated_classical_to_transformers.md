@@ -31,7 +31,7 @@ This post explains all three, shows simple formulas, and includes two runnable c
 You have:
 
 - experts: $\(f_1(x), f_2(x), \dots, f_E(x)\)$
-- a gate/router that outputs non-negative weights \(w_i(x)\)
+- a gate/router that outputs non-negative weights $w_i(x)$
 
 A common “canonical” MoE combination is the weighted sum:
 
@@ -417,18 +417,6 @@ Dense models are often simpler if you care about:
 - deployment on limited hardware
 
 ---
-
-## References
-
-<!-- [1] Wikipedia, “Mixture of experts”. https://en.wikipedia.org/wiki/Mixture_of_experts
-[2] IBM Think, “What is mixture of experts?”. https://www.ibm.com/think/topics/mixture-of-experts
-[3] DataCamp, “What Is Mixture of Experts (MoE)?”. https://www.datacamp.com/blog/mixture-of-experts-moe
-[4] Shazeer et al. (2017): “Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer”
-[5] Lepikhin et al. (2020): “GShard”.
-[6] Fedus et al. (2021/2022): “Switch Transformers”.
-[7] Riquelme et al. (2021): “Scaling Vision with Sparse Mixture of Experts (V-MoE)”.
-[8] Mistral (2023) Mixtral.
-[9] Hugging Face MoE explainer. -->
 
 ## References
 
