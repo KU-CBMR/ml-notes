@@ -420,28 +420,24 @@ Dense models are often simpler if you care about:
 
 ## References
 
-[1] Wikipedia, “Mixture of experts”. https://en.wikipedia.org/wiki/Mixture_of_experts  
-[2] IBM Think, “What is mixture of experts?”. https://www.ibm.com/think/topics/mixture-of-experts  
+<!-- [1] Wikipedia, “Mixture of experts”. https://en.wikipedia.org/wiki/Mixture_of_experts
+[2] IBM Think, “What is mixture of experts?”. https://www.ibm.com/think/topics/mixture-of-experts
 [3] DataCamp, “What Is Mixture of Experts (MoE)?”. https://www.datacamp.com/blog/mixture-of-experts-moe
 [4] Shazeer et al. (2017): “Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer”
 [5] Lepikhin et al. (2020): “GShard”.
 [6] Fedus et al. (2021/2022): “Switch Transformers”.
 [7] Riquelme et al. (2021): “Scaling Vision with Sparse Mixture of Experts (V-MoE)”.
 [8] Mistral (2023) Mixtral.
-[9] Hugging Face MoE explainer.
+[9] Hugging Face MoE explainer. -->
 
-<!-- [[1]]
+## References
 
-- Wikipedia: “Mixture of experts” [[1]]
-- IBM Think: “What is mixture of experts?” citeturn0search1
-- DataCamp: “What Is Mixture of Experts (MoE)?” [[3]]
-- [Wikipedia: “Mixture of experts”](https://en.wikipedia.org/wiki/Mixture_of_experts)
-- [IBM Think: “What is mixture of experts?”](https://www.ibm.com/think/topics/mixture-of-experts)
-- [DataCamp: “What Is Mixture of Experts (MoE)?”](https://www.datacamp.com/blog/mixture-of-experts-moe) -->
-
-<!-- - Shazeer et al. (2017): “Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer” [[4]]
-- Lepikhin et al. (2020): “GShard” [[5]]
-- Fedus et al. (2021/2022): “Switch Transformers” [[6]]
-- Riquelme et al. (2021): “Scaling Vision with Sparse Mixture of Experts (V-MoE)” [[7]]
-- Mistral (2023) Mixtral [[8]]
-- Hugging Face MoE explainer [[9]] -->
+- [1] Wikipedia, “Mixture of experts”. https://en.wikipedia.org/wiki/Mixture_of_experts
+- [2] IBM Think, “What is mixture of experts?”. https://www.ibm.com/think/topics/mixture-of-experts
+- [3] DataCamp, “What Is Mixture of Experts (MoE)?”. https://www.datacamp.com/blog/mixture-of-experts-moe
+- [4] Shazeer et al. (2017): “Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer”.
+- [5] Lepikhin et al. (2020): “GShard”.
+- [6] Fedus et al. (2021/2022): “Switch Transformers”.
+- [7] Riquelme et al. (2021): “Scaling Vision with Sparse Mixture of Experts (V-MoE)”.
+- [8] Mistral (2023): “Mixtral”.
+- [9] Hugging Face: “MoE explainer”.
