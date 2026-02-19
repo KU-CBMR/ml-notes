@@ -317,7 +317,7 @@ class EarlyExitEncoder(nn.Module):
 
 ## 11) Notable cascade architectures (quick list)
 
-- **Viola–Jones boosted cascade** (real-time object/face detection) [1]
+- **Viola–Jones boosted cascade** (real-time object/face detection)
 - **gcForest / deep forest** (cascade of tree ensembles)
 - **Cascade R-CNN / Cascade Mask R-CNN** (multi-stage detectors)
 - **Early-exit Transformers (e.g., DeeBERT)**
