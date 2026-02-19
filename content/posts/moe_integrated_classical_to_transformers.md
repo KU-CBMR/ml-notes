@@ -30,7 +30,7 @@ This post explains all three, shows simple formulas, and includes two runnable c
 
 You have:
 
-- experts: \(f_1(x), f_2(x), \dots, f_E(x)\)
+- experts: $\(f_1(x), f_2(x), \dots, f_E(x)\)$
 - a gate/router that outputs non-negative weights \(w_i(x)\)
 
 A common “canonical” MoE combination is the weighted sum:
