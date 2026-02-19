@@ -39,7 +39,7 @@ $
 f(x) = \sum\_{i=1}^{E} w_i(x)\, f_i(x), \quad w_i(x)\ge 0
 $
 
-This basic structure (experts + gating function + combination) is described in standard references. citeturn0search0
+This basic structure (experts + gating function + combination) is described in standard references. [[1]]
 
 ---
 
@@ -59,7 +59,7 @@ This is great when:
 Wikipedia notes MoE can be trained using an **Expectation–Maximization (EM)**-style procedure, similar to other mixture models:
 
 - **E-step**: assign “responsibility” of each data point to experts
-- **M-step**: update experts + gate to better fit those responsibilities citeturn0search0
+- **M-step**: update experts + gate to better fit those responsibilities [[1]]
 
 ---
 
@@ -75,13 +75,13 @@ $
 f(x) = \sum\_{i\in S(x)} \tilde{w}\_i(x)\, f_i(x), \quad |S(x)| = k
 $
 
-This is exactly the point we emphasized: **routing becomes the key design choice** in deep-learning MoE—how to route a batch of queries to the best experts while controlling cost and avoiding bottlenecks. citeturn0search0
+This is exactly the point we emphasized: **routing becomes the key design choice** in deep-learning MoE—how to route a batch of queries to the best experts while controlling cost and avoiding bottlenecks. [[1]]
 
 ### Why load balancing matters
 
 Sparse routing can collapse: the router may send most inputs to a few “popular” experts, leaving others idle.
 
-As a result, modern MoE designs often add **auxiliary load-balancing losses** (or routing constraints) to keep expert usage more uniform. Wikipedia explicitly calls out load-balancing issues in deep-learning MoE and discusses auxiliary losses used to address them. citeturn0search0
+As a result, modern MoE designs often add **auxiliary load-balancing losses** (or routing constraints) to keep expert usage more uniform. Wikipedia explicitly calls out load-balancing issues in deep-learning MoE and discusses auxiliary losses used to address them. [[1]]
 
 ---
 
@@ -94,7 +94,7 @@ In many Transformer blocks, the dense **feed-forward network (FFN)** is a large 
 - a router (gate)
 - a bank of FFN experts
 
-Wikipedia notes that MoE layers are typically used to select the Transformer feed-forward layers and are commonly sparsely gated (e.g., k=1 or k=2). citeturn0search0
+Wikipedia notes that MoE layers are typically used to select the Transformer feed-forward layers and are commonly sparsely gated (e.g., k=1 or k=2). [[1]]
 
 ### Why Transformers use MoE (the motivation)
 
@@ -432,7 +432,7 @@ Dense models are often simpler if you care about:
 
 <!-- [[1]]
 
-- Wikipedia: “Mixture of experts” citeturn0search0
+- Wikipedia: “Mixture of experts” [[1]]
 - IBM Think: “What is mixture of experts?” citeturn0search1
 - DataCamp: “What Is Mixture of Experts (MoE)?” [[3]]
 - [Wikipedia: “Mixture of experts”](https://en.wikipedia.org/wiki/Mixture_of_experts)
