@@ -1,6 +1,6 @@
 ---
 title: "Ensemble Learning: From Classic ML to Deep Nets and Transformers"
-date: 2026-02-19
+date: 2026-02-15
 tags:
   [
     "machine-learning",

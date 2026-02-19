@@ -1,6 +1,6 @@
 ---
 title: "Mixture of Experts (MoE): From Classical ML to Sparse Transformers (with Code)"
-date: 2026-02-19
+date: 2026-02-13
 tags:
   [
     "moe",
