@@ -69,7 +69,7 @@ Wikipedia notes MoE can be trained using an **Expectation–Maximization (EM)**-
 
 Modern deep-learning MoE is often used for **conditional computation**: to reduce compute, each input routes to **only a small subset of experts** (often top-1 or top-2). citeturn0search0turn0search1turn0search2
 
-So instead of summing over all \(E\) experts, we sum only over a selected set \(S(x)\) with \(|S(x)| = k \ll E\):
+So instead of summing over all $E$ experts, we sum only over a selected set $S(x)$ with $|S(x)| = k \ll E$:
 
 $
 f(x) = \sum\_{i\in S(x)} \tilde{w}\_i(x)\, f_i(x), \quad |S(x)| = k
