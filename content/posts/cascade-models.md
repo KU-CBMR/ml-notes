@@ -49,7 +49,7 @@ If many samples exit early, **average latency and FLOPs drop a lot**—without s
 
 ## 2) Where cascades came from (traditional ML)
 
-### 2.1 The classic: Viola–Jones boosted cascade (2001) [1]
+### 2.1 The classic
 
 The breakthrough “rapid object detection” system (popularly known for face detection) used:
 
