@@ -29,6 +29,11 @@ $
 \hat{y}(x) = f\_{k^_(x)}(x), \quad k^_(x) = \min \{k \;|\; g_k(x) = \text{exit}\}
 $
 
+$
+\hat{y}(x) = f_{k^\star(x)}(x), \quad
+k^\star(x) = \min\{\,k \mid g_k(x) = \text{exit}\,\}
+$
+
 where:
 
 - $f_k$ is the predictor at stage $k$
