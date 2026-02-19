@@ -1,6 +1,6 @@
 # baseURL = "https://ku-cbmr.github.io/ml-notes/"
 # languageCode = "en-us"
-# title = "LLM/ML Systems Notes"
+# title = "Siyu’s ML & AI Systems Notes"
 # theme = "PaperMod"
 
 # # canonifyURLs = true
@@ -38,7 +38,7 @@
 
 baseURL = "https://ku-cbmr.github.io/ml-notes/"
 languageCode = "en-us"
-title = "LLM/ML Systems Notes"
+title = "Siyu’s ML & AI Systems Notes"
 theme = "PaperMod"
 
 canonifyURLs = false
