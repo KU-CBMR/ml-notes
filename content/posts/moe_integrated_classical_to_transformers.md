@@ -47,7 +47,7 @@ This basic structure (experts + gating function + combination) is described in s
 
 ### What it is
 
-In **classical MoE**, each input uses **all experts**. The gate produces weights for _every_ expert, and you compute a full weighted sum for each query. citeturn0search0turn0search2
+In **classical MoE**, each input uses **all experts**. The gate produces weights for _every_ expert, and you compute a full weighted sum for each query. [1] [3]
 
 This is great when:
 
@@ -67,7 +67,7 @@ Wikipedia notes MoE can be trained using an **Expectation–Maximization (EM)**-
 
 ### What changes vs classical MoE?
 
-Modern deep-learning MoE is often used for **conditional computation**: to reduce compute, each input routes to **only a small subset of experts** (often top-1 or top-2). citeturn0search0turn0search1turn0search2
+Modern deep-learning MoE is often used for **conditional computation**: to reduce compute, each input routes to **only a small subset of experts** (often top-1 or top-2). [1] [2] [3]
 
 So instead of summing over all $E$ experts, we sum only over a selected set $S(x)$ with $|S(x)| = k \ll E$:
 
@@ -104,7 +104,7 @@ Benefits:
 
 - **Better “capacity per FLOP”**: big total parameter count, but only a few experts active per token
 - **Specialization**: experts can learn to handle different patterns (e.g., code vs prose), though this is emergent and not guaranteed
-- **Faster training at scale** (in the right infra): Switch Transformer reports large speedups with simplified routing. citeturn0search3
+- **Faster training at scale** (in the right infra): Switch Transformer reports large speedups with simplified routing. [6]
 
 Trade-offs:
 
@@ -118,13 +118,13 @@ Trade-offs:
 
 Below are “standout” MoE representatives commonly cited in the modern literature and ecosystem:
 
-- **Sparsely-Gated MoE (Shazeer et al., 2017)**: introduced sparse top-k gating for conditional computation at large scale. [[4]]
-- **GShard (Lepikhin et al., 2020)**: combined conditional computation (MoE) with large-scale sharding/parallelism tooling for giant Transformers. [[5]]
-- **Switch Transformer (Fedus et al., 2021/2022)**: simplified to **top-1** routing to reduce compute/communication overhead and improve practicality. [[6]]
-- **V-MoE (Riquelme et al., 2021)**: brought sparse MoE ideas to vision Transformers with strong scaling and compute trade-offs. [[7]]
-- **Mixtral (Mistral, 2023)**: a high-profile open sparse MoE LLM (top-2 per token) that popularized MoE in the open model community. [[8]]
+- **Sparsely-Gated MoE (Shazeer et al., 2017)**: introduced sparse top-k gating for conditional computation at large scale. [4]
+- **GShard (Lepikhin et al., 2020)**: combined conditional computation (MoE) with large-scale sharding/parallelism tooling for giant Transformers. [5]
+- **Switch Transformer (Fedus et al., 2021/2022)**: simplified to **top-1** routing to reduce compute/communication overhead and improve practicality. [6]
+- **V-MoE (Riquelme et al., 2021)**: brought sparse MoE ideas to vision Transformers with strong scaling and compute trade-offs. [7]
+- **Mixtral (Mistral, 2023)**: a high-profile open sparse MoE LLM (top-2 per token) that popularized MoE in the open model community. [8]
 
-For a practical, system-level discussion of MoE building blocks and serving trade-offs, the Hugging Face MoE overview is also a helpful companion. [[9]]
+For a practical, system-level discussion of MoE building blocks and serving trade-offs, the Hugging Face MoE overview is also a helpful companion. [9]
 
 ---
 
@@ -424,11 +424,11 @@ Dense models are often simpler if you care about:
 [2] IBM Think, “What is mixture of experts?”. https://www.ibm.com/think/topics/mixture-of-experts  
 [3] DataCamp, “What Is Mixture of Experts (MoE)?”. https://www.datacamp.com/blog/mixture-of-experts-moe
 [4] Shazeer et al. (2017): “Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer”
-[5] Lepikhin et al. (2020): “GShard”
-[6] Fedus et al. (2021/2022): “Switch Transformers”
-[7] Riquelme et al. (2021): “Scaling Vision with Sparse Mixture of Experts (V-MoE)”
-[8] Mistral (2023) Mixtral
-[9] Hugging Face MoE explainer
+[5] Lepikhin et al. (2020): “GShard”.
+[6] Fedus et al. (2021/2022): “Switch Transformers”.
+[7] Riquelme et al. (2021): “Scaling Vision with Sparse Mixture of Experts (V-MoE)”.
+[8] Mistral (2023) Mixtral.
+[9] Hugging Face MoE explainer.
 
 <!-- [[1]]
 
