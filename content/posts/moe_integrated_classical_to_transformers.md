@@ -118,13 +118,13 @@ Trade-offs:
 
 Below are “standout” MoE representatives commonly cited in the modern literature and ecosystem:
 
-- **Sparsely-Gated MoE (Shazeer et al., 2017)**: introduced sparse top-k gating for conditional computation at large scale. citeturn1search0turn1search4
-- **GShard (Lepikhin et al., 2020)**: combined conditional computation (MoE) with large-scale sharding/parallelism tooling for giant Transformers. citeturn1search1
-- **Switch Transformer (Fedus et al., 2021/2022)**: simplified to **top-1** routing to reduce compute/communication overhead and improve practicality. citeturn0search3turn0search9
-- **V-MoE (Riquelme et al., 2021)**: brought sparse MoE ideas to vision Transformers with strong scaling and compute trade-offs. citeturn1search10turn1search6
-- **Mixtral (Mistral, 2023)**: a high-profile open sparse MoE LLM (top-2 per token) that popularized MoE in the open model community. citeturn1search3turn1search7
+- **Sparsely-Gated MoE (Shazeer et al., 2017)**: introduced sparse top-k gating for conditional computation at large scale. [[4]]
+- **GShard (Lepikhin et al., 2020)**: combined conditional computation (MoE) with large-scale sharding/parallelism tooling for giant Transformers. [[5]]
+- **Switch Transformer (Fedus et al., 2021/2022)**: simplified to **top-1** routing to reduce compute/communication overhead and improve practicality. [[6]]
+- **V-MoE (Riquelme et al., 2021)**: brought sparse MoE ideas to vision Transformers with strong scaling and compute trade-offs. [[7]]
+- **Mixtral (Mistral, 2023)**: a high-profile open sparse MoE LLM (top-2 per token) that popularized MoE in the open model community. [[8]]
 
-For a practical, system-level discussion of MoE building blocks and serving trade-offs, the Hugging Face MoE overview is also a helpful companion. citeturn0search4
+For a practical, system-level discussion of MoE building blocks and serving trade-offs, the Hugging Face MoE overview is also a helpful companion. [[9]]
 
 ---
 
@@ -420,12 +420,28 @@ Dense models are often simpler if you care about:
 
 ## References
 
+[1] Wikipedia, “Mixture of experts”. https://en.wikipedia.org/wiki/Mixture_of_experts  
+[2] IBM Think, “What is mixture of experts?”. https://www.ibm.com/think/topics/mixture-of-experts  
+[3] DataCamp, “What Is Mixture of Experts (MoE)?”. https://www.datacamp.com/blog/mixture-of-experts-moe
+[4] Shazeer et al. (2017): “Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer”
+[5] Lepikhin et al. (2020): “GShard”
+[6] Fedus et al. (2021/2022): “Switch Transformers”
+[7] Riquelme et al. (2021): “Scaling Vision with Sparse Mixture of Experts (V-MoE)”
+[8] Mistral (2023) Mixtral
+[9] Hugging Face MoE explainer
+
+<!-- [[1]]
+
 - Wikipedia: “Mixture of experts” citeturn0search0
 - IBM Think: “What is mixture of experts?” citeturn0search1
-- DataCamp: “What Is Mixture of Experts (MoE)?” citeturn0search2
-- Shazeer et al. (2017): “Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer” citeturn1search0turn1search4
-- Lepikhin et al. (2020): “GShard” citeturn1search1
-- Fedus et al. (2021/2022): “Switch Transformers” citeturn0search3turn0search9
-- Riquelme et al. (2021): “Scaling Vision with Sparse Mixture of Experts (V-MoE)” citeturn1search10turn1search6
-- Mistral (2023) Mixtral citeturn1search3turn1search7
-- Hugging Face MoE explainer citeturn0search4
+- DataCamp: “What Is Mixture of Experts (MoE)?” [[3]]
+- [Wikipedia: “Mixture of experts”](https://en.wikipedia.org/wiki/Mixture_of_experts)
+- [IBM Think: “What is mixture of experts?”](https://www.ibm.com/think/topics/mixture-of-experts)
+- [DataCamp: “What Is Mixture of Experts (MoE)?”](https://www.datacamp.com/blog/mixture-of-experts-moe) -->
+
+<!-- - Shazeer et al. (2017): “Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer” [[4]]
+- Lepikhin et al. (2020): “GShard” [[5]]
+- Fedus et al. (2021/2022): “Switch Transformers” [[6]]
+- Riquelme et al. (2021): “Scaling Vision with Sparse Mixture of Experts (V-MoE)” [[7]]
+- Mistral (2023) Mixtral [[8]]
+- Hugging Face MoE explainer [[9]] -->
