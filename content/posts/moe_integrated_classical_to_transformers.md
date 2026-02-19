@@ -239,7 +239,7 @@ if __name__ == "__main__":
     print("train acc:", (pred == y).mean())
 ```
 
-**Key property:** every input uses all experts (dense mixing), which is the “classical” MoE flavor. citeturn0search0turn0search2
+**Key property:** every input uses all experts (dense mixing), which is the “classical” MoE flavor. [1] [3]
 
 ---
 
@@ -398,7 +398,7 @@ if __name__ == "__main__":
     main()
 ```
 
-This “top-1 routing + balancing” pattern matches the modern sparse MoE theme: **activate only a small subset of experts per query** and use auxiliary signals to keep routing stable. citeturn0search0turn0search9
+This “top-1 routing + balancing” pattern matches the modern sparse MoE theme: **activate only a small subset of experts per query** and use auxiliary signals to keep routing stable. [1] [6]
 
 ---
 
