@@ -2608,11 +2608,11 @@ $$
 then the new target is:
 
 $$
+\begin{aligned}
 r+\gamma \max_{a'}Q_{\theta^-}(s',a')
-=
--1 + 0.99 \times 30
-=
-28.7
+&= -1 + 0.99 \times 30 \\
+&= 28.7
+\end{aligned}
 $$
 
 This means:
