@@ -1083,7 +1083,7 @@ So the action can be good in the long run, even if the immediate reward is not g
 Bellman equation captures this:
 
 $$
-Q^*(s,\text{fire main engine}) = \mathbb{E} \left[ r + \gamma \max_{a'}Q^*(s',a') \right]
+Q^{\ast}(s,\text{fire main engine}) = \mathbb{E} \left[ r + \gamma \max_{a'}Q^{\ast}(s',a') \right]
 $$
 
 The first term $r$ says:
