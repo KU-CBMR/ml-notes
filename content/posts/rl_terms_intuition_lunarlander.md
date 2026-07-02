@@ -889,11 +889,10 @@ is the average value of the actions the policy may take there.
 
 If the policy always chooses the best action, then:
 
-<!-- $$ V^_(s) = \max_a Q^_(s,a) $$ -->
+<!-- $$ V^_(s) = \max_a Q^_(s,a) $$
+ -->
 
-$$
-V^{*}(s) = \max_{a} Q^{*}(s,a)
-$$
+$V^{*}(s) = \max_{a} Q^{*}(s,a)$
 
 Why do we need this relationship?
 
