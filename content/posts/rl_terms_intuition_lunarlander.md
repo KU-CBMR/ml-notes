@@ -1423,8 +1423,9 @@ A **mini-batch** is a small random subset of transitions used for one gradient u
 
 For example:
 
-$$(s_i,a_i,r_i,s'_i,d_i)_{i=1}^{64}$$
+<!-- $$(s_i,a_i,r_i,s'_i,d_i)_{i=1}^{64}$$ -->
 
+$(s_i,a_i,r_i,s_i',d_i)_{i=1}^{64}$
 This means the batch size is:
 
 $$
