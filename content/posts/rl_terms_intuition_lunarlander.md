@@ -927,7 +927,7 @@ discounted value of the future
 For Q-values, the optimal Bellman equation is:
 
 $$
-Q^*(s,a) = \mathbb{E} \left[ r + \gamma \max_{a'}Q^*(s',a') \right]
+Q^{\ast}(s,a) = \mathbb{E} \left[ r + \gamma \max_{a'}Q^{\ast}(s',a') \right]
 $$
 
 At first, this formula may look abstract.
@@ -1035,7 +1035,7 @@ Take the action with the highest estimated long-term value.
 Therefore, the value of the current action becomes:
 
 $$
-Q^*(s,a) = \mathbb{E} \left[ r + \gamma \max_{a'} Q^*(s',a') \right]
+Q^{\ast}(s,a) = \mathbb{E} \left[ r + \gamma \max_{a'} Q^{\ast}(s',a') \right]
 $$
 
 In plain English:
