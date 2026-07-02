@@ -2267,14 +2267,7 @@ old estimate
 More explicitly:
 
 $$
-\delta =
-\underbrace{
-r+\gamma \max_{a'}Q(s',a')
-}_{\text{new target}}
--
-\underbrace{
-Q(s,a)
-}_{\text{old estimate}}
+\delta = \underbrace{ r+\gamma \max_{a'}Q(s',a') }_{\text{new target}} - \underbrace{ Q(s,a) }_{\text{old estimate}}
 $$
 
 The natural question is:
