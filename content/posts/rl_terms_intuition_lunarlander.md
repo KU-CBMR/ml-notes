@@ -1,5 +1,5 @@
 ---
-title: "Reinforcement Learning Terms from Intuition: A LunarLander Walkthrough"
+title: "Reinforcement Learning Terms from Intuition: A LunarLander Walkthrough (1)"
 date: 2026-02-21
 draft: false
 math: true
@@ -15,7 +15,7 @@ categories: ["Machine Learning"]
 summary: "A beginner-friendly map of reinforcement learning terms: state, action, environment, reward, return, policy, value function, Q-value, Bellman equation, rollout, and DQN."
 ---
 
-# Reinforcement Learning Terms from Intuition: A LunarLander Walkthrough (1)
+# Reinforcement Learning Terms from Intuition: A LunarLander Walkthrough
 
 When I first learned reinforcement learning, the hardest part was not one specific algorithm.
 
