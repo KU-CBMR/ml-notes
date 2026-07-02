@@ -2273,9 +2273,21 @@ old estimate
 
 More explicitly:
 
-$$
+<!-- $$
 \delta = \underbrace{ r+\gamma \max_{a'}Q(s',a') }_{\text{new target}} - \underbrace{ Q(s,a) }_{\text{old estimate}}
+$$ -->
+
 $$
+\delta =
+\left(r+\gamma \max_{a'} Q(s',a')\right)
+-
+Q(s,a)
+$$
+
+where:
+
+- $r+\gamma \max_{a'} Q(s',a')$ is the new target
+- $Q(s,a)$ is the current estimate before the update
 
 The natural question is:
 
