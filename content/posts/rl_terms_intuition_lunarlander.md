@@ -892,7 +892,7 @@ If the policy always chooses the best action, then:
 <!-- $$ V^_(s) = \max_a Q^_(s,a) $$ -->
 
 $$
-V^*(s) = \max_a Q^*(s,a)
+V^{*}(s) = \max_{a} Q^{*}(s,a)
 $$
 
 Why do we need this relationship?
