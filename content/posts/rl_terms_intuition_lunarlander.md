@@ -498,19 +498,9 @@ $$
 
 The standard discounted return is:
 
-    $$
-    G_t
-    =
-    r_{t+1}
-    +
-    \gamma r_{t+2}
-    +
-    \gamma^2 r_{t+3}
-    +
-    \gamma^3 r_{t+4}
-    +
-    \cdots
-    $$
+$$
+G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \gamma^3 r_{t+4} + \cdots
+$$
 
 or:
 
