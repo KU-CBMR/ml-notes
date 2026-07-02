@@ -1509,7 +1509,13 @@ For each candidate action $a$, rollout estimates:
 \hat{Q}_{\text{rollout}}(s,a) = \frac{1}{N} \sum_{i=1}^{N} G^{(i)}(s,a)
 $$ -->
 
-$\hat{Q}_{\mathrm{rollout}}(s,a) = \frac{1}{N}\sum_{i=1}^{N}G^{(i)}(s,a)$
+$$
+\hat{Q}_{\mathrm{rollout}}(s,a)
+=
+\frac{1}{N}
+\sum_{i=1}^{N}
+G^{(i)}(s,a)
+$$
 
 This means:
 
