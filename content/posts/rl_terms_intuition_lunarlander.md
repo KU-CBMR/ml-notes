@@ -15,7 +15,7 @@ categories: ["Machine Learning"]
 summary: "A beginner-friendly map of reinforcement learning terms: state, action, environment, reward, return, policy, value function, Q-value, Bellman equation, rollout, and DQN."
 ---
 
-# Reinforcement Learning Terms from Intuition: A LunarLander Walkthrough -1
+# Reinforcement Learning Terms from Intuition: A LunarLander Walkthrough (1)
 
 When I first learned reinforcement learning, the hardest part was not one specific algorithm.
 
@@ -505,9 +505,7 @@ $$
 or:
 
 $$
-G_t
-=
-\sum_{k=0}^{\infty} \gamma^k r_{t+k+1}
+G_t = \sum_{k=0}^{\infty} \gamma^k r_{t+k+1}
 $$
 
 Why do we need this term?
@@ -771,9 +769,7 @@ The **state-value function** tells us how good a state is under a policy.
 For policy $\pi$:
 
 $$
-V^\pi(s)
-=
-\mathbb{E}_{\pi}[G_t \mid s_t=s]
+V^\pi(s) = \mathbb{E}_{\pi}[G_t \mid s_t=s]
 $$
 
 In words:
@@ -815,9 +811,7 @@ The **action-value function**, or **Q-function**, tells us how good an action is
 For policy $\pi$:
 
 $$
-Q^\pi(s,a)
-=
-\mathbb{E}_{\pi}[G_t \mid s_t=s, a_t=a]
+Q^\pi(s,a) = \mathbb{E}_{\pi}[G_t \mid s_t=s, a_t=a]
 $$
 
 In words:
@@ -883,9 +877,7 @@ $V$ and $Q$ are closely connected.
 $V^\pi(s)$ is the average Q-value under the policy:
 
 $$
-V^\pi(s)
-=
-\sum_a \pi(a \mid s)Q^\pi(s,a)
+V^\pi(s) = \sum_a \pi(a \mid s)Q^\pi(s,a)
 $$
 
 This means:
@@ -934,12 +926,7 @@ discounted value of the future
 For Q-values, the optimal Bellman equation is:
 
 $$
-Q^*(s,a)
-=
-\mathbb{E}
-\left[
-r + \gamma \max_{a'}Q^*(s',a')
-\right]
+Q^*(s,a) = \mathbb{E} \left[ r + \gamma \max_{a'}Q^*(s',a') \right]
 $$
 
 At first, this formula may look abstract.
@@ -975,17 +962,7 @@ how good will the whole future become?
 That long-term future is the return:
 
 $$
-G_t
-=
-r_{t+1}
-+
-\gamma r_{t+2}
-+
-\gamma^2 r_{t+3}
-+
-\gamma^3 r_{t+4}
-+
-\cdots
+G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \gamma^3 r_{t+4} + \cdots
 $$
 
 The problem is:
@@ -1013,25 +990,13 @@ Instead, split the future into two parts:
 So instead of writing the full future as:
 
 $$
-G_t
-=
-r_{t+1}
-+
-\gamma r_{t+2}
-+
-\gamma^2 r_{t+3}
-+
-\cdots
+G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots
 $$
 
 we rewrite it as:
 
 $$
-G_t
-=
-r_{t+1}
-+
-\gamma G_{t+1}
+G_t = r_{t+1} + \gamma G_{t+1}
 $$
 
 This is the key step.
@@ -1039,15 +1004,7 @@ This is the key step.
 The term $G_{t+1}$ already contains the future after the next state:
 
 $$
-G_{t+1}
-=
-r_{t+2}
-+
-\gamma r_{t+3}
-+
-\gamma^2 r_{t+4}
-+
-\cdots
+G_{t+1} = r_{t+2} + \gamma r_{t+3} + \gamma^2 r_{t+4} + \cdots
 $$
 
 So Bellman equation compresses the long future into one number:
@@ -1077,14 +1034,7 @@ Take the action with the highest estimated long-term value.
 Therefore, the value of the current action becomes:
 
 $$
-Q^*(s,a)
-=
-\mathbb{E}
-\left[
-r
-+
-\gamma \max_{a'} Q^*(s',a')
-\right]
+Q^*(s,a) = \mathbb{E} \left[ r + \gamma \max_{a'} Q^*(s',a') \right]
 $$
 
 In plain English:
@@ -1132,15 +1082,7 @@ So the action can be good in the long run, even if the immediate reward is not g
 Bellman equation captures this:
 
 $$
-Q^*(s,\text{fire main engine})
-=
-\mathbb{E}
-\left[
-r
-+
-\gamma
-\max_{a'}Q^*(s',a')
-\right]
+Q^*(s,\text{fire main engine}) = \mathbb{E} \left[ r + \gamma \max_{a'}Q^*(s',a') \right]
 $$
 
 The first term $r$ says:
@@ -1179,12 +1121,7 @@ $$
 DQN builds the target:
 
 $$
-y
-=
-r
-+
-\gamma(1-d)
-\max_{a'}Q_{\theta^-}(s',a')
+y = r + \gamma(1-d) \max_{a'}Q_{\theta^-}(s',a')
 $$
 
 This target says:
@@ -1276,9 +1213,7 @@ The **temporal-difference error**, or **TD error**, measures how different our c
 For Q-learning:
 
 $$
-\delta
-=
-r + \gamma \max_{a'}Q(s',a') - Q(s,a)
+\delta = r + \gamma \max_{a'}Q(s',a') - Q(s,a)
 $$
 
 Why do we need this term?
@@ -1312,14 +1247,7 @@ In LunarLander, if firing the main engine unexpectedly prevents a crash, the TD 
 In tabular form, it updates:
 
 $$
-Q(s,a)
-\leftarrow
-Q(s,a)
-+
-\alpha
-\left[
-r + \gamma \max_{a'}Q(s',a') - Q(s,a)
-\right]
+Q(s,a) \leftarrow Q(s,a) + \alpha \left[ r + \gamma \max_{a'}Q(s',a') - Q(s,a) \right]
 $$
 
 Why do we need it?
@@ -1398,9 +1326,7 @@ $$
 The loss is often written as:
 
 $$
-L(\theta)
-=
-\left(Q_\theta(s,a)-y\right)^2
+L(\theta) = \left(Q_\theta(s,a)-y\right)^2
 $$
 
 Why do we need this target?
@@ -1460,9 +1386,7 @@ But it is one of the key reasons DQN works in practice.
 The **replay buffer** is a memory of past transitions:
 
 $$
-\mathcal{D}
-=
-\{(s,a,r,s',d)\}
+\mathcal{D} = \{(s,a,r,s',d)\}
 $$
 
 Why do we need it?
@@ -1517,11 +1441,7 @@ $$
 Then it minimizes average loss:
 
 $$
-L(\theta)
-=
-\frac{1}{B}
-\sum_{i=1}^{B}
-\left(Q_\theta(s_i,a_i)-y_i\right)^2
+L(\theta) = \frac{1}{B} \sum_{i=1}^{B} \left(Q_\theta(s_i,a_i)-y_i\right)^2
 $$
 
 Why do we need mini-batches?
@@ -1586,11 +1506,7 @@ later training:
 For each candidate action $a$, rollout estimates:
 
 $$
-\hat{Q}_{\text{rollout}}(s,a)
-=
-\frac{1}{N}
-\sum_{i=1}^{N}
-G^{(i)}(s,a)
+\hat{Q}_{\text{rollout}}(s,a) = \frac{1}{N} \sum_{i=1}^{N} G^{(i)}(s,a)
 $$
 
 This means:
@@ -1725,15 +1641,7 @@ But the action may still be good because it prevents a crash later.
 So we define **return**:
 
 $$
-G_t
-=
-r_{t+1}
-+
-\gamma r_{t+2}
-+
-\gamma^2 r_{t+3}
-+
-\cdots
+G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots
 $$
 
 The agent follows a **policy** $\pi$ to choose actions.
@@ -1940,17 +1848,7 @@ Let us unpack this carefully.
 Earlier we defined the discounted return as:
 
 $$
-G_t
-=
-r_{t+1}
-+
-\gamma r_{t+2}
-+
-\gamma^2 r_{t+3}
-+
-\gamma^3 r_{t+4}
-+
-\cdots
+G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \gamma^3 r_{t+4} + \cdots
 $$
 
 Because the same discount factor $\gamma$ is applied again and again, we get:
@@ -1974,12 +1872,7 @@ This is the seed of the Bellman equation.
 For Q-learning and DQN, this leads to the familiar one-step target:
 
 $$
-y
-=
-r
-+
-\gamma (1-d)
-\max_{a'} Q_{\theta^-}(s',a')
+y = r + \gamma (1-d) \max_{a'} Q_{\theta^-}(s',a')
 $$
 
 This target is simple because it only needs one transition:
@@ -2011,17 +1904,7 @@ Yes.
 One possible definition is:
 
 $$
-G_t
-=
-r_{t+1}
-+
-\gamma_t r_{t+2}
-+
-\gamma_t \gamma_{t+1} r_{t+3}
-+
-\gamma_t \gamma_{t+1} \gamma_{t+2} r_{t+4}
-+
-\cdots
+G_t = r_{t+1} + \gamma_t r_{t+2} + \gamma_t \gamma_{t+1} r_{t+3} + \gamma_t \gamma_{t+1} \gamma_{t+2} r_{t+4} + \cdots
 $$
 
 This still has a recursive form:
@@ -2035,12 +1918,7 @@ So changing gamma does not automatically destroy learning.
 A DQN-style target could become:
 
 $$
-y
-=
-r
-+
-\gamma_t (1-d)
-\max_{a'} Q(s',a')
+y = r + \gamma_t (1-d) \max_{a'} Q(s',a')
 $$
 
 So the problem is not that changing gamma is impossible.
@@ -2174,11 +2052,7 @@ Bellman learning lets us update immediately.
 Instead of waiting for the whole future, DQN uses:
 
 $$
-y
-=
-r
-+
-\gamma \max_{a'} Q(s',a')
+y = r + \gamma \max_{a'} Q(s',a')
 $$
 
 This says:
@@ -2268,12 +2142,7 @@ $$
 So DQN uses the Bellman equation to construct a temporary label:
 
 $$
-y
-=
-r
-+
-\gamma(1-d)
-\max_{a'} Q_{\theta^-}(s',a')
+y = r + \gamma(1-d) \max_{a'} Q_{\theta^-}(s',a')
 $$
 
 Then it trains the DNN by minimizing:
@@ -2381,13 +2250,7 @@ In the previous section, we talked about the **temporal-difference error**, or *
 For Q-learning, the TD error is:
 
 $$
-\delta
-=
-r
-+
-\gamma \max_{a'} Q(s',a')
--
-Q(s,a)
+\delta = r + \gamma \max_{a'} Q(s',a') - Q(s,a)
 $$
 
 At first, this formula can feel confusing.
@@ -2403,8 +2266,7 @@ old estimate
 More explicitly:
 
 $$
-\delta
-=
+\delta =
 \underbrace{
 r+\gamma \max_{a'}Q(s',a')
 }_{\text{new target}}
@@ -2529,13 +2391,7 @@ But the future after $s'$ has not fully happened yet.
 The agent does not know the full future return:
 
 $$
-r_{t+1}
-+
-\gamma r_{t+2}
-+
-\gamma^2 r_{t+3}
-+
-\cdots
+r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots
 $$
 
 So Bellman idea says:
@@ -2653,11 +2509,7 @@ $$
 In tabular Q-learning, the update is:
 
 $$
-Q(s,a)
-\leftarrow
-Q(s,a)
-+
-\alpha \delta
+Q(s,a) \leftarrow Q(s,a) + \alpha \delta
 $$
 
 where $\alpha$ is the learning rate.
@@ -2671,11 +2523,7 @@ $$
 then:
 
 $$
-Q(s,a)
-\leftarrow
-10 + 0.1 \times 18.7
-=
-11.87
+Q(s,a) \leftarrow 10 + 0.1 \times 18.7 = 11.87
 $$
 
 So the Q-value does not jump all the way to $28.7$.
@@ -2869,9 +2717,7 @@ s1 -> s2
 it learns:
 
 $$
-Q(s1,a1)
-\approx
-0 + \gamma Q(s2,a2)
+Q(s1,a1) \approx 0 + \gamma Q(s2,a2)
 $$
 
 So $Q(s1,a1)$ becomes high.
@@ -2885,9 +2731,7 @@ s0 -> s1
 it learns:
 
 $$
-Q(s0,a0)
-\approx
-0 + \gamma Q(s1,a1)
+Q(s0,a0) \approx 0 + \gamma Q(s1,a1)
 $$
 
 So $Q(s0,a0)$ also becomes high.
@@ -2913,12 +2757,7 @@ $$
 The new target is:
 
 $$
-y
-=
-r
-+
-\gamma(1-d)
-\max_{a'}Q_{\theta^-}(s',a')
+y = r + \gamma(1-d) \max_{a'}Q_{\theta^-}(s',a')
 $$
 
 where:
@@ -2940,11 +2779,7 @@ Q_theta_minus:
 So the DQN TD error is:
 
 $$
-\delta
-=
-y
--
-Q_{\theta}(s,a)
+\delta = y - Q_{\theta}(s,a)
 $$
 
 DQN then trains the online network so that:
@@ -2962,11 +2797,7 @@ $$
 This is usually done by minimizing a loss such as:
 
 $$
-L(\theta)
-=
-\left(
-Q_{\theta}(s,a)-y
-\right)^2
+L(\theta) = \left( Q_{\theta}(s,a)-y \right)^2
 $$
 
 or the Huber loss.
