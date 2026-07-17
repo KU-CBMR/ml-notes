@@ -1,6 +1,6 @@
 ---
 title: "Why Bellman Equation Exists: From Reward to Return to Q-Value (2)"
-date: 2026-02-2
+date: 2026-02-20
 draft: false
 # math: true
 tags: ["reinforcement-learning", "bellman-equation", "dqn", "machine-learning"]
