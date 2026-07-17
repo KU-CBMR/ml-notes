@@ -2,10 +2,10 @@
 title: "Why Bellman Equation Exists: From Reward to Return to Q-Value (2)"
 date: 2026-02-2
 draft: false
-math: true
+# math: true
 tags: ["reinforcement-learning", "bellman-equation", "dqn", "machine-learning"]
 categories: ["Machine Learning"]
-summary: "A high-level but intuitive explanation of how RL concepts are built: state, environment, reward, return, value function, Q-value, Bellman equation, and DQN."
+# summary: "A high-level but intuitive explanation of how RL concepts are built: state, environment, reward, return, value function, Q-value, Bellman equation, and DQN."
 ---
 
 # Why Bellman Equation Exists: From Reward to Return to Q-Value
