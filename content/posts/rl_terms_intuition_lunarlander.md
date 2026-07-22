@@ -1471,13 +1471,23 @@ This is the same practical idea used in deep learning.
 
 In DQN, a common strategy is epsilon-greedy:
 
-$
+<!-- $
 a_t =
 \begin{cases}
 \text{random action}, & \text{with probability } \epsilon \\
 \arg\max_a Q_\theta(s_t,a), & \text{with probability } 1-\epsilon
 \end{cases}
-$
+$ -->
+
+\[
+a*t =
+\begin{cases}
+\text{random action},
+& \text{with probability } \epsilon, \\[4pt]
+\displaystyle \arg\max*{a} Q\_\theta(s_t,a),
+& \text{with probability } 1-\epsilon.
+\end{cases}
+\]
 
 Why do we need exploration?
 
