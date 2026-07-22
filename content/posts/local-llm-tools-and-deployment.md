@@ -1,6 +1,6 @@
 ---
 title: "Local LLM Deployment Tools Explained: Transformers, Ollama, vLLM, TGI, LMDeploy, and SGLang"
-date: 2026-03-01
+date: 2026-02-19
 draft: false
 tags: ["LLM", "Inference", "Deployment", "RAG", "Embedding"]
 categories: ["LLM Systems"]
