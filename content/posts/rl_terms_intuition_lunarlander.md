@@ -1479,15 +1479,14 @@ a_t =
 \end{cases}
 $ -->
 
-\[
-a*t =
+$$
+a_t =
 \begin{cases}
-\text{random action},
-& \text{with probability } \epsilon, \\[4pt]
-\displaystyle \arg\max*{a} Q\_\theta(s_t,a),
+\text{random action}, & \text{with probability } \epsilon, \\[4pt]
+\displaystyle \operatorname*{arg\,max}_{a} Q_{\theta}(s_t,a),
 & \text{with probability } 1-\epsilon.
 \end{cases}
-\]
+$$
 
 Why do we need exploration?
 
