@@ -1,6 +1,6 @@
 ---
 title: "Reinforcement Learning Terms from Intuition: A LunarLander Walkthrough (1)"
-date: 2026-02-21
+date: 2026-02-20
 draft: false
 math: true
 tags:
