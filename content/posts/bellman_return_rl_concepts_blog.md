@@ -237,8 +237,7 @@ So we introduce a discount factor.
 The standard discounted return is:
 
 $$
-G_t
-=
+G_t =
 r_{t+1}
 +
 \gamma r_{t+2}
@@ -331,8 +330,7 @@ The Bellman equation is derived from the discounted return.
 Start from:
 
 $$
-G_t
-=
+G_t =
 r_{t+1}
 +
 \gamma r_{t+2}
@@ -347,8 +345,7 @@ $$
 Now write the return from the next time step:
 
 $$
-G_{t+1}
-=
+G_{t+1} =
 r_{t+2}
 +
 \gamma r_{t+3}
@@ -361,8 +358,7 @@ $$
 Multiply $G_{t+1}$ by $\gamma$:
 
 $$
-\gamma G_{t+1}
-=
+\gamma G_{t+1} =
 \gamma r_{t+2}
 +
 \gamma^2 r_{t+3}
@@ -375,8 +371,7 @@ $$
 Then add $r_{t+1}$:
 
 $$
-r_{t+1} + \gamma G_{t+1}
-=
+r_{t+1} + \gamma G_{t+1} =
 r_{t+1}
 +
 \gamma r_{t+2}
@@ -481,8 +476,7 @@ But when choosing an action, we need to know how good each action is.
 So we define the action-value function, also called the Q-function:
 
 $$
-Q^{\pi}(s,a)
-=
+Q^{\pi}(s,a) =
 \mathbb{E}_{\pi}[G_t \mid s_t=s, a_t=a]
 $$
 
@@ -515,8 +509,7 @@ the value function also has a recursive form.
 For a fixed policy $\pi$:
 
 $$
-V^{\pi}(s)
-=
+V^{\pi}(s) =
 \mathbb{E}_{\pi}
 \left[
     r_{t+1} + \gamma V^{\pi}(s_{t+1})
@@ -541,8 +534,7 @@ It is return recursion plus expectation.
 Similarly, for the Q-function:
 
 $$
-Q^{\pi}(s,a)
-=
+Q^{\pi}(s,a) =
 \mathbb{E}_{\pi}
 \left[
     r_{t+1}
@@ -559,8 +551,7 @@ This says:
 If we are trying to find the best possible policy, we use the optimal Q-function:
 
 $$
-Q^*(s,a)
-=
+Q^*(s,a) =
 \mathbb{E}
 \left[
     r_{t+1}
@@ -583,8 +574,7 @@ This is the key equation behind Q-learning.
 The optimal Bellman equation says:
 
 $$
-Q^*(s_t,a_t)
-\approx
+Q^*(s_t,a_t) \approx
 r_{t+1}
 +
 \gamma \max_{a'} Q^*(s_{t+1}, a')
@@ -595,8 +585,7 @@ Q-learning turns this idea into an update rule.
 The target is:
 
 $$
-y_t
-=
+y_t =
 r_{t+1}
 +
 \gamma \max_{a'} Q(s_{t+1}, a')
@@ -607,8 +596,7 @@ Then we update our estimate of $Q(s_t,a_t)$ toward $y_t$.
 In tabular Q-learning, this looks like:
 
 $$
-Q(s_t,a_t)
-\leftarrow
+Q(s_t,a_t) \leftarrow
 Q(s_t,a_t)
 +
 \alpha
@@ -658,8 +646,7 @@ where $\theta$ represents the network parameters.
 The DQN target is:
 
 $$
-y_t
-=
+y_t =
 r_{t+1}
 +
 \gamma \max_{a'} Q_{\theta^-}(s_{t+1}, a')
@@ -670,8 +657,7 @@ Here $Q_{\theta^-}$ is the target network.
 The DQN loss is:
 
 $$
-L(\theta)
-=
+L(\theta) =
 \left(
     Q_{\theta}(s_t,a_t) - y_t
 \right)^2
@@ -711,8 +697,7 @@ $$
 For continuing tasks, we can use average reward:
 
 $$
-\lim_{T \to \infty}
-\frac{1}{T}
+\lim_{T \to \infty} \frac{1}{T}
 \sum_{t=1}^{T} r_t
 $$
 
@@ -811,8 +796,7 @@ $$
 This property allows us to write:
 
 $$
-Q(s_t,a_t)
-\approx
+Q(s_t,a_t) \approx
 r_{t+1}
 +
 \gamma \max_{a'} Q(s_{t+1},a')
