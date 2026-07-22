@@ -1975,11 +1975,8 @@ In that case, the rollout is part of model-based planning.
 For each candidate action, the agent may simulate several possible futures:
 
 $$
-\hat{Q}_{\text{rollout}}(s,a)
-=
-\frac{1}{N}
-\sum_{i=1}^{N}
-G^{(i)}(s,a)
+\hat{Q}_{\text{rollout}}(s,a) = \frac{1}{N}
+\sum_{i=1}^{N} G^{(i)}(s,a)
 $$
 
 This means:
