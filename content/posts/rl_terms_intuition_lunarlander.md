@@ -2284,9 +2284,7 @@ $$ -->
 
 $$
 \delta =
-\left(r+\gamma \max_{a'} Q(s',a')\right)
--
-Q(s,a)
+\left(r+\gamma \max_{a'} Q(s',a')\right) - Q(s,a)
 $$
 
 where:
