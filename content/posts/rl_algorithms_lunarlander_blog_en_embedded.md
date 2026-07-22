@@ -1,6 +1,6 @@
 ---
 title: "DQN, Rollout, Greedy, Random: Four Ways to Make Decisions in Reinforcement Learning"
-date: 2026-02-20
+date: 2026-04-20
 draft: false
 tags: ["reinforcement-learning", "dqn", "rollout", "gymnasium", "python"]
 categories: ["Machine Learning"]
