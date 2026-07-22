@@ -1568,7 +1568,7 @@ how valuable is firing the main engine now?
 
 ---
 
-## 30. Model-based vs model-free
+<!-- ## 30. Model-based vs model-free
 
 A **model** in RL usually means a model of the environment:
 
@@ -1610,7 +1610,617 @@ learn a value function from experience
 
 Rollout is closer to the first.
 
-DQN is closer to the second.
+DQN is closer to the second. -->
+
+## 30. Model-based vs model-free
+
+A **model** in reinforcement learning describes how the environment changes.
+
+Given a current state $s$ and an action $a$, an environment model may predict:
+
+$$
+P(s' \mid s,a)
+$$
+
+and:
+
+$$
+R(s,a,s')
+$$
+
+The first part describes the transition dynamics:
+
+```text
+If the agent takes action a in state s,
+what next state s' may follow?
+```
+
+The second part describes the reward:
+
+```text
+If this transition happens,
+what reward will the agent receive?
+```
+
+For LunarLander, an environment model may predict how firing an engine changes:
+
+```text
+position
+velocity
+angle
+angular velocity
+fuel usage
+reward
+```
+
+For example, given the current lander state and the action:
+
+```text
+fire main engine
+```
+
+the model may predict:
+
+```text
+the vertical velocity will decrease
+the lander will move upward slightly
+some fuel will be consumed
+the next state will be safer
+```
+
+Why do we need an environment model?
+
+Because if the agent can predict what will happen, it can consider possible futures before taking a real action.
+
+This leads to model-based reinforcement learning.
+
+---
+
+### Model-based reinforcement learning
+
+A **model-based** method learns or uses an environment model and then uses that model to plan.
+
+The model may be:
+
+```text
+a known physics simulator
+a hand-written transition rule
+a learned neural network
+```
+
+The model does not have to be learned by the agent.
+
+For example, LunarLander already has a physics simulator.
+
+If the agent can use that simulator to test possible future actions before acting in the real environment, it is using a model-based approach.
+
+Suppose the lander is falling too fast.
+
+A model-based agent may consider several actions:
+
+```text
+Action 1:
+    do nothing
+
+Predicted future:
+    falling speed increases
+    crash becomes more likely
+```
+
+```text
+Action 2:
+    fire main engine
+
+Predicted future:
+    falling speed decreases
+    fuel is consumed
+    landing becomes safer
+```
+
+```text
+Action 3:
+    fire a side engine
+
+Predicted future:
+    angle changes
+    vertical speed remains dangerous
+```
+
+The agent compares these predicted outcomes and chooses the action that appears to lead to the best future.
+
+The basic idea is:
+
+```text
+predict what will happen
+then choose an action by planning through those predictions
+```
+
+Mathematically, the agent may simulate a sequence such as:
+
+$$
+s_t
+\xrightarrow{a_t}
+\hat{s}_{t+1}
+\xrightarrow{a_{t+1}}
+\hat{s}_{t+2}
+\xrightarrow{a_{t+2}}
+\hat{s}_{t+3}
+$$
+
+The states with hats are predicted states inside the model.
+
+They have not necessarily happened in the real environment.
+
+This internal simulation allows the agent to ask:
+
+```text
+If I take this action now,
+what may happen several steps later?
+```
+
+This is the central idea of planning.
+
+---
+
+### Model-free reinforcement learning
+
+A **model-free** method does not explicitly learn or use an environment model for planning.
+
+It does not need to predict:
+
+```text
+the exact next position
+the exact next velocity
+the exact next angle
+the full future trajectory
+```
+
+Instead, it directly learns a policy or value function from experience.
+
+For example, DQN directly learns:
+
+$$
+Q_\theta(s,a)
+$$
+
+This function answers:
+
+```text
+If I take action a in state s,
+how much long-term return should I expect?
+```
+
+It does not directly answer:
+
+```text
+What exact next state will action a produce?
+```
+
+For LunarLander, a DQN may output:
+
+```text
+Q(s, do nothing)        = -20
+Q(s, fire left engine)  = 5
+Q(s, fire main engine)  = 40
+Q(s, fire right engine) = 3
+```
+
+The agent then chooses:
+
+$$
+a^* = \arg\max_a Q_\theta(s,a)
+$$
+
+In this example, it chooses the main engine because that action has the highest estimated long-term value.
+
+The DQN may learn that firing the main engine is useful in this state.
+
+But it does not need to explicitly learn:
+
+```text
+how many meters the lander will move
+how its velocity will change
+how its angle will evolve
+```
+
+It learns the usefulness of the action directly from past transitions:
+
+$$
+(s,a,r,s',d)
+$$
+
+The basic idea is:
+
+```text
+do not explicitly predict the environment
+directly learn which actions are valuable
+```
+
+---
+
+### Model-free does not mean no model at all
+
+This terminology can be confusing.
+
+DQN uses a neural network, so it clearly contains a mathematical model.
+
+However, the neural network in DQN is not an **environment model**.
+
+It represents a Q-function:
+
+$$
+Q_\theta(s,a)
+$$
+
+It predicts action value.
+
+It does not represent the transition dynamics:
+
+$$
+P(s' \mid s,a)
+$$
+
+Therefore, the important distinction is not:
+
+```text
+uses a neural network
+versus
+does not use a neural network
+```
+
+The important distinction is:
+
+```text
+explicitly models how the environment changes
+versus
+directly learns values or actions from experience
+```
+
+A model-based method may use a neural network to predict the next state.
+
+A model-free method may use a neural network to predict Q-values or action probabilities.
+
+Both may use neural networks.
+
+They use them for different purposes.
+
+---
+
+### A direct LunarLander comparison
+
+Suppose the lander is:
+
+```text
+close to the ground
+falling too fast
+slightly tilted
+```
+
+A model-based method may reason like this:
+
+```text
+If I do nothing:
+    predict the next position and velocity
+    simulate several future steps
+    estimate a high probability of crashing
+
+If I fire the main engine:
+    predict slower downward movement
+    simulate several future steps
+    estimate a higher probability of landing
+
+If I fire a side engine:
+    predict a change in angle
+    simulate several future steps
+    estimate that vertical speed remains too high
+```
+
+It chooses an action by comparing simulated futures.
+
+A model-free DQN may instead produce:
+
+```text
+do nothing:        Q = -30
+fire left engine:  Q = 4
+fire main engine:  Q = 35
+fire right engine: Q = 2
+```
+
+It chooses the main engine directly.
+
+It does not need to simulate the intermediate states before choosing.
+
+So the difference is:
+
+```text
+model-based:
+    What will happen if I take this action?
+
+model-free:
+    How valuable has this action proved to be in situations like this?
+```
+
+---
+
+### Where does rollout fit?
+
+The word **rollout** can have more than one meaning.
+
+A rollout may mean:
+
+```text
+run the agent in the real environment
+and collect a trajectory
+```
+
+For example:
+
+$$
+s_0,a_0,r_1,s_1,a_1,r_2,\ldots
+$$
+
+Both model-based and model-free algorithms can collect this kind of rollout.
+
+So a rollout is not automatically model-based.
+
+However, rollout may also mean:
+
+```text
+use a simulator or learned environment model
+to simulate possible futures before taking the real action
+```
+
+In that case, the rollout is part of model-based planning.
+
+For each candidate action, the agent may simulate several possible futures:
+
+$$
+\hat{Q}_{\text{rollout}}(s,a)
+=
+\frac{1}{N}
+\sum_{i=1}^{N}
+G^{(i)}(s,a)
+$$
+
+This means:
+
+```text
+start with action a
+simulate the future N times
+compute the return of each simulated future
+average the returns
+```
+
+Then choose:
+
+$$
+a^*
+=
+\arg\max_a
+\hat{Q}_{\text{rollout}}(s,a)
+$$
+
+Therefore:
+
+```text
+real-environment rollout:
+    not necessarily model-based
+
+simulated look-ahead rollout:
+    model-based
+```
+
+---
+
+### Advantages of model-based methods
+
+A model-based method can reuse its model to imagine many possible futures.
+
+This may reduce the number of real environment interactions needed.
+
+For example, a robot may learn more safely by simulating actions instead of repeatedly testing dangerous actions in the real world.
+
+Model-based methods can also adapt their plans when the goal changes.
+
+If the environment model remains correct, the agent may plan toward a new goal without relearning everything from the beginning.
+
+The main advantages are:
+
+```text
+can plan before acting
+can reuse simulated experience
+may require fewer real interactions
+can evaluate multiple possible futures
+```
+
+---
+
+### Limitations of model-based methods
+
+The main difficulty is model accuracy.
+
+If the model predicts the future incorrectly, the agent may make bad plans.
+
+For example, suppose the learned LunarLander model underestimates gravity.
+
+It may predict:
+
+```text
+the lander will descend slowly
+```
+
+while the real lander actually falls much faster.
+
+The plan may look good inside the model but fail in the real environment.
+
+This is often called **model error**.
+
+Small prediction errors can also accumulate over long simulated trajectories:
+
+```text
+slightly wrong next state
+    leads to
+a more incorrect following state
+    leads to
+an even more incorrect future
+```
+
+The main limitations are:
+
+```text
+the environment model may be difficult to learn
+prediction errors can accumulate
+planning can be computationally expensive
+a bad model can produce bad decisions
+```
+
+---
+
+### Advantages of model-free methods
+
+Model-free methods avoid explicitly learning the full transition dynamics.
+
+This can be useful when the environment is too complicated to model accurately.
+
+For example, it may be difficult to predict every detail of:
+
+```text
+robot contact
+fluid motion
+human behavior
+complex biological systems
+```
+
+A model-free agent can instead learn directly from experience which actions tend to produce good returns.
+
+The main advantages are:
+
+```text
+does not require an accurate environment model
+can learn useful behavior in complex environments
+action selection can be fast after training
+```
+
+For DQN, action selection only requires one network evaluation:
+
+$$
+Q_\theta(s,\cdot)
+$$
+
+The agent then selects the largest output.
+
+---
+
+### Limitations of model-free methods
+
+Model-free methods often require many real interactions.
+
+The agent cannot generate useful simulated experience unless another simulator is available.
+
+It must learn action values or policies from collected transitions.
+
+This can be expensive when real-world interaction is:
+
+```text
+slow
+dangerous
+costly
+limited
+```
+
+The main limitations are:
+
+```text
+often needs more experience
+cannot naturally plan through unseen situations
+may need retraining when the task changes
+```
+
+---
+
+### Model-based and model-free are not always separate
+
+Some reinforcement learning systems combine both ideas.
+
+For example, an agent may:
+
+```text
+learn an environment model
+use it to generate simulated transitions
+store real and simulated transitions together
+train a model-free value function from both
+```
+
+The learned model helps produce experience.
+
+The value function provides fast action selection.
+
+One example of this general idea is Dyna-style learning:
+
+```text
+real experience
+    updates the value function
+
+learned model
+    generates simulated experience
+
+simulated experience
+    also updates the value function
+```
+
+So model-based and model-free are not always mutually exclusive.
+
+They can be combined in the same system.
+
+---
+
+### Why do we need this distinction?
+
+Because there are two broad ways to solve a sequential decision problem.
+
+The first approach is:
+
+```text
+learn or use how the world works
+simulate possible futures
+choose an action through planning
+```
+
+The second approach is:
+
+```text
+interact with the world
+learn which states or actions are valuable
+choose an action directly from those learned values
+```
+
+Model-based methods are closer to planning.
+
+Model-free methods are closer to learning behavior directly from experience.
+
+The shortest summary is:
+
+```text
+model-based:
+    predict what will happen,
+    then plan
+
+model-free:
+    directly learn what action to take
+    or how valuable an action is
+```
+
+For LunarLander:
+
+```text
+model-based:
+    predict how each engine action changes the future flight path
+
+model-free DQN:
+    directly estimate which engine action has the highest long-term value
+```
+
+That is the core difference.
 
 ---
 
