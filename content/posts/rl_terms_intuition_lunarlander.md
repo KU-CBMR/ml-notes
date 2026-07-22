@@ -1991,10 +1991,8 @@ average the returns
 Then choose:
 
 $$
-a^*
-=
-\arg\max_a
-\hat{Q}_{\text{rollout}}(s,a)
+a^* =
+\arg\max_a \hat{Q}_{\text{rollout}}(s,a)
 $$
 
 Therefore:
