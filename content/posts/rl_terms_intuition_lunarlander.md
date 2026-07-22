@@ -1481,13 +1481,11 @@ $$ -->
 
 $$
 a_t =
-\left\{
-\begin{array}{ll}
-\text{random action}, & \text{with probability } \epsilon \cr
+\begin{cases}
+\text{random action}, & \text{with probability } \epsilon, \\
 \displaystyle \operatorname*{arg\,max}_{a} Q_{\theta}(s_t,a),
 & \text{with probability } 1-\epsilon
-\end{array}
-\right.
+\end{cases}
 $$
 
 Why do we need exploration?
