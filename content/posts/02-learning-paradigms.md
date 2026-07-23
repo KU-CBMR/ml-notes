@@ -61,7 +61,9 @@ The distinction depends on which classification question is being asked.
 Traditionally, a variational autoencoder is called an **unsupervised generative model** because it is trained on observations (x) without human-provided labels (y). It learns a latent-variable model by maximizing an evidence lower bound:
 
 $$
-\mathbb{E}_{q_\phi(z \mid x)} \left[
+\mathcal{L}(x) =
+\mathbb{E}_{q_\phi(z \mid x)}
+\left[
 \log p_\theta(x \mid z)
 \right]
 -
