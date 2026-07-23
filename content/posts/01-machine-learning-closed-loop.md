@@ -147,13 +147,13 @@ python code/01_ml_closed_loop.py
 
 A reliable interview structure is: **one-sentence conclusion → mechanism or data flow → one concrete experiment/project example → limitations and trade-offs**. -->
 
-## 7. Self-check
+<!-- ## 7. Self-check
 
 - [ ] I can draw the data flow from memory.
 - [ ] I can explain the key tensor shapes or data structures.
 - [ ] I can name at least two failure modes and how to detect them.
 - [ ] I can answer the interview questions in 90 seconds each.
-- [ ] I recorded the experiment result and one failed attempt in the README.
+- [ ] I recorded the experiment result and one failed attempt in the README. -->
 
 ## 8. References
 
