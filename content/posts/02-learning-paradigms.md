@@ -54,6 +54,44 @@ Actions affect future states, rewards can be delayed or sparse, and the policy c
 
 A foundation model may be self-supervised during pretraining, supervised during instruction tuning, and preference-optimized afterward. An agent may additionally learn from environment feedback.
 
+### 2.6 Why models such as VAEs may be called both unsupervised and self-supervised
+
+The distinction depends on which classification question is being asked.
+
+Traditionally, a variational autoencoder is called an **unsupervised generative model** because it is trained on observations (x) without human-provided labels (y). It learns a latent-variable model by maximizing an evidence lower bound:
+
+[
+\mathcal{L}(x)
+==============
+
+## \mathbb{E}_{q_\phi(z \mid x)}[\log p_\theta(x \mid z)]
+
+D*{\mathrm{KL}}\left(q*\phi(z \mid x),|,p(z)\right).
+]
+
+From the perspective of the learning signal, however, the reconstruction term has a **self-supervised structure**. The input data provides its own prediction target:
+
+```text
+input x → latent representation z → reconstruction x̂
+target: the original x
+```
+
+No annotator supplies the target. It is constructed automatically from the observation itself. This is similar to masked-token prediction, next-token prediction, image denoising, and ordinary autoencoding.
+
+The two labels therefore emphasize different properties:
+
+| Classification question                             | Description of a VAE                                     |
+| --------------------------------------------------- | -------------------------------------------------------- |
+| Does training require human labels?                 | No, so it is unsupervised.                               |
+| Is there an explicit target derived from the input? | Yes, so its reconstruction objective is self-supervised. |
+| Does it learn a probability model of the data?      | Yes, so it is a latent-variable generative model.        |
+
+A precise description is:
+
+> A VAE is an unsupervised latent-variable generative model trained partly through a self-supervised reconstruction signal.
+
+Terminology is not completely standardized. Some authors use **self-supervised learning** broadly for any task whose targets are generated from the data, while others reserve the term mainly for representation-learning objectives such as masking, contrastive prediction, or temporal prediction. The underlying mechanism is less ambiguous than the label: always inspect how the target and loss are produced.
+
 ## 3. Minimal implementation plan
 
 Take one dataset and write three objective functions: a supervised target, a self-supervised prediction task, and an interaction-based reward. Compare what information each objective requires and what behavior it encourages.
