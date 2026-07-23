@@ -61,12 +61,17 @@ The distinction depends on which classification question is being asked.
 Traditionally, a variational autoencoder is called an **unsupervised generative model** because it is trained on observations (x) without human-provided labels (y). It learns a latent-variable model by maximizing an evidence lower bound:
 
 $$
-\mathcal{L}(x)
-==============
-
-## \mathbb{E}_{q_\phi(z \mid x)}[\log p_\theta(x \mid z)]
-
-D*{\mathrm{KL}}\left(q*\phi(z \mid x),|,p(z)\right).
+\mathbb{E}_{q_\phi(z \mid x)}
+\left[
+\log p_\theta(x \mid z)
+\right]
+-
+D_{\mathrm{KL}}
+\left(
+q_\phi(z \mid x)
+\,\|\,
+p(z)
+\right)
 $$
 
 From the perspective of the learning signal, however, the reconstruction term has a **self-supervised structure**. The input data provides its own prediction target:
