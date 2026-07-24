@@ -3109,13 +3109,13 @@ PCA is an important application of SVD. -->
 
 This geometric picture is not really about circles. It is a way to see what a matrix does to **every possible direction**.
 
-All two-dimensional unit vectors have length \(1\). They can be written as
+All two-dimensional unit vectors have length $1$. They can be written as
 
 $$
 x(\theta)=\begin{bmatrix}\cos\theta\\\sin\theta\end{bmatrix}.
 $$
 
-As \(\theta\) moves from \(0\) to \(2\pi\), the endpoints of these vectors form the unit circle.
+As $\theta$ moves from $0$ to $2\pi$, the endpoints of these vectors form the unit circle.
 
 Now apply the same matrix to every unit vector. Consider
 
@@ -3159,13 +3159,13 @@ $$
 x(\theta)=\begin{bmatrix}\cos\theta\\\sin\theta\end{bmatrix}.
 $$
 
-After applying \(A\),
+After applying $A$,
 
 $$
 Ax(\theta)=\begin{bmatrix}3\cos\theta\\\sin\theta\end{bmatrix}.
 $$
 
-Call the new coordinates \(X\) and \(Y\):
+Call the new coordinates $X$ and $Y$:
 
 $$
 X=3\cos\theta,\qquad Y=\sin\theta.
@@ -3177,7 +3177,7 @@ $$
 \frac{X^2}{9}+Y^2=1.
 $$
 
-This is an ellipse whose semi-axis lengths are \(3\) and \(1\).
+This is an ellipse whose semi-axis lengths are $3$ and $1$.
 
 Those two lengths are exactly the singular values:
 
@@ -3201,7 +3201,7 @@ Vᵀ  → rotate or reflect the input into the matrix's preferred directions
 U   → rotate or reflect the result into its final orientation
 ```
 
-Only \(\Sigma\) changes the axis lengths. \(V^\top\) and \(U\) mainly change orientation.
+Only $\Sigma$ changes the axis lengths. $V^\top$ and $U$ mainly change orientation.
 
 This gives three important cases.
 
@@ -3278,15 +3278,15 @@ The data varies mostly along one diagonal direction.
 
 **Projection uses a direction that is already known**
 
-Suppose someone gives us the diagonal unit vector \(q\).
+Suppose someone gives us the diagonal unit vector $q$.
 
-Projection measures how much of each point \(x\) lies along \(q\):
+Projection measures how much of each point $x$ lies along $q$:
 
 $$
 \operatorname{proj}_q(x)=(q^\top x)q.
 $$
 
-Projection does not decide whether \(q\) is useful. It simply uses the direction provided to it.
+Projection does not decide whether $q$ is useful. It simply uses the direction provided to it.
 
 ```text
 given direction q
@@ -3296,9 +3296,9 @@ measure each point along q
 
 **SVD discovers the direction**
 
-Now suppose nobody gives us \(q\). We only have the data matrix \(X\).
+Now suppose nobody gives us $q$. We only have the data matrix $X$.
 
-SVD examines \(X\) and discovers:
+SVD examines $X$ and discovers:
 
 - the strongest direction;
 - the next strongest perpendicular direction;
@@ -3326,7 +3326,7 @@ $$
 
 Then the input is represented only through those directions.
 
-The rank-\(k\) approximation is
+The rank-$k$ approximation is
 
 $$
 A_k=U_k\Sigma_kV_k^\top.
@@ -3334,9 +3334,9 @@ $$
 
 This can be read as:
 
-1. \(V_k^\top\) measures the input along the top \(k\) directions;
-2. \(\Sigma_k\) scales the retained directions;
-3. \(U_k\) reconstructs the output using only those directions.
+1. $V_k^\top$ measures the input along the top $k$ directions;
+2. $\Sigma_k$ scales the retained directions;
+3. $U_k$ reconstructs the output using only those directions.
 
 The complete flow is:
 
@@ -3397,7 +3397,7 @@ $$
 X=U\Sigma V^\top.
 $$
 
-The columns of \(V\) are the principal directions:
+The columns of $V$ are the principal directions:
 
 ```text
 v₁  → direction of greatest variation
@@ -3406,7 +3406,7 @@ v₃  → third greatest perpendicular direction
 ...
 ```
 
-The singular values tell us how strongly the data varies along these directions. The variance explained by component \(i\) is proportional to
+The singular values tell us how strongly the data varies along these directions. The variance explained by component $i$ is proportional to
 
 $$
 \sigma_i^2.
@@ -3423,7 +3423,7 @@ second principal direction  → perpendicular to the cloud
 
 The first direction captures most of the variation. The second captures smaller deviations from the main trend.
 
-To reduce the data from \(d\) dimensions to \(k\) dimensions, keep the first \(k\) columns of \(V\):
+To reduce the data from $d$ dimensions to $k$ dimensions, keep the first $k$ columns of $V$:
 
 $$
 V_k=[v_1\ v_2\ \cdots\ v_k].
@@ -3441,7 +3441,7 @@ $$
 XV_k=U_k\Sigma_k.
 $$
 
-So \(Z\) contains the lower-dimensional coordinates.
+So $Z$ contains the lower-dimensional coordinates.
 
 The complete data flow is:
 
@@ -3491,9 +3491,9 @@ The words **singular**, **rank**, and **zero singular value** describe the same 
 
 > A matrix has lost one or more independent directions of information.
 
-For a square matrix \(A\), the matrix is called **singular** when it has no inverse.
+For a square matrix $A$, the matrix is called **singular** when it has no inverse.
 
-That means no matrix \(A^{-1}\) can satisfy
+That means no matrix $A^{-1}$ can satisfy
 
 $$
 A^{-1}A=I.
@@ -3539,7 +3539,7 @@ $$
 
 Two different inputs produce the same output.
 
-An inverse would need to recover the original input from the output, but the output \([2,4]\) does not tell us which of those inputs was used. The information has been lost.
+An inverse would need to recover the original input from the output, but the output $[2,4]$ does not tell us which of those inputs was used. The information has been lost.
 
 That is why the matrix cannot be inverted.
 
@@ -3549,7 +3549,7 @@ That is why the matrix cannot be inverted.
 
 The rank of a matrix is the number of linearly independent directions it preserves.
 
-For the previous matrix, the rank is \(1\), even though the matrix is \(2\times2\).
+For the previous matrix, the rank is $1$, even though the matrix is $2\times2$.
 
 ```text
 matrix size:  2 × 2
@@ -3558,7 +3558,7 @@ rank:         1
 
 It accepts two-dimensional inputs but preserves only one independent dimension.
 
-For a square \(n\times n\) matrix:
+For a square $n\times n$ matrix:
 
 ```text
 rank = n   → full rank, no direction is completely lost
@@ -3577,7 +3577,7 @@ $$
 A=U\Sigma V^\top.
 $$
 
-The diagonal entries of \(\Sigma\) are the singular values.
+The diagonal entries of $\Sigma$ are the singular values.
 
 The rank is the number of nonzero singular values:
 
@@ -3585,7 +3585,7 @@ $$
 \operatorname{rank}(A)=\#\{i:\sigma_i>0\}.
 $$
 
-For a singular \(2\times2\) matrix, the singular values might be
+For a singular $2\times2$ matrix, the singular values might be
 
 $$
 \sigma_1=5,\qquad \sigma_2=0.
@@ -3699,7 +3699,7 @@ $$
 A^+=V\Sigma^+U^\top.
 $$
 
-To construct \(\Sigma^+\):
+To construct $\Sigma^+$:
 
 ```text
 nonzero singular value σᵢ  → replace with 1/σᵢ
