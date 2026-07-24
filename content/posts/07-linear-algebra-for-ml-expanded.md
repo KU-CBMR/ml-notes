@@ -274,8 +274,7 @@ The dot product does not separate “direction” from “strength.” Sometimes
 Cosine similarity is:
 
 $$
-\operatorname{cos}(x,y)
-=
+\operatorname{cos}(x,y) =
 \frac{x^\top y}{\lVert x \rVert_2 \lVert y \rVert_2}
 $$
 
