@@ -1,7 +1,7 @@
 ---
 title: "07. Linear Algebra for Machine Learning: Shapes, Broadcasting, Projection, and Batched Matrix Multiplication"
 date: 2026-05-07
-draft: true
+draft: false
 categories: ["Machine Learning · LLM · Agent Full-Stack Roadmap"]
 tags: ["Linear Algebra", "Tensor Shapes", "Embeddings"]
 summary: "Learn only the linear algebra needed to read tensor code, reason about embeddings, and debug modern neural networks."
@@ -93,14 +93,12 @@ B: [batch=32, height=128, width=768]
 
 They contain the same number of values, but the axes mean different things. Swapping or reducing an axis in `A` changes token structure; doing the same thing in `B` changes image structure. Equal element counts do not imply equal mathematical meaning.
 
-#### Matrix multiplication contracts one dimension
+#### 2.1.1 Matrix multiplication contracts one dimension
 
 For ordinary matrix multiplication:
 
 $$
-A \in \mathbb{R}^{m \times n},
-\qquad
-B \in \mathbb{R}^{n \times p}
+A \in \mathbb{R}^{m \times n}, \qquad B \in \mathbb{R}^{n \times p}
 $$
 
 then:
@@ -131,7 +129,7 @@ This is more useful than remembering only the mechanical rule “inside dimensio
 
 > The contracted dimensions must describe the same kind of thing.
 
-#### A valid shape can still represent the wrong computation
+#### 2.1.2 A valid shape can still represent the wrong computation
 
 Suppose token embeddings have shape:
 
@@ -161,7 +159,7 @@ But imagine transposing `X` incorrectly and obtaining:
 
 A later operation may still run if another dimension happens to equal `100`. The program sees compatible integers; it does not know that “sequence” was matched with “feature.” This is why semantic shape comments matter.
 
-#### Reduction also changes meaning
+#### 2.1.3 Reduction also changes meaning
 
 For a tensor:
 
@@ -185,7 +183,7 @@ This averages over hidden features and produces one scalar per token.
 
 Both are legal. Only one may match your intention.
 
-#### A practical debugging rule
+#### 2.1.4 A practical debugging rule
 
 At every important line, annotate the tensor:
 
@@ -217,7 +215,7 @@ $$
 Geometrically:
 
 $$
-x^\top y = \lVert x \rVert_2 \lVert y \rVert_2 \cos \theta
+x^\top y = \| x \|_2 \| y \|_2 \cos \theta
 $$
 
 This equation says that a dot product becomes large for two different reasons:
@@ -225,14 +223,12 @@ This equation says that a dot product becomes large for two different reasons:
 1. the vectors have large magnitudes;
 2. the vectors point in similar directions.
 
-#### A small numeric example
+#### 2.2.1 A small numeric example
 
 Let:
 
 $$
-x = [1, 2],
-\qquad
-y = [3, 4]
+x = [1, 2], \qquad y = [3, 4]
 $$
 
 Then:
@@ -269,13 +265,12 @@ Interpretation:
 
 The dot product does not separate “direction” from “strength.” Sometimes that is exactly what the model wants. Sometimes it is not.
 
-#### Cosine similarity removes magnitude
+#### 2.2.2 Cosine similarity removes magnitude
 
 Cosine similarity is:
 
 $$
-\operatorname{cos}(x,y) =
-\frac{x^\top y}{\lVert x \rVert_2 \lVert y \rVert_2}
+\operatorname{cos}(x,y) = \frac{x^\top y}{\| x \|_2 \| y \|_2}
 $$
 
 For the previous example, `item A` and `item B` both have cosine similarity `1` with the query because they point in the same direction.
@@ -284,14 +279,10 @@ For the previous example, `item A` and `item B` both have cosine similarity `1` 
 
 **But cosine similarity is not automatically “better.” If embedding magnitude contains confidence, popularity, frequency, or another learned signal, normalization removes that information.**
 
-#### Euclidean distance measures absolute displacement
+#### 2.2.3 Euclidean distance measures absolute displacement
 
 Euclidean distance is:
 
-<!--
-$$
-\lVert x-y \rVert_2
-$$ -->
 
 $$
 \|x-y\|_2
@@ -316,21 +307,8 @@ All three point in the same direction. Their cosine similarity is `1`, but their
 
 **Cosine similarity sees identical direction. Euclidean distance sees different locations.**
 
-<!-- #### Normalization connects the metrics
 
-If all vectors are normalized to unit length, then:
-
-$$
-\lVert x-y \rVert_2^2
-=
-2 - 2x^\top y
-$$
-
-So, for unit vectors, maximizing dot product, maximizing cosine similarity, and minimizing Euclidean distance produce the same ranking.
-
-This is an important practical fact. Many retrieval systems appear to support different metrics, but after normalization those metrics can become equivalent up to a monotonic transformation. -->
-
-#### Normalization connects the metrics
+#### 2.2.4 Normalization connects the metrics
 
 Dot product, cosine similarity, and Euclidean distance look like three different ways to compare vectors:
 
@@ -363,15 +341,7 @@ $$
 Expanding the product gives
 
 $$
-\|x-y\|_2^2
-=
-x^\top x
--
-x^\top y
--
-y^\top x
-+
-y^\top y.
+\|x-y\|_2^2 = x^\top x - x^\top y - y^\top x + y^\top y.
 $$
 
 For real-valued vectors, the dot product is symmetric:
@@ -383,13 +353,7 @@ $$
 Therefore,
 
 $$
-\|x-y\|_2^2
-=
-x^\top x
-+
-y^\top y
--
-2x^\top y.
+\|x-y\|_2^2 = x^\top x + y^\top y - 2x^\top y.
 $$
 
 A vector dotted with itself is its squared norm:
@@ -407,13 +371,7 @@ $$
 So, for arbitrary vectors,
 
 $$
-\|x-y\|_2^2
-=
-\|x\|_2^2
-+
-\|y\|_2^2
--
-2x^\top y.
+\|x-y\|_2^2 = \|x\|_2^2 + \|y\|_2^2 - 2x^\top y.
 $$
 
 Because both vectors have unit length,
@@ -431,17 +389,13 @@ $$
 Substituting these values gives
 
 $$
-\|x-y\|_2^2
-=
-1 + 1 - 2x^\top y.
+\|x-y\|_2^2 = 1 + 1 - 2x^\top y.
 $$
 
 Therefore,
 
 $$
-\|x-y\|_2^2
-=
-2 - 2x^\top y.
+\|x-y\|_2^2 = 2 - 2x^\top y.
 $$
 
 This is the direct mathematical connection between Euclidean distance and the dot product for normalized vectors.
@@ -451,10 +405,7 @@ This is the direct mathematical connection between Euclidean distance and the do
 Cosine similarity is defined as
 
 $$
-\operatorname{cos}(x,y)
-=
-\frac{x^\top y}
-{\|x\|_2\|y\|_2}.
+\operatorname{cos}(x,y) = \frac{x^\top y} {\|x\|_2\|y\|_2}.
 $$
 
 For unit vectors,
@@ -472,9 +423,7 @@ $$
 For normalized vectors, cosine similarity and dot product are exactly equal. The distance formula can therefore also be written as
 
 $$
-\|x-y\|_2^2
-=
-2 - 2\operatorname{cos}(x,y).
+\|x-y\|_2^2 = 2 - 2\operatorname{cos}(x,y).
 $$
 
 **Why do they produce the same ranking?**
@@ -490,9 +439,7 @@ $$
 At the same time, a larger dot product gives a smaller squared Euclidean distance because
 
 $$
-\|q-x_i\|_2^2
-=
-2 - 2q^\top x_i.
+\|q-x_i\|_2^2 = 2 - 2q^\top x_i.
 $$
 
 For example, suppose two candidates have dot-product scores
@@ -510,21 +457,13 @@ $$
 Their squared Euclidean distances are
 
 $$
-\|q-x_1\|_2^2
-=
-2 - 2(0.9)
-=
-0.2
+\|q-x_1\|_2^2 = 2 - 2(0.9) = 0.2
 $$
 
 and
 
 $$
-\|q-x_2\|_2^2
-=
-2 - 2(0.6)
-=
-0.8.
+\|q-x_2\|_2^2 = 2 - 2(0.6) = 0.8.
 $$
 
 The first candidate has the larger dot product and the smaller Euclidean distance. Therefore, both metrics rank it as the better match.
@@ -532,11 +471,7 @@ The first candidate has the larger dot product and the smaller Euclidean distanc
 In general, for normalized vectors,
 
 $$
-\text{maximum dot product}
-\quad\Longleftrightarrow\quad
-\text{maximum cosine similarity}
-\quad\Longleftrightarrow\quad
-\text{minimum Euclidean distance}.
+\text{maximum dot product} \quad\Longleftrightarrow\quad \text{maximum cosine similarity} \quad\Longleftrightarrow\quad \text{minimum Euclidean distance}.
 $$
 
 The scores are not numerically identical, but the ranking is identical because one score is a monotonic transformation of the other.
@@ -546,31 +481,19 @@ The scores are not numerically identical, but the ranking is identical because o
 Consider the normalized query vector
 
 $$
-q =
-\begin{bmatrix}
-1 \\
-0
-\end{bmatrix}
+q = \begin{bmatrix} 1 \\ 0 \end{bmatrix}
 $$
 
 and two normalized candidates
 
 $$
-a =
-\begin{bmatrix}
-0.8 \\
-0.6
-\end{bmatrix}
+a = \begin{bmatrix} 0.8 \\ 0.6 \end{bmatrix}
 $$
 
 and
 
 $$
-b =
-\begin{bmatrix}
-0.6 \\
-0.8
-\end{bmatrix}.
+b = \begin{bmatrix} 0.6 \\ 0.8 \end{bmatrix}.
 $$
 
 Both candidate vectors have unit length because
@@ -596,21 +519,13 @@ Since the vectors are normalized, these values are also their cosine similaritie
 Now calculate their squared Euclidean distances:
 
 $$
-\|q-a\|_2^2
-=
-2 - 2(0.8)
-=
-0.4
+\|q-a\|_2^2 = 2 - 2(0.8) = 0.4
 $$
 
 and
 
 $$
-\|q-b\|_2^2
-=
-2 - 2(0.6)
-=
-0.8.
+\|q-b\|_2^2 = 2 - 2(0.6) = 0.8.
 $$
 
 All three metrics agree that \(a\) is more similar to \(q\):
@@ -626,9 +541,7 @@ Before normalization, two vectors can differ in both length and direction. After
 The dot product can be written as
 
 $$
-x^\top y
-=
-\|x\|_2\|y\|_2\cos\theta,
+x^\top y = \|x\|_2\|y\|_2\cos\theta,
 $$
 
 where \(\theta\) is the angle between the vectors.
@@ -642,9 +555,7 @@ $$
 Substituting this into the distance formula gives
 
 $$
-\|x-y\|_2^2
-=
-2 - 2\cos\theta.
+\|x-y\|_2^2 = 2 - 2\cos\theta.
 $$
 
 This explains the geometry:
@@ -661,23 +572,7 @@ Without normalization, vector length can change the result.
 Consider
 
 $$
-q =
-\begin{bmatrix}
-1 \\
-0
-\end{bmatrix},
-\qquad
-a =
-\begin{bmatrix}
-10 \\
-10
-\end{bmatrix},
-\qquad
-b =
-\begin{bmatrix}
-2 \\
-0
-\end{bmatrix}.
+q = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \qquad a = \begin{bmatrix} 10 \\ 10 \end{bmatrix}, \qquad b = \begin{bmatrix} 2 \\ 0 \end{bmatrix}.
 $$
 
 The raw dot products are
@@ -703,10 +598,7 @@ $$
 For \(a\),
 
 $$
-\operatorname{cos}(q,a)
-=
-\frac{10}{\sqrt{10^2+10^2}}
-\approx 0.707.
+\operatorname{cos}(q,a) = \frac{10}{\sqrt{10^2+10^2}} \approx 0.707.
 $$
 
 Cosine similarity therefore prefers \(b\).
@@ -714,9 +606,7 @@ Cosine similarity therefore prefers \(b\).
 This disagreement occurs because raw dot product contains both magnitude and alignment:
 
 $$
-x^\top y
-=
-\|x\|_2\|y\|_2\cos\theta.
+x^\top y = \|x\|_2\|y\|_2\cos\theta.
 $$
 
 A large norm can produce a large dot product even when the direction is not the closest match. Normalization removes this magnitude term.
@@ -767,23 +657,8 @@ The main idea is:
 
 > Before normalization, both magnitude and direction can affect similarity. After normalization, magnitude is fixed, so dot product, cosine similarity, and Euclidean distance become different transformations of the same angular relationship.
 
-#### Practical consequence for retrieval
 
-If both query embeddings and document embeddings are normalized before indexing and search, then these three procedures return the same exact ranking:
-
-1. sort raw dot products from largest to smallest;
-2. sort cosine similarities from largest to smallest;
-3. sort Euclidean distances from smallest to largest.
-
-This is why a retrieval system can implement cosine search with an inner-product index: normalize every vector first, then search by maximum inner product.
-
-The equivalence requires both sides to be normalized. Normalizing only the query or only the documents is not enough in the general case. Zero vectors also need special handling because they cannot be divided by their norm.
-
-The main idea is:
-
-> Before normalization, direction and magnitude can both affect the score. After normalization, magnitude is fixed, so dot product, cosine similarity, and Euclidean distance become different transformations of the same angle.
-
-#### The metric must match training
+#### 2.2.5 The metric must match training
 
 Suppose a model was trained with raw inner products and learned to encode useful information in vector norms. Replacing inner-product search with cosine search changes the scoring function.
 
@@ -807,14 +682,12 @@ original vector = projected part + residual part
 
 The projected part lies in the chosen direction. The residual is perpendicular to it.
 
-#### Projection onto one vector
+#### 2.3.1 Projection onto one vector
 
 To project $x$ onto a nonzero vector $u$:
 
 $$
-\operatorname{proj}_u(x)
-=
-\frac{x^\top u}{u^\top u}u
+\operatorname{proj}_u(x) = \frac{x^\top u}{u^\top u}u
 $$
 
 If $u$ is already a unit vector, the denominator is `1`, so:
@@ -826,9 +699,7 @@ $$
 Consider:
 
 $$
-x = [3,2],
-\qquad
-u = [1,0]
+x = [3,2], \qquad u = [1,0]
 $$
 
 The vector $u$ represents the horizontal direction. The projection is:
@@ -851,7 +722,7 @@ $$
 
 The first part is explained by the horizontal direction; the second part is what remains unexplained.
 
-#### Projection onto a subspace
+#### 2.3.2 Projection onto a subspace
 
 A single direction is often not enough. Suppose the columns of matrix $Q$ are orthonormal basis vectors for a subspace. Then:
 
@@ -864,7 +735,7 @@ The operation has two conceptual steps:
 1. $Q^\top x$ asks how much of $x$ lies along each basis direction;
 2. $Q(Q^\top x)$ reconstructs the explained part in the original coordinate system.
 
-#### Least squares is a projection problem
+#### 2.3.3 Least squares is a projection problem
 
 In linear regression, we seek coefficients $\beta$ such that:
 
@@ -892,7 +763,7 @@ You do not need to memorize this as an isolated algebra trick. It simply states:
 
 > After the best projection, no feature direction can explain any more of the residual.
 
-#### PCA is also projection
+#### 2.3.4 PCA is also projection
 
 PCA finds directions that preserve as much variation as possible. After selecting the top principal directions, each sample is projected onto the subspace they span.
 
@@ -900,7 +771,7 @@ For example, height and weight may be strongly correlated. A two-dimensional clo
 
 The discarded perpendicular direction contains less variation. It may represent noise, measurement error, or a weaker pattern.
 
-#### Projection always depends on the chosen geometry
+#### 2.3.5 Projection always depends on the chosen geometry
 
 “Perpendicular” and “closest” are defined by an inner product. Standard orthogonal projection uses the usual Euclidean geometry. If features have different scales or a different metric is used, the meaning of distance and orthogonality changes.
 
@@ -930,7 +801,7 @@ output coordinates
 
 In other words, every linear map can be understood as **rotate → scale → rotate**.
 
-#### What the pieces mean
+#### 2.4.1 What the pieces mean
 
 - The columns of $V$ are important directions in the input space.
 - The singular values in $\Sigma$ tell us how strongly $A$ acts on those directions.
@@ -938,7 +809,7 @@ In other words, every linear map can be understood as **rotate → scale → rot
 
 If a singular value is large, the matrix strongly preserves or amplifies that direction. If it is tiny, changes along that input direction barely affect the output.
 
-#### A simple geometric picture
+#### 2.4.2 A simple geometric picture
 
 Imagine applying a matrix to every point on the unit circle.
 
@@ -949,7 +820,7 @@ Imagine applying a matrix to every point on the unit circle.
 
 This picture explains why singular values measure the strength of a linear transformation.
 
-#### Rank counts active directions
+#### 2.4.3 Rank counts active directions
 
 The rank of a matrix is the number of linearly independent directions it preserves.
 
@@ -972,7 +843,7 @@ After centering, these two columns lie on one line. Although the matrix has two 
 
 Real data is rarely exactly low rank, but it is often approximately low rank: a small number of directions explain most of the signal, while many directions contain weak structure or noise.
 
-#### Low-rank approximation keeps the strongest directions
+#### 2.4.4 Low-rank approximation keeps the strongest directions
 
 If the singular values are ordered:
 
@@ -999,7 +870,7 @@ At a very low rank, the image looks blurry but recognizable. As rank increases, 
 
 This is compression because storing $U_k$, $\Sigma_k$, and $V_k$ may require far fewer numbers than storing the full matrix.
 
-#### Why low rank appears in machine learning
+#### 2.4.5 Why low rank appears in machine learning
 
 Low-rank structure appears in many places:
 
@@ -1012,7 +883,7 @@ The shared idea is:
 
 > Many useful transformations are dominated by a smaller number of directions than the raw matrix size suggests.
 
-#### Important cautions
+#### 2.4.6 Important cautions
 
 SVD finds strong linear structure, not automatically meaningful concepts. A dominant singular direction may reflect lighting, document length, background frequency, or another nuisance factor.
 
@@ -1030,16 +901,12 @@ $$
 
 The vector may be stretched, shrunk, or reversed, but it stays on the same line. The scalar $\lambda$ is the eigenvalue.
 
-#### A concrete example
+#### 2.5.1 A concrete example
 
 Consider:
 
 $$
-A =
-\begin{bmatrix}
-2 & 0 \\
-0 & 1
-\end{bmatrix}
+A = \begin{bmatrix} 2 & 0 \\ 0 & 1 \end{bmatrix}
 $$
 
 Then:
@@ -1057,7 +924,7 @@ Eigenvectors answer:
 
 That makes them useful for studying dynamical systems, covariance structure, graph processes, and local optimization behavior.
 
-#### PCA uses eigenvectors of covariance
+#### 2.5.2 PCA uses eigenvectors of covariance
 
 Suppose data matrix $X$ contains centered samples. Its covariance matrix describes how features vary together.
 
@@ -1079,13 +946,13 @@ Imagine measurements of height and weight. Taller people often weigh more, so th
 
 Keeping only the first component compresses the data from two values to one while preserving much of its variation.
 
-#### PCA and SVD are closely connected
+#### 2.5.3 PCA and SVD are closely connected
 
 Instead of explicitly constructing the covariance matrix, we can apply SVD directly to the centered data matrix. The right singular vectors give the principal directions.
 
 This connection is useful because forming a large covariance matrix may be expensive or numerically less stable.
 
-#### Centering is not optional
+#### 2.5.4 Centering is not optional
 
 Without centering, PCA may mostly capture the direction from the origin to the average sample rather than the directions of variation around the mean.
 
@@ -1099,7 +966,7 @@ Always record the mean used during fitting and apply the same centering to valid
 
 A derivative tells us how a small input change affects an output. A Jacobian extends this idea to vector inputs and vector outputs. A Hessian describes how the slope itself changes.
 
-#### Start with the one-dimensional idea
+#### 2.6.1 Start with the one-dimensional idea
 
 For a scalar function $f(x)$, the derivative $f'(x)$ is the local slope.
 
@@ -1123,7 +990,7 @@ $$
 
 The derivative is a local linear approximation.
 
-#### A Jacobian stores many local slopes
+#### 2.6.2 A Jacobian stores many local slopes
 
 For:
 
@@ -1144,34 +1011,19 @@ Each entry asks:
 Consider:
 
 $$
-f(x_1,x_2)
-=
-\begin{bmatrix}
-x_1+x_2 \\
-x_1x_2
-\end{bmatrix}
+f(x_1,x_2) = \begin{bmatrix} x_1+x_2 \\ x_1x_2 \end{bmatrix}
 $$
 
 The Jacobian is:
 
 $$
-J_f(x)
-=
-\begin{bmatrix}
-1 & 1 \\
-x_2 & x_1
-\end{bmatrix}
+J_f(x) = \begin{bmatrix} 1 & 1 \\ x_2 & x_1 \end{bmatrix}
 $$
 
 At $(x_1,x_2)=(2,3)$:
 
 $$
-J_f(2,3)
-=
-\begin{bmatrix}
-1 & 1 \\
-3 & 2
-\end{bmatrix}
+J_f(2,3) = \begin{bmatrix} 1 & 1 \\ 3 & 2 \end{bmatrix}
 $$
 
 Interpretation:
@@ -1179,7 +1031,7 @@ Interpretation:
 - Increasing either input by a small amount increases the first output equally.
 - The second output is more sensitive to $x_1$ when $x_2$ is large, and more sensitive to $x_2$ when $x_1$ is large.
 
-#### Neural networks multiply local sensitivities
+#### 2.6.3 Neural networks multiply local sensitivities
 
 A neural network is a composition of functions:
 
@@ -1200,15 +1052,12 @@ without materializing the entire matrix.
 
 This is why automatic differentiation can train large networks even though constructing every derivative matrix explicitly would be impossible.
 
-#### The Hessian describes curvature
+#### 2.6.4 The Hessian describes curvature
 
 For a scalar loss $L(\theta)$ with parameter vector $\theta$, the Hessian is:
 
 $$
-H_{ij}
-=
-\frac{\partial^2 L}
-{\partial \theta_i \partial \theta_j}
+H_{ij} = \frac{\partial^2 L} {\partial \theta_i \partial \theta_j}
 $$
 
 The gradient tells us which direction goes downhill. The Hessian tells us how the slope changes in different directions.
@@ -1221,7 +1070,7 @@ A useful picture is:
 
 This matters for optimization. A learning rate that is safe in a flat direction may be too large in a sharply curved direction.
 
-#### Why full Hessians are rarely formed
+#### 2.6.5 Why full Hessians are rarely formed
 
 If a model has $n$ parameters, the Hessian has $n^2$ entries. For one billion parameters, storing it is not remotely practical.
 
@@ -1253,7 +1102,7 @@ output[b] = A[b] @ B[b]
 
 The batch dimension is preserved. The `k` dimension is contracted.
 
-#### Example: attention scores
+#### 2.7.1 Example: attention scores
 
 Suppose:
 
@@ -1292,7 +1141,7 @@ The final two axes answer:
 
 > For each query token, how strongly does it match every key token?
 
-#### Shared weights are also a form of broadcasting
+#### 2.7.2 Shared weights are also a form of broadcasting
 
 Consider:
 
@@ -1309,7 +1158,7 @@ X @ W → [batch, sequence, output]
 
 The same matrix `W` is used for every batch item and token. This is intended broadcasting of the leading dimensions.
 
-#### Broadcasting can silently create extra pairwise computations
+#### 2.7.3 Broadcasting can silently create extra pairwise computations
 
 Suppose:
 
@@ -1328,7 +1177,7 @@ That may be exactly what you want: every batch item combined with every head. Bu
 
 The operation is mathematically valid. The danger is that the library cannot infer your intended semantics.
 
-#### Choose an API that communicates intent
+#### 2.7.4 Choose an API that communicates intent
 
 Common options include:
 
