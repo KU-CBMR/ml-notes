@@ -1198,7 +1198,7 @@ For example:
 - one plane is a two-dimensional subspace;
 - a collection of several feature directions forms a higher-dimensional subspace.
 
-Imagine a three-dimensional vector floating above the floor. Projecting it onto the floor keeps its horizontal \(x\)- and $y$-components but removes its vertical component.
+Imagine a three-dimensional vector floating above the floor. Projecting it onto the floor keeps its horizontal $x$- and $y$-components but removes its vertical component.
 
 ```text
 3D vector
