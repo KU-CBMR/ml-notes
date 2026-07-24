@@ -283,7 +283,6 @@ For the previous example, `item A` and `item B` both have cosine similarity `1` 
 
 Euclidean distance is:
 
-
 $$
 \|x-y\|_2
 $$
@@ -306,7 +305,6 @@ All three point in the same direction. Their cosine similarity is `1`, but their
 ```
 
 **Cosine similarity sees identical direction. Euclidean distance sees different locations.**
-
 
 #### 2.2.4 Normalization connects the metrics
 
@@ -601,7 +599,9 @@ $$
 \operatorname{cos}(q,a) = \frac{10}{\sqrt{10^2+10^2}} \approx 0.707.
 $$
 
-Cosine similarity therefore prefers \(b\).
+Cosine similarity therefore prefers $b$.
+
+# \(b\)
 
 This disagreement occurs because raw dot product contains both magnitude and alignment:
 
@@ -656,7 +656,6 @@ This equivalence has several conditions:
 The main idea is:
 
 > Before normalization, both magnitude and direction can affect similarity. After normalization, magnitude is fixed, so dot product, cosine similarity, and Euclidean distance become different transformations of the same angular relationship.
-
 
 #### 2.2.5 The metric must match training
 
