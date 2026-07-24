@@ -1178,7 +1178,7 @@ $$
 
 Why is this property important?
 
-Because if the residual still contained some component along \(u\), then the projection would not have captured everything available in that direction. We could move a little farther along \(u\) and get even closer to \(x\).
+Because if the residual still contained some component along $u$, then the projection would not have captured everything available in that direction. We could move a little farther along $u$ and get even closer to $x$.
 
 So perpendicularity means:
 
