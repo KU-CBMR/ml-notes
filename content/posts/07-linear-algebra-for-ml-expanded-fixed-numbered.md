@@ -667,7 +667,7 @@ A reliable rule is:
 
 ---
 
-### 2.3 Projection asks how much lies in a direction or subspace
+<!-- ### 2.3 Projection asks how much lies in a direction or subspace
 
 A projection keeps the part of a vector that can be explained by a chosen direction.
 
@@ -886,7 +886,1508 @@ SVD finds strong linear structure, not automatically meaningful concepts. A domi
 
 Also, signs are not unique. If one singular vector is multiplied by `-1` and its paired vector is also multiplied by `-1`, the reconstructed matrix is unchanged. Do not attach meaning to the sign alone.
 
+--- -->
+
+### 2.3 Projection asks: how much of this vector belongs to a chosen direction?
+
+Projection sounds abstract, but the idea is simple:
+
+> Choose a direction, then keep only the part of the vector that points along that direction.
+
+Imagine that a vector is an arrow. Now imagine placing a lamp directly above it and shining light onto a line. The shadow of the arrow on that line is its projection.
+
+The original vector can always be split into two parts:
+
+```text
+original vector = projected part + leftover part
+```
+
+The projected part follows the chosen direction. The leftover part, usually called the **residual**, points away from that direction.
+
+A useful mental picture is:
+
+```text
+What the chosen direction can explain
+                    +
+What the chosen direction cannot explain
+                    =
+The original vector
+```
+
+Projection is therefore not merely “dropping a point onto a line.” It is a way to separate **explained structure** from **unexplained structure**.
+
 ---
+
+#### 2.3.1 Start with the easiest case: projection onto the horizontal axis
+
+Consider the vector
+
+$$
+x = [3,2].
+$$
+
+It means:
+
+- move 3 units horizontally;
+- move 2 units vertically.
+
+Now choose the horizontal direction
+
+$$
+u = [1,0].
+$$
+
+If we keep only the horizontal part of \(x\), we get
+
+$$
+\operatorname{proj}_u(x) = [3,0].
+$$
+
+The part that remains is
+
+$$
+r = x - \operatorname{proj}_u(x) = [0,2].
+$$
+
+Therefore,
+
+$$
+[3,2] = [3,0] + [0,2].
+$$
+
+This example contains the whole idea of projection:
+
+- \([3,0]\) is the part explained by the horizontal direction;
+- \([0,2]\) is the part the horizontal direction cannot explain.
+
+The residual is vertical, so it is perpendicular to the horizontal direction.
+
+```text
+x = [3, 2]
+     ↘
+      ↘ original vector
+       ●
+       │
+       │ residual = [0, 2]
+       │
+-------●----------------→ horizontal direction
+   projection = [3, 0]
+```
+
+The chosen direction acts like a question:
+
+> “How much of \(x\) is horizontal?”
+
+The projection is the answer.
+
+---
+
+#### 2.3.2 The dot product first measures how much points along the direction
+
+For a unit direction vector \(u\), the dot product
+
+$$
+x^\top u
+$$
+
+measures the signed amount of \(x\) that points along \(u\).
+
+Suppose
+
+$$
+x = [3,2]
+$$
+
+and
+
+$$
+u = [1,0].
+$$
+
+Then
+
+$$
+x^\top u = 3(1) + 2(0) = 3.
+$$
+
+The result is the number \(3\), not yet a vector.
+
+It tells us:
+
+> The vector \(x\) contains 3 units in the direction \(u\).
+
+To turn that scalar amount back into a vector, multiply it by the direction vector:
+
+$$
+\operatorname{proj}_u(x) = (x^\top u)u.
+$$
+
+Substituting the numbers gives
+
+$$
+\operatorname{proj}_u(x) = 3[1,0] = [3,0].
+$$
+
+So the operation has two steps:
+
+```text
+xᵀu        → measure how much lies along u
+(xᵀu)u     → rebuild that amount as a vector
+```
+
+This is worth remembering:
+
+> The dot product gives the amount; multiplying by the direction gives the projected vector.
+
+---
+
+#### 2.3.3 Why does the general projection formula divide by \(u^\top u\)?
+
+The simple formula
+
+$$
+\operatorname{proj}_u(x) = (x^\top u)u
+$$
+
+works only when \(u\) has unit length.
+
+A unit vector has norm \(1\):
+
+$$
+\|u\|_2 = 1.
+$$
+
+But what happens if the same direction is written using a longer vector?
+
+For example, both of these vectors point horizontally:
+
+$$
+u_1 = [1,0]
+$$
+
+and
+
+$$
+u_2 = [10,0].
+$$
+
+They represent the same direction, but \(u_2\) is ten times longer.
+
+If we incorrectly use the unit-vector formula with \(u_2\), then
+
+$$
+x^\top u_2 = 3(10) + 2(0) = 30.
+$$
+
+Multiplying again by \(u_2\) gives
+
+$$
+30[10,0] = [300,0].
+$$
+
+That is obviously not the horizontal part of \([3,2]\). The direction vector was counted twice:
+
+- once inside the dot product;
+- once again when multiplying by \(u\).
+
+The general formula corrects for the length of \(u\):
+
+$$
+\operatorname{proj}_u(x) = \frac{x^\top u}{u^\top u}u.
+$$
+
+For
+
+$$
+x = [3,2]
+$$
+
+and
+
+$$
+u = [10,0],
+$$
+
+we have
+
+$$
+x^\top u = 30
+$$
+
+and
+
+$$
+u^\top u = 10^2 = 100.
+$$
+
+Therefore,
+
+$$
+\operatorname{proj}_u(x) = \frac{30}{100}[10,0] = [3,0].
+$$
+
+The result is correct again.
+
+The denominator
+
+$$
+u^\top u = \|u\|_2^2
+$$
+
+removes the arbitrary scale of the direction vector.
+
+This gives an important rule:
+
+> Projection depends on the direction of \(u\), not on how long we happened to draw \(u\).
+
+---
+
+#### 2.3.4 The residual must be perpendicular to the chosen direction
+
+After projection, define the residual as
+
+$$
+r = x - \operatorname{proj}_u(x).
+$$
+
+For an orthogonal projection, the residual satisfies
+
+$$
+u^\top r = 0.
+$$
+
+A dot product of zero means the two vectors are perpendicular.
+
+Using the previous example,
+
+$$
+u = [1,0]
+$$
+
+and
+
+$$
+r = [0,2].
+$$
+
+Then
+
+$$
+u^\top r = 1(0) + 0(2) = 0.
+$$
+
+Why is this property important?
+
+Because if the residual still contained some component along \(u\), then the projection would not have captured everything available in that direction. We could move a little farther along \(u\) and get even closer to \(x\).
+
+So perpendicularity means:
+
+> The chosen direction has already explained as much as it possibly can.
+
+This idea reappears in linear regression, least squares, PCA, and many optimization problems.
+
+---
+
+#### 2.3.5 Projection onto a subspace means keeping several directions at once
+
+A single direction may be too restrictive.
+
+For example:
+
+- one line is a one-dimensional subspace;
+- one plane is a two-dimensional subspace;
+- a collection of several feature directions forms a higher-dimensional subspace.
+
+Imagine a three-dimensional vector floating above the floor. Projecting it onto the floor keeps its horizontal \(x\)- and \(y\)-components but removes its vertical component.
+
+```text
+3D vector
+   ↓ projection onto the floor
+2D shadow on the floor
+```
+
+Now suppose the columns of a matrix \(Q\) are orthonormal direction vectors:
+
+$$
+Q = [q_1\ q_2\ \cdots\ q_k].
+$$
+
+“Orthonormal” means:
+
+- every column has unit length;
+- different columns are perpendicular.
+
+The projection onto the subspace spanned by these columns is
+
+$$
+\operatorname{proj}_Q(x) = QQ^\top x.
+$$
+
+This formula looks compact, but it performs two understandable steps.
+
+First,
+
+$$
+Q^\top x
+$$
+
+computes how much of \(x\) lies along each basis direction.
+
+The result is a list of coordinates:
+
+```text
+amount along q₁
+amount along q₂
+...
+amount along qₖ
+```
+
+Second,
+
+$$
+Q(Q^\top x)
+$$
+
+uses those coordinates to rebuild the explained part in the original space.
+
+So the data flow is:
+
+```text
+original vector x
+      ↓ Qᵀ
+coordinates inside the subspace
+      ↓ Q
+projected vector in the original space
+```
+
+A useful memory aid is:
+
+> \(Q^\top\) compresses into subspace coordinates; \(Q\) reconstructs from those coordinates.
+
+---
+
+#### 2.3.6 A concrete subspace example
+
+Suppose a vector lives in three dimensions:
+
+$$
+x = [3,4,5].
+$$
+
+We want to project it onto the horizontal \(xy\)-plane.
+
+Choose the two basis directions
+
+$$
+q_1 = [1,0,0]
+$$
+
+and
+
+$$
+q_2 = [0,1,0].
+$$
+
+These directions form the matrix
+
+$$
+Q = [q_1\ q_2].
+$$
+
+The coordinates inside the plane are
+
+$$
+Q^\top x = [3,4].
+$$
+
+These numbers say:
+
+- 3 units along the \(x\)-axis;
+- 4 units along the \(y\)-axis.
+
+Reconstructing gives
+
+$$
+QQ^\top x = [3,4,0].
+$$
+
+The vertical component \(5\) has been removed.
+
+The residual is
+
+$$
+r = [3,4,5] - [3,4,0] = [0,0,5].
+$$
+
+So
+
+```text
+original vector     = [3, 4, 5]
+projected part      = [3, 4, 0]
+residual            = [0, 0, 5]
+```
+
+The projection keeps everything the plane can represent and discards everything perpendicular to the plane.
+
+---
+
+#### 2.3.7 Least squares is projection disguised as regression
+
+In linear regression, we try to predict a target vector \(y\) using features stored in a matrix \(X\):
+
+$$
+X\beta \approx y.
+$$
+
+The coefficient vector \(\beta\) chooses how to combine the columns of \(X\).
+
+Every possible prediction has the form
+
+$$
+\hat{y} = X\beta.
+$$
+
+Therefore, all possible predictions live inside the **column space of \(X\)**.
+
+Think of the columns of \(X\) as building blocks. By changing \(\beta\), we can mix those columns in different amounts, but we cannot leave the space they span.
+
+Usually, the true target \(y\) does not lie exactly inside that space.
+
+```text
+target y
+   ●
+   │\
+   │ \
+   │  \ residual
+   │   \
+---●---------------- prediction space
+  ŷ
+```
+
+Least squares chooses the point \(\hat{y}\) in the prediction space that is closest to \(y\).
+
+That is exactly an orthogonal projection:
+
+$$
+\hat{y} = X\hat{\beta}.
+$$
+
+The residual is
+
+$$
+r = y - X\hat{\beta}.
+$$
+
+At the best solution, the residual is perpendicular to every column of \(X\):
+
+$$
+X^\top r = 0.
+$$
+
+Substituting the definition of \(r\) gives
+
+$$
+X^\top(y-X\hat{\beta}) = 0.
+$$
+
+This is the normal-equation condition.
+
+It does not need to be memorized as mysterious algebra. It says:
+
+> After finding the best prediction, none of the feature directions can explain any remaining part of the error.
+
+If a feature direction still aligned with the residual, changing its coefficient would reduce the error further. Therefore, at the least-squares solution, no such alignment remains.
+
+---
+
+#### 2.3.8 A tiny least-squares example
+
+Suppose we want to approximate
+
+$$
+y = [2,3]
+$$
+
+using only multiples of
+
+$$
+x = [1,1].
+$$
+
+The possible predictions are
+
+$$
+\hat{y} = \beta[1,1].
+$$
+
+This means every possible prediction lies on the diagonal line
+
+```text
+[0,0], [1,1], [2,2], [3,3], ...
+```
+
+The target \([2,3]\) is not on that line.
+
+Its projection onto the line is
+
+$$
+\hat{y} = [2.5,2.5].
+$$
+
+The residual is
+
+$$
+r = [2,3] - [2.5,2.5] = [-0.5,0.5].
+$$
+
+Check perpendicularity:
+
+$$
+[1,1]^\top[-0.5,0.5] = -0.5 + 0.5 = 0.
+$$
+
+This is the geometric meaning of least squares:
+
+- choose the closest point the model is capable of producing;
+- accept the perpendicular remainder as unexplained error.
+
+---
+
+#### 2.3.9 PCA is projection onto directions that preserve the most variation
+
+PCA also uses projection, but it asks a different question.
+
+Least squares asks:
+
+> Which point in the model's prediction space is closest to the target?
+
+PCA asks:
+
+> Which lower-dimensional directions preserve the most variation in the data?
+
+Imagine plotting height and weight for many people.
+
+Because taller people often weigh more, the points may form an elongated diagonal cloud:
+
+```text
+weight
+  ↑
+  |              ●
+  |          ●
+  |       ●
+  |    ●
+  | ●
+  +--------------------→ height
+```
+
+The data uses two coordinates:
+
+```text
+[height, weight]
+```
+
+But most of the variation follows one diagonal direction.
+
+PCA finds that direction and projects every point onto it.
+
+After projection, each person can be represented by one coordinate instead of two:
+
+```text
+[height, weight]
+        ↓ project
+[position along the main direction]
+```
+
+This is compression.
+
+The first principal direction preserves as much variation as possible. A second perpendicular direction captures the remaining variation. If that second direction contains little variation, discarding it loses relatively little information.
+
+A useful interpretation is:
+
+```text
+main direction       → dominant shared pattern
+perpendicular part   → smaller deviations, noise, or weaker structure
+```
+
+However, PCA does not know which variation is useful for your task. It only knows which variation is large.
+
+A direction with high variance may represent:
+
+- useful signal;
+- lighting differences;
+- document length;
+- sensor scale;
+- background noise.
+
+So PCA preserves large variation, not automatically meaningful variation.
+
+---
+
+#### 2.3.10 Projection depends on how distance is defined
+
+Projection uses words such as:
+
+- closest;
+- perpendicular;
+- length;
+- angle.
+
+These ideas depend on the geometry used to measure distance.
+
+In ordinary Euclidean geometry, we use the standard dot product. But feature scales can distort this geometry.
+
+Suppose each person is represented by
+
+```text
+[age, annual income]
+```
+
+Typical values might be
+
+```text
+age:       18 to 80
+income:    20,000 to 200,000
+```
+
+Income has a much larger numerical scale than age.
+
+Without scaling, Euclidean distance may be dominated by income. A difference of 10 years can look tiny compared with a difference of 10,000 currency units.
+
+As a result, projection or PCA may mostly follow the income axis, not because income is inherently more important, but because its numerical values are larger.
+
+This is why preprocessing matters:
+
+```text
+raw features
+    ↓ center and possibly scale
+comparable geometry
+    ↓ projection or PCA
+meaningful directions
+```
+
+The main lesson is:
+
+> Projection is only as meaningful as the distance and feature scaling used to define “closest.”
+
+---
+
+#### 2.3.11 Projection: the complete mental model
+
+Keep this summary in mind:
+
+```text
+choose a direction or subspace
+              ↓
+measure how much of x lies inside it
+              ↓
+reconstruct the explained part
+              ↓
+subtract from x
+              ↓
+obtain a perpendicular residual
+```
+
+In symbols,
+
+$$
+x = \operatorname{proj}(x) + r.
+$$
+
+The projected part is what the chosen space can represent. The residual is what it cannot represent.
+
+This one idea connects:
+
+- vector decomposition;
+- least-squares regression;
+- PCA;
+- dimensionality reduction;
+- orthogonal bases;
+- low-rank approximation.
+
+---
+
+### 2.4 SVD finds the strongest directions inside a matrix
+
+Projection assumes that we have already chosen a useful direction or subspace.
+
+SVD helps answer the next question:
+
+> Where do the important directions come from?
+
+A matrix can be viewed as a machine that receives a vector and produces another vector:
+
+$$
+y = Ax.
+$$
+
+Different input directions may be treated very differently by this machine:
+
+- one direction may be stretched strongly;
+- another may be stretched only a little;
+- another may be collapsed almost to zero;
+- directions may also be rotated or reflected.
+
+SVD separates this complicated behavior into simple pieces.
+
+For a matrix
+
+$$
+A \in \mathbb{R}^{m\times n},
+$$
+
+the singular value decomposition is
+
+$$
+A = U\Sigma V^\top.
+$$
+
+A good mental model is:
+
+```text
+input vector
+    ↓ Vᵀ
+express it in the matrix's preferred input directions
+    ↓ Σ
+stretch or shrink each direction independently
+    ↓ U
+place the result into the output space
+```
+
+This is often summarized as:
+
+> rotate → scale → rotate
+
+More precisely, the rotations may also include reflections, but “rotate → scale → rotate” is the useful intuition.
+
+---
+
+#### 2.4.1 First understand SVD as a machine with preferred directions
+
+Imagine pushing an object made of soft rubber.
+
+If you push it in one direction, it may stretch a lot. If you push it in another direction, it may barely move.
+
+A matrix behaves similarly. It has preferred input directions.
+
+For each preferred direction \(v_i\),
+
+$$
+Av_i = \sigma_i u_i.
+$$
+
+This equation says:
+
+1. start with the input direction \(v_i\);
+2. apply the matrix \(A\);
+3. the result points along \(u_i\);
+4. its length is multiplied by \(\sigma_i\).
+
+The three objects have distinct roles:
+
+```text
+vᵢ        preferred input direction
+σᵢ        strength of that direction
+uᵢ        resulting output direction
+```
+
+The singular value \(\sigma_i\) is always nonnegative.
+
+If
+
+$$
+\sigma_i = 10,
+$$
+
+the matrix strongly stretches that direction.
+
+If
+
+$$
+\sigma_i = 0.01,
+$$
+
+the matrix almost removes that direction.
+
+If
+
+$$
+\sigma_i = 0,
+$$
+
+the direction disappears completely.
+
+---
+
+#### 2.4.2 What \(V^\top\), \(\Sigma\), and \(U\) actually do
+
+The matrix \(V\) contains the preferred input directions:
+
+$$
+V = [v_1\ v_2\ \cdots].
+$$
+
+Applying \(V^\top\) to an input vector asks:
+
+> How much of the input lies along each preferred direction?
+
+This is a projection-like coordinate change.
+
+```text
+ordinary input coordinates
+          ↓ Vᵀ
+coordinates along preferred directions
+```
+
+The diagonal matrix \(\Sigma\) then scales each coordinate separately:
+
+```text
+direction 1 × σ₁
+direction 2 × σ₂
+direction 3 × σ₃
+...
+```
+
+Finally, \(U\) converts those scaled coordinates into the output directions:
+
+```text
+scaled preferred coordinates
+          ↓ U
+ordinary output coordinates
+```
+
+So the full operation
+
+$$
+Ax = U\Sigma V^\top x
+$$
+
+can be read from right to left:
+
+1. \(V^\top x\): describe \(x\) using important input directions;
+2. \(\Sigma V^\top x\): scale each direction by its strength;
+3. \(U\Sigma V^\top x\): reconstruct the final output.
+
+This is not merely a factorization trick. It reveals how the matrix acts geometrically.
+
+---
+
+#### 2.4.3 A very simple SVD example
+
+Consider the matrix
+
+$$
+A = \begin{bmatrix}3&0\\0&1\end{bmatrix}.
+$$
+
+This matrix transforms
+
+$$
+[x_1,x_2]
+$$
+
+into
+
+$$
+[3x_1,x_2].
+$$
+
+It stretches the horizontal direction by \(3\) and leaves the vertical direction unchanged.
+
+The important input directions are already the coordinate axes:
+
+```text
+v₁ = horizontal direction
+v₂ = vertical direction
+```
+
+The singular values are
+
+$$
+\sigma_1 = 3
+$$
+
+and
+
+$$
+\sigma_2 = 1.
+$$
+
+The output directions are also the coordinate axes.
+
+In this special case, the rotations do nothing, and SVD is mostly the scaling step:
+
+```text
+horizontal component × 3
+vertical component   × 1
+```
+
+A more general matrix first rotates the preferred directions away from the coordinate axes, but the principle remains the same.
+
+---
+
+#### 2.4.4 Why a unit circle becomes an ellipse
+
+Imagine drawing every unit vector in two dimensions. Their endpoints form a unit circle.
+
+Now apply the same matrix \(A\) to every point on the circle.
+
+A general linear transformation turns the circle into an ellipse.
+
+```text
+unit circle
+    ↓ apply A
+ellipse
+```
+
+Why an ellipse?
+
+Because SVD says the matrix:
+
+1. rotates the circle;
+2. stretches different perpendicular directions by different amounts;
+3. rotates the result again.
+
+Rotating a circle does not change its shape. Stretching it differently along two perpendicular directions creates an ellipse. The final rotation changes only the ellipse's orientation.
+
+The singular values are the lengths of the ellipse's principal semi-axes.
+
+If
+
+$$
+\sigma_1 = 5
+$$
+
+and
+
+$$
+\sigma_2 = 1,
+$$
+
+the ellipse is long in one direction and narrow in the other.
+
+If
+
+$$
+\sigma_1 = \sigma_2,
+$$
+
+the circle is scaled equally in all directions and remains a circle.
+
+If
+
+$$
+\sigma_2 = 0,
+$$
+
+the ellipse collapses into a line.
+
+This picture makes the singular values easy to interpret:
+
+> Singular values tell us how much the matrix stretches its preferred directions.
+
+---
+
+#### 2.4.5 Rank counts how many independent directions survive
+
+The rank of a matrix is the number of independent directions that remain after the matrix acts.
+
+In SVD language:
+
+> Rank is the number of nonzero singular values.
+
+Consider the matrix
+
+$$
+A = \begin{bmatrix}1&2\\2&4\end{bmatrix}.
+$$
+
+The second row is exactly twice the first. The matrix contains repeated information.
+
+Its two columns are also dependent:
+
+$$
+\begin{bmatrix}2\\4\end{bmatrix} = 2\begin{bmatrix}1\\2\end{bmatrix}.
+$$
+
+Although the matrix is \(2\times2\), it contains only one independent direction.
+
+Therefore, its rank is \(1\).
+
+SVD reveals this with one positive singular value and one zero singular value.
+
+The zero singular value means:
+
+> There is an input direction that the matrix completely collapses.
+
+---
+
+#### 2.4.6 A dataset can have many columns but few real directions
+
+Suppose a dataset contains two temperature features:
+
+```text
+feature 1: Celsius
+feature 2: Fahrenheit
+```
+
+They are related by
+
+$$
+F = 1.8C + 32.
+$$
+
+After subtracting the mean from each feature, the constant \(32\) disappears, leaving
+
+$$
+F_{\text{centered}} = 1.8C_{\text{centered}}.
+$$
+
+The two centered columns contain the same information up to scaling.
+
+So although the dataset has two columns, it has only one true direction of variation.
+
+Another example:
+
+```text
+feature 1: distance in meters
+feature 2: distance in centimeters
+feature 3: distance in millimeters
+```
+
+There are three columns, but only one underlying quantity.
+
+This is what low rank means in data:
+
+> The number of stored features is larger than the number of genuinely independent patterns.
+
+Real datasets are rarely exactly low rank. More often, they are approximately low rank:
+
+```text
+a few strong directions       → main signal
+many weak directions          → fine detail, noise, or small effects
+```
+
+SVD measures this through the sizes of the singular values.
+
+---
+
+#### 2.4.7 Singular values form an importance ladder
+
+SVD usually orders singular values from largest to smallest:
+
+$$
+\sigma_1 \ge \sigma_2 \ge \sigma_3 \ge \cdots \ge 0.
+$$
+
+You can imagine them as an importance ladder:
+
+```text
+σ₁   strongest direction
+σ₂   second strongest direction
+σ₃   third strongest direction
+...
+```
+
+A steep drop might look like
+
+```text
+100, 48, 20, 2, 0.8, 0.1, ...
+```
+
+The first few directions dominate the transformation.
+
+A flat sequence might look like
+
+```text
+10, 9.5, 9.1, 8.8, 8.4, ...
+```
+
+Many directions have comparable strength, so aggressive compression will lose more information.
+
+This is why people often inspect a singular-value plot. It helps answer:
+
+> Is the matrix approximately controlled by only a few directions?
+
+---
+
+#### 2.4.8 Low-rank approximation keeps only the strongest directions
+
+The full SVD is
+
+$$
+A = U\Sigma V^\top.
+$$
+
+Suppose we keep only the first \(k\) singular directions:
+
+$$
+A_k = U_k\Sigma_kV_k^\top.
+$$
+
+This is a rank-\(k\) approximation.
+
+Conceptually, we discard the weakest directions:
+
+```text
+keep:
+σ₁, σ₂, ..., σₖ
+
+discard:
+σₖ₊₁, σₖ₊₂, ...
+```
+
+The approximation keeps the transformations that matter most and ignores weaker ones.
+
+This is closely related to projection:
+
+1. \(V_k^\top\) projects the input onto the top \(k\) input directions;
+2. \(\Sigma_k\) scales those retained directions;
+3. \(U_k\) reconstructs the result in the output space.
+
+So low-rank SVD is not unrelated to projection. It is a projection onto the matrix's strongest directions, followed by scaling and reconstruction.
+
+---
+
+#### 2.4.9 Why truncated SVD is a good approximation
+
+Suppose the matrix contains one strong pattern plus a small amount of noise.
+
+For example, imagine a grayscale image of a smooth sky with a bird:
+
+```text
+large smooth regions      → strong low-frequency structure
+edges and small textures  → weaker fine detail
+sensor noise              → very weak directions
+```
+
+The largest singular values often capture broad structure. Smaller singular values capture increasingly fine detail.
+
+Keeping only the largest values may preserve:
+
+- large shapes;
+- overall lighting;
+- smooth gradients;
+- dominant repeated patterns.
+
+Discarding smaller values may remove:
+
+- fine texture;
+- tiny edges;
+- noise.
+
+The approximation becomes blurrier, but the main content can remain recognizable.
+
+SVD has a special mathematical guarantee: among all rank-\(k\) matrices, truncated SVD gives the closest approximation under common matrix-distance measures.
+
+The intuitive reason is:
+
+> If only \(k\) directions may be kept, the best choice is to keep the \(k\) strongest ones.
+
+---
+
+#### 2.4.10 A concrete image-compression example
+
+Suppose a grayscale image has shape
+
+```text
+1000 × 1000
+```
+
+Storing the full matrix requires
+
+```text
+1,000,000 numbers
+```
+
+A rank-\(k\) SVD stores:
+
+- \(U_k\): \(1000\times k\) numbers;
+- \(\Sigma_k\): \(k\) numbers;
+- \(V_k^\top\): \(k\times1000\) numbers.
+
+The total is
+
+$$
+1000k + k + 1000k = 2001k.
+$$
+
+For \(k=20\), this is
+
+$$
+2001(20) = 40020.
+$$
+
+Instead of one million numbers, we store about forty thousand.
+
+That is roughly \(4\%\) of the original amount.
+
+The trade-off is that the reconstructed image is approximate.
+
+```text
+small k     → strong compression, blurrier image
+large k     → weaker compression, sharper image
+full rank   → nearly exact reconstruction
+```
+
+This makes rank a controllable compression knob.
+
+---
+
+#### 2.4.11 Why low-rank structure appears in machine learning
+
+Low-rank structure appears whenever many observed values are driven by a smaller number of hidden factors.
+
+**Recommender systems**
+
+A user-item rating matrix may contain millions of entries, but preferences may be influenced by a smaller number of factors:
+
+```text
+action preference
+comedy preference
+price sensitivity
+brand loyalty
+difficulty preference
+```
+
+A low-rank model represents each user and item using a short factor vector.
+
+**PCA**
+
+PCA projects high-dimensional data onto a smaller set of strong variation directions.
+
+**Language and embedding models**
+
+Large embedding spaces may contain correlated or redundant directions. Low-rank approximations can sometimes preserve much of the useful transformation with fewer parameters.
+
+**LoRA**
+
+A large weight update is approximated using two small matrices:
+
+$$
+\Delta W = BA.
+$$
+
+If \(B\) and \(A\) have a small inner dimension, then \(\Delta W\) is low rank.
+
+Instead of training every entry in a huge matrix, LoRA trains a limited number of update directions.
+
+**Model compression**
+
+A large weight matrix can be approximated by a lower-rank product to reduce memory and computation.
+
+The common assumption is:
+
+> The model may contain many parameters, but the useful change or dominant behavior may lie in a much smaller subspace.
+
+---
+
+#### 2.4.12 SVD and PCA are closely related but not identical
+
+PCA operates on centered data and asks:
+
+> Which directions explain the most variance among samples?
+
+SVD asks more generally:
+
+> What are the strongest input-output directions of this matrix?
+
+If \(X\) is a centered data matrix, applying SVD gives
+
+$$
+X = U\Sigma V^\top.
+$$
+
+The columns of \(V\) are the principal directions used by PCA.
+
+The singular values are related to how much variance each principal direction explains.
+
+So PCA can be computed using SVD, but their viewpoints differ:
+
+```text
+PCA   → interpret directions of data variation
+SVD   → decompose any matrix transformation
+```
+
+PCA is one important application of SVD.
+
+---
+
+#### 2.4.13 Strong directions are not automatically useful directions
+
+A large singular value means a direction is strong in the matrix. It does not mean that direction is useful for the task.
+
+For images, the strongest direction might represent:
+
+- overall brightness;
+- background color;
+- camera exposure.
+
+For text, it might represent:
+
+- document length;
+- punctuation frequency;
+- common formatting.
+
+For user data, it might represent:
+
+- activity level;
+- popularity;
+- missing-value patterns.
+
+SVD detects strong linear structure. It does not understand meaning.
+
+Therefore, after finding dominant directions, ask:
+
+- What real examples have large positive coordinates?
+- What examples have large negative coordinates?
+- Does the direction help the downstream task?
+- Is it signal, bias, or nuisance variation?
+
+---
+
+#### 2.4.14 Singular-vector signs are arbitrary
+
+Suppose one SVD component uses vectors \(u_i\) and \(v_i\).
+
+Its contribution is
+
+$$
+\sigma_i u_iv_i^\top.
+$$
+
+Now flip both signs:
+
+$$
+u_i' = -u_i
+$$
+
+and
+
+$$
+v_i' = -v_i.
+$$
+
+Then
+
+$$
+\sigma_i u_i'(v_i')^\top = \sigma_i(-u_i)(-v_i)^\top = \sigma_i u_iv_i^\top.
+$$
+
+The reconstructed matrix is unchanged.
+
+Therefore, two software runs may return singular vectors with opposite signs while representing the same solution.
+
+Do not interpret the sign alone as inherently meaningful.
+
+What matters is:
+
+- the direction as a line;
+- the subspace spanned;
+- the reconstructed matrix;
+- relative coordinates used consistently.
+
+---
+
+#### 2.4.15 Numerical rank is not always exactly zero or nonzero
+
+In exact mathematics, rank counts nonzero singular values.
+
+In floating-point computation, a theoretically zero singular value may appear as
+
+```text
+0.0000000000003
+```
+
+because of numerical error.
+
+Real data also contains noise, so weak directions are often small rather than exactly zero.
+
+Therefore, practical code uses a tolerance:
+
+```text
+large singular value       → active direction
+tiny singular value        → effectively inactive direction
+```
+
+This is called **numerical rank**.
+
+The threshold should depend on:
+
+- matrix scale;
+- floating-point precision;
+- noise level;
+- downstream tolerance for approximation error.
+
+Rank is therefore sometimes a modeling decision, not only a literal count.
+
+---
+
+#### 2.4.16 Projection and SVD fit together
+
+Projection and SVD are easier to remember when connected.
+
+Projection says:
+
+> Given a direction or subspace, keep the part of the vector inside it.
+
+SVD says:
+
+> Given a matrix, discover the directions that the matrix treats most strongly.
+
+Low-rank approximation combines both ideas:
+
+```text
+discover strong directions with SVD
+                ↓
+project onto the top k directions
+                ↓
+discard weak directions
+                ↓
+reconstruct an approximation
+```
+
+This connection appears in PCA, image compression, recommender systems, LoRA, and many representation analyses.
+
+---
+
+#### 2.4.17 SVD: the complete mental model
+
+Remember SVD as a story rather than as three unexplained letters:
+
+```text
+A = UΣVᵀ
+
+Vᵀ:
+find how much of the input lies along preferred input directions
+
+Σ:
+scale each preferred direction by its singular value
+
+U:
+place the scaled directions into the output space
+```
+
+The singular values tell us which directions matter most.
+
+```text
+large σᵢ   → strong direction
+small σᵢ   → weak direction
+zero σᵢ    → collapsed direction
+```
+
+Keeping only the largest singular values gives a low-rank approximation:
+
+```text
+full matrix
+    ↓ keep dominant directions
+smaller representation
+    ↓ reconstruct
+approximate matrix
+```
+
+The main idea is:
+
+> A large matrix may look complicated in ordinary coordinates, while becoming simple when expressed in the right directions.
 
 ### 2.5 Eigenvectors and PCA identify stable directions
 
