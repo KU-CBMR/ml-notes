@@ -2983,7 +2983,7 @@ That geometric description explains how a matrix transforms vectors. The pattern
 
 ---
 
-#### 2.4.12 Why a unit circle becomes an ellipse
+<!-- #### 2.4.12 Why a unit circle becomes an ellipse
 
 Imagine all unit vectors in two dimensions. Their endpoints form a circle.
 
@@ -3103,11 +3103,649 @@ PCA   → analyze variation in centered data
 SVD   → decompose any matrix into ranked patterns
 ```
 
-PCA is an important application of SVD.
+PCA is an important application of SVD. -->
+
+#### 2.4.12 Why a unit circle becomes an ellipse
+
+This geometric picture is not really about circles. It is a way to see what a matrix does to **every possible direction**.
+
+All two-dimensional unit vectors have length \(1\). They can be written as
+
+$$
+x(\theta)=\begin{bmatrix}\cos\theta\\\sin\theta\end{bmatrix}.
+$$
+
+As \(\theta\) moves from \(0\) to \(2\pi\), the endpoints of these vectors form the unit circle.
+
+Now apply the same matrix to every unit vector. Consider
+
+$$
+A=\begin{bmatrix}3&0\\0&1\end{bmatrix}.
+$$
+
+For an arbitrary vector
+
+$$
+x=\begin{bmatrix}x_1\\x_2\end{bmatrix},
+$$
+
+the transformed vector is
+
+$$
+Ax=\begin{bmatrix}3x_1\\x_2\end{bmatrix}.
+$$
+
+So this matrix performs a simple operation:
+
+```text
+horizontal component × 3
+vertical component   × 1
+```
+
+For example:
+
+```text
+[ 1,  0]  →  [ 3,  0]
+[-1,  0]  →  [-3,  0]
+[ 0,  1]  →  [ 0,  1]
+[ 0, -1]  →  [ 0, -1]
+```
+
+The original circle extends one unit left, right, up, and down. After the transformation, it extends three units left and right but still only one unit up and down. The circle therefore becomes a horizontal ellipse.
+
+We can verify this algebraically. A point on the unit circle is
+
+$$
+x(\theta)=\begin{bmatrix}\cos\theta\\\sin\theta\end{bmatrix}.
+$$
+
+After applying \(A\),
+
+$$
+Ax(\theta)=\begin{bmatrix}3\cos\theta\\\sin\theta\end{bmatrix}.
+$$
+
+Call the new coordinates \(X\) and \(Y\):
+
+$$
+X=3\cos\theta,\qquad Y=\sin\theta.
+$$
+
+Then
+
+$$
+\frac{X^2}{9}+Y^2=1.
+$$
+
+This is an ellipse whose semi-axis lengths are \(3\) and \(1\).
+
+Those two lengths are exactly the singular values:
+
+$$
+\sigma_1=3,\qquad \sigma_2=1.
+$$
+
+In this example, the important directions happen to be horizontal and vertical. For a general matrix, they may be diagonal or rotated. SVD discovers those perpendicular directions automatically.
+
+The decomposition
+
+$$
+A=U\Sigma V^\top
+$$
+
+can be read from right to left:
+
+```text
+Vᵀ  → rotate or reflect the input into the matrix's preferred directions
+Σ   → stretch or shrink each preferred direction
+U   → rotate or reflect the result into its final orientation
+```
+
+Only \(\Sigma\) changes the axis lengths. \(V^\top\) and \(U\) mainly change orientation.
+
+This gives three important cases.
+
+**Different singular values**
+
+If
+
+$$
+\sigma_1=5,\qquad \sigma_2=1,
+$$
+
+one direction is stretched much more than the other, so the circle becomes a long, narrow ellipse.
+
+**Equal singular values**
+
+If
+
+$$
+\sigma_1=\sigma_2=5,
+$$
+
+every direction is scaled equally, so the unit circle becomes a larger circle.
+
+**A zero singular value**
+
+If
+
+$$
+\sigma_1=5,\qquad \sigma_2=0,
+$$
+
+one direction survives while the perpendicular direction is completely flattened. The ellipse collapses into a line segment.
+
+```text
+circle
+  ↓ one direction scaled to zero
+line segment
+```
+
+That means the matrix has destroyed one dimension of information.
+
+The geometric meaning is:
+
+> Singular values tell us how much of each preferred direction survives after the matrix transformation.
 
 ---
 
-#### 2.4.15 Why low rank appears in machine learning
+#### 2.4.13 Projection and SVD solve different problems
+
+Projection and SVD are related, but they answer different questions.
+
+Projection asks:
+
+> Given a direction or subspace, how much of this vector lies inside it?
+
+SVD asks:
+
+> Given a matrix, which directions or patterns are strongest?
+
+Suppose a two-dimensional dataset forms a long diagonal cloud:
+
+```text
+y
+↑
+|              ●
+|          ●
+|       ●
+|    ●
+| ●
++--------------------→ x
+```
+
+The data varies mostly along one diagonal direction.
+
+**Projection uses a direction that is already known**
+
+Suppose someone gives us the diagonal unit vector \(q\).
+
+Projection measures how much of each point \(x\) lies along \(q\):
+
+$$
+\operatorname{proj}_q(x)=(q^\top x)q.
+$$
+
+Projection does not decide whether \(q\) is useful. It simply uses the direction provided to it.
+
+```text
+given direction q
+        ↓
+measure each point along q
+```
+
+**SVD discovers the direction**
+
+Now suppose nobody gives us \(q\). We only have the data matrix \(X\).
+
+SVD examines \(X\) and discovers:
+
+- the strongest direction;
+- the next strongest perpendicular direction;
+- the strength associated with each direction.
+
+```text
+given data matrix X
+        ↓ SVD
+discover important directions
+        ↓
+rank them by singular value
+```
+
+The distinction is:
+
+> Projection uses directions; SVD discovers and ranks directions.
+
+Low-rank SVD combines the two ideas.
+
+First, SVD finds the strongest directions:
+
+$$
+v_1,v_2,\ldots,v_k.
+$$
+
+Then the input is represented only through those directions.
+
+The rank-\(k\) approximation is
+
+$$
+A_k=U_k\Sigma_kV_k^\top.
+$$
+
+This can be read as:
+
+1. \(V_k^\top\) measures the input along the top \(k\) directions;
+2. \(\Sigma_k\) scales the retained directions;
+3. \(U_k\) reconstructs the output using only those directions.
+
+The complete flow is:
+
+```text
+matrix
+  ↓ SVD
+discover the top k directions
+  ↓ projection
+keep only the part inside those directions
+  ↓ reconstruction
+build a lower-rank approximation
+```
+
+The discarded directions are not necessarily meaningless. They are simply weaker according to the matrix.
+
+A useful memory aid is:
+
+```text
+projection:    use directions
+SVD:           discover and rank directions
+low-rank SVD:  discover directions, keep the strongest ones, discard the rest
+```
+
+---
+
+#### 2.4.14 PCA uses SVD to find directions of maximum variation
+
+PCA and SVD are closely related, but their questions are slightly different.
+
+PCA asks:
+
+> Along which directions does a centered dataset vary the most?
+
+SVD asks:
+
+> What are the strongest patterns or input-output directions of this matrix?
+
+When the matrix is a centered data matrix, the two viewpoints meet.
+
+Suppose
+
+$$
+X\in\mathbb{R}^{n\times d},
+$$
+
+where:
+
+```text
+n  = number of samples
+d  = number of features
+```
+
+Each row is one sample, and each column is one feature.
+
+Before applying PCA, subtract the mean of each feature. Then compute
+
+$$
+X=U\Sigma V^\top.
+$$
+
+The columns of \(V\) are the principal directions:
+
+```text
+v₁  → direction of greatest variation
+v₂  → next greatest perpendicular direction
+v₃  → third greatest perpendicular direction
+...
+```
+
+The singular values tell us how strongly the data varies along these directions. The variance explained by component \(i\) is proportional to
+
+$$
+\sigma_i^2.
+$$
+
+Return to the height-weight example. After centering, the points may form a long diagonal cloud.
+
+PCA finds:
+
+```text
+first principal direction   → follows the long diagonal cloud
+second principal direction  → perpendicular to the cloud
+```
+
+The first direction captures most of the variation. The second captures smaller deviations from the main trend.
+
+To reduce the data from \(d\) dimensions to \(k\) dimensions, keep the first \(k\) columns of \(V\):
+
+$$
+V_k=[v_1\ v_2\ \cdots\ v_k].
+$$
+
+Project the centered data onto those directions:
+
+$$
+Z=XV_k.
+$$
+
+Using the SVD relation,
+
+$$
+XV_k=U_k\Sigma_k.
+$$
+
+So \(Z\) contains the lower-dimensional coordinates.
+
+The complete data flow is:
+
+```text
+raw data
+   ↓ subtract feature means
+centered matrix X
+   ↓ SVD
+principal directions V
+   ↓ keep the first k columns
+Vₖ
+   ↓ project
+Z = XVₖ
+```
+
+For example:
+
+```text
+original sample:    [height, weight]
+compressed sample:  [position along the main diagonal direction]
+```
+
+PCA is therefore one important application of SVD.
+
+The distinction is:
+
+```text
+SVD:
+decompose any matrix into ranked patterns
+
+PCA:
+apply SVD to centered data and interpret the top directions
+as maximum-variance directions
+```
+
+One caution matters:
+
+> PCA preserves directions with large variance, not necessarily directions that are most useful for prediction.
+
+A high-variance direction may represent useful signal, but it may also represent lighting, scale, document length, or another nuisance factor.
+
+---
+
+#### 2.4.15 Singular matrices and rank: when information disappears
+
+The words **singular**, **rank**, and **zero singular value** describe the same underlying event from different viewpoints:
+
+> A matrix has lost one or more independent directions of information.
+
+For a square matrix \(A\), the matrix is called **singular** when it has no inverse.
+
+That means no matrix \(A^{-1}\) can satisfy
+
+$$
+A^{-1}A=I.
+$$
+
+Why might an inverse fail to exist?
+
+Because the matrix may map different inputs to the same output.
+
+Consider
+
+$$
+A=\begin{bmatrix}1&2\\2&4\end{bmatrix}.
+$$
+
+Its second column is twice the first:
+
+$$
+\begin{bmatrix}2\\4\end{bmatrix}=2\begin{bmatrix}1\\2\end{bmatrix}.
+$$
+
+The two columns do not describe two independent directions. Both lie on the same line.
+
+This matrix maps the two-dimensional input plane into a one-dimensional output line:
+
+```text
+2D input plane
+      ↓ A
+1D output line
+```
+
+For example,
+
+$$
+A\begin{bmatrix}2\\0\end{bmatrix}=\begin{bmatrix}2\\4\end{bmatrix}
+$$
+
+and
+
+$$
+A\begin{bmatrix}0\\1\end{bmatrix}=\begin{bmatrix}2\\4\end{bmatrix}.
+$$
+
+Two different inputs produce the same output.
+
+An inverse would need to recover the original input from the output, but the output \([2,4]\) does not tell us which of those inputs was used. The information has been lost.
+
+That is why the matrix cannot be inverted.
+
+---
+
+**Rank counts how many independent directions survive**
+
+The rank of a matrix is the number of linearly independent directions it preserves.
+
+For the previous matrix, the rank is \(1\), even though the matrix is \(2\times2\).
+
+```text
+matrix size:  2 × 2
+rank:         1
+```
+
+It accepts two-dimensional inputs but preserves only one independent dimension.
+
+For a square \(n\times n\) matrix:
+
+```text
+rank = n   → full rank, no direction is completely lost
+rank < n   → rank deficient, at least one direction is lost
+```
+
+A square matrix is invertible exactly when it has full rank.
+
+---
+
+**SVD makes rank visible**
+
+Suppose
+
+$$
+A=U\Sigma V^\top.
+$$
+
+The diagonal entries of \(\Sigma\) are the singular values.
+
+The rank is the number of nonzero singular values:
+
+$$
+\operatorname{rank}(A)=\#\{i:\sigma_i>0\}.
+$$
+
+For a singular \(2\times2\) matrix, the singular values might be
+
+$$
+\sigma_1=5,\qquad \sigma_2=0.
+$$
+
+The first singular value means one direction survives.
+
+The zero singular value means the perpendicular direction is completely flattened.
+
+Geometrically:
+
+```text
+unit circle
+   ↓ A
+line segment
+```
+
+This gives the complete connection:
+
+```text
+zero singular value
+        ↓
+one direction is destroyed
+        ↓
+rank decreases
+        ↓
+square matrix becomes singular
+        ↓
+ordinary inverse does not exist
+```
+
+---
+
+**Why rank matters in data and machine learning**
+
+Suppose a dataset contains:
+
+```text
+feature 1: temperature in Celsius
+feature 2: temperature in Fahrenheit
+```
+
+After centering, the two features satisfy
+
+$$
+F_{\text{centered}}=1.8C_{\text{centered}}.
+$$
+
+The second feature contains no new independent information.
+
+The data matrix has two columns but only one real feature direction.
+
+This can cause several problems:
+
+- regression coefficients may not be unique;
+- direct matrix inversion may fail;
+- numerical algorithms may become unstable;
+- storage and computation are wasted on redundant features.
+
+Rank tells us whether the apparent dimensionality matches the actual independent dimensionality.
+
+---
+
+**Singular and nearly singular are different**
+
+A matrix can be invertible but still be dangerously close to singular.
+
+Suppose its singular values are
+
+$$
+\sigma_1=100,\qquad \sigma_2=0.000001.
+$$
+
+The second direction is not exactly zero, but it is extremely weak.
+
+Inversion must divide by the singular values. Along the weak direction,
+
+$$
+\frac{1}{\sigma_2}=1000000.
+$$
+
+This means tiny measurement errors or floating-point errors can be amplified one million times.
+
+So the matrix is invertible in theory but unstable in practice.
+
+For a full-rank matrix, the condition number is
+
+$$
+\kappa(A)=\frac{\sigma_{\max}}{\sigma_{\min}}.
+$$
+
+Interpretation:
+
+```text
+condition number near 1      → stable
+very large condition number  → nearly singular and noise-sensitive
+infinite condition number    → singular
+```
+
+This matters in least squares, optimization, regression, and scientific computing.
+
+---
+
+**Why the pseudoinverse is useful**
+
+A singular or rectangular matrix may not have an ordinary inverse.
+
+SVD still lets us define the pseudoinverse:
+
+$$
+A^+=V\Sigma^+U^\top.
+$$
+
+To construct \(\Sigma^+\):
+
+```text
+nonzero singular value σᵢ  → replace with 1/σᵢ
+zero singular value        → keep as 0
+```
+
+The pseudoinverse does not recover information that has already been destroyed.
+
+Instead, it returns a best-fit solution, often the solution with the smallest norm.
+
+It is useful for:
+
+- least squares;
+- underdetermined systems;
+- rank-deficient regression;
+- projection onto column spaces;
+- stable numerical solutions.
+
+---
+
+**The complete mental model**
+
+Think of a matrix as acting differently on different directions:
+
+```text
+large σᵢ   → direction survives strongly
+small σᵢ   → direction is weak and noise-sensitive
+zero σᵢ    → direction disappears completely
+```
+
+Rank counts how many directions survive.
+
+For a square matrix:
+
+```text
+all directions survive    → full rank → invertible
+some direction disappears → rank deficient → singular
+```
+
+The most important sentence is:
+
+> A singular matrix cannot be inverted because it maps different inputs to the same output, so part of the original information has been permanently lost.
+
+---
+
+#### 2.4.16 Why low rank appears in machine learning
 
 Low-rank structure appears when many observations are controlled by a smaller number of hidden factors.
 
@@ -3155,7 +3793,7 @@ All of these examples use the same idea:
 
 ---
 
-#### 2.4.16 Strong patterns are not automatically meaningful patterns
+#### 2.4.17 Strong patterns are not automatically meaningful patterns
 
 A large singular value means a pattern is strong in the matrix.
 
@@ -3190,7 +3828,7 @@ After finding dominant directions, ask:
 
 ---
 
-#### 2.4.17 The signs of singular vectors are arbitrary
+#### 2.4.18 The signs of singular vectors are arbitrary
 
 One SVD pattern is
 
@@ -3231,7 +3869,7 @@ What matters is:
 
 ---
 
-#### 2.4.18 The complete SVD mental model
+#### 2.4.19 The complete SVD mental model
 
 Start with the practical purpose:
 
