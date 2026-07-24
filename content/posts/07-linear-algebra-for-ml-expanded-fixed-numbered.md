@@ -526,11 +526,11 @@ $$
 \|q-b\|_2^2 = 2 - 2(0.6) = 0.8.
 $$
 
-All three metrics agree that \(a\) is more similar to \(q\):
+All three metrics agree that $a$ is more similar to $q$:
 
-- \(a\) has the larger dot product;
-- \(a\) has the larger cosine similarity;
-- \(a\) has the smaller Euclidean distance.
+- $a$ has the larger dot product;
+- $a$ has the larger cosine similarity;
+- $a$ has the smaller Euclidean distance.
 
 **Geometric intuition**
 
@@ -937,7 +937,7 @@ $$
 u = [1,0].
 $$
 
-If we keep only the horizontal part of \(x\), we get
+If we keep only the horizontal part of $x$, we get
 
 $$
 \operatorname{proj}_u(x) = [3,0].
@@ -957,8 +957,8 @@ $$
 
 This example contains the whole idea of projection:
 
-- \([3,0]\) is the part explained by the horizontal direction;
-- \([0,2]\) is the part the horizontal direction cannot explain.
+- $[3,0]$ is the part explained by the horizontal direction;
+- $[0,2]$ is the part the horizontal direction cannot explain.
 
 The residual is vertical, so it is perpendicular to the horizontal direction.
 
@@ -976,7 +976,7 @@ x = [3, 2]
 
 The chosen direction acts like a question:
 
-> “How much of \(x\) is horizontal?”
+> “How much of $x$ is horizontal?”
 
 The projection is the answer.
 
@@ -984,13 +984,13 @@ The projection is the answer.
 
 #### 2.3.2 The dot product first measures how much points along the direction
 
-For a unit direction vector \(u\), the dot product
+For a unit direction vector $u$, the dot product
 
 $$
 x^\top u
 $$
 
-measures the signed amount of \(x\) that points along \(u\).
+measures the signed amount of $x$ that points along $u$.
 
 Suppose
 
@@ -1010,11 +1010,11 @@ $$
 x^\top u = 3(1) + 2(0) = 3.
 $$
 
-The result is the number \(3\), not yet a vector.
+The result is the number $3$, not yet a vector.
 
 It tells us:
 
-> The vector \(x\) contains 3 units in the direction \(u\).
+> The vector $x$ contains 3 units in the direction $u$.
 
 To turn that scalar amount back into a vector, multiply it by the direction vector:
 
@@ -1041,7 +1041,7 @@ This is worth remembering:
 
 ---
 
-#### 2.3.3 Why does the general projection formula divide by \(u^\top u\)?
+#### 2.3.3 Why does the general projection formula divide by $u^\top u$?
 
 The simple formula
 
@@ -1049,9 +1049,9 @@ $$
 \operatorname{proj}_u(x) = (x^\top u)u
 $$
 
-works only when \(u\) has unit length.
+works only when $u$ has unit length.
 
-A unit vector has norm \(1\):
+A unit vector has norm $1$:
 
 $$
 \|u\|_2 = 1.
