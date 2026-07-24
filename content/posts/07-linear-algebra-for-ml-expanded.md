@@ -328,237 +328,440 @@ This is an important practical fact. Many retrieval systems appear to support di
 
 #### Normalization connects the metrics
 
-Dot product, cosine similarity, and Euclidean distance look like three different measurements. In general, they are different. After normalization, however, they become different ways of describing the same geometric relationship.
+Dot product, cosine similarity, and Euclidean distance look like three different ways to compare vectors:
 
-Let $x$ and $y$ be two unit vectors:
+- the dot product depends on both vector length and directional alignment;
+- cosine similarity compares direction after removing vector length;
+- Euclidean distance measures how far apart two vectors are.
 
-$$
-\|x\|_2 = 1\; , \; \|y\|_2 = 1
-$$
+However, after both vectors are normalized to unit length, their magnitudes are fixed. Only their directions can still differ. Under this condition, the three metrics become different numerical expressions of the same geometric relationship.
 
-We begin with squared Euclidean distance:
+**Step 1: Expand the squared Euclidean distance**
 
-$$
-\|x-y\|_2^2 = (x-y)^T(x-y)
-$$
-
-Expand the product exactly as we would expand $(a-b)^2$:
+Assume that both vectors are normalized:
 
 $$
-(x-y)^T(x-y) = x^Tx - x^Ty - y^Tx + y^Ty
+\|x\|_2 = 1
 $$
 
-For real-valued vectors, $x^Ty$ and $y^Tx$ are the same scalar. Therefore,
+and
 
 $$
-\|x-y\|_2^2 = x^Tx + y^Ty - 2x^Ty
+\|y\|_2 = 1.
 $$
 
-A vector multiplied by itself gives its squared length:
+Start from the squared Euclidean distance:
 
 $$
-x^Tx = \|x\|_2^2\; , \; y^Ty = \|y\|_2^2
+\|x-y\|_2^2 = (x-y)^\top(x-y).
 $$
 
-So the general identity is
+Expanding the product gives
 
 $$
-\|x-y\|_2^2 = \|x\|_2^2 + \|y\|_2^2 - 2x^Ty
+\|x-y\|_2^2
+=
+x^\top x
+-
+x^\top y
+-
+y^\top x
++
+y^\top y.
 $$
 
-Now use the unit-length assumption:
+For real-valued vectors, the dot product is symmetric:
 
 $$
-\|x-y\|_2^2 = 1 + 1 - 2x^Ty
+x^\top y = y^\top x.
 $$
 
 Therefore,
 
 $$
-\|x-y\|_2^2 = 2 - 2x^Ty
+\|x-y\|_2^2
+=
+x^\top x
++
+y^\top y
+-
+2x^\top y.
 $$
 
-This equation tells us that, once the lengths of $x$ and $y$ are fixed at one, their Euclidean distance is completely determined by their dot product.
+A vector dotted with itself is its squared norm:
 
-#### Why cosine similarity becomes the dot product
+$$
+x^\top x = \|x\|_2^2
+$$
+
+and
+
+$$
+y^\top y = \|y\|_2^2.
+$$
+
+So, for arbitrary vectors,
+
+$$
+\|x-y\|_2^2
+=
+\|x\|_2^2
++
+\|y\|_2^2
+-
+2x^\top y.
+$$
+
+Because both vectors have unit length,
+
+$$
+\|x\|_2^2 = 1
+$$
+
+and
+
+$$
+\|y\|_2^2 = 1.
+$$
+
+Substituting these values gives
+
+$$
+\|x-y\|_2^2
+=
+1 + 1 - 2x^\top y.
+$$
+
+Therefore,
+
+$$
+\|x-y\|_2^2
+=
+2 - 2x^\top y.
+$$
+
+This is the direct mathematical connection between Euclidean distance and the dot product for normalized vectors.
+
+**Step 2: Connect the dot product to cosine similarity**
 
 Cosine similarity is defined as
 
 $$
-\cos(x,y) = \frac{x^Ty}{\|x\|_2\|y\|_2}
+\operatorname{cos}(x,y)
+=
+\frac{x^\top y}
+{\|x\|_2\|y\|_2}.
 $$
 
-For unit vectors, the denominator is one:
+For unit vectors,
 
 $$
-\|x\|_2\|y\|_2 = 1
+\|x\|_2\|y\|_2 = 1.
 $$
 
 Therefore,
 
 $$
-\cos(x,y) = x^Ty
+\operatorname{cos}(x,y) = x^\top y.
 $$
 
-Substituting this into the distance identity gives
+For normalized vectors, cosine similarity and dot product are exactly equal. The distance formula can therefore also be written as
 
 $$
-\|x-y\|_2^2 = 2 - 2\cos(x,y)
+\|x-y\|_2^2
+=
+2 - 2\operatorname{cos}(x,y).
 $$
 
-The three quantities are now directly connected:
+**Why do they produce the same ranking?**
 
-- a larger dot product means a larger cosine similarity;
-- a larger cosine similarity means a smaller Euclidean distance;
-- a smaller Euclidean distance means the vectors are closer on the unit sphere.
+Suppose a normalized query vector \(q\) is compared with many normalized candidate vectors \(x_i\).
 
-The scores are not numerically identical, but they produce the same ordering.
-
-Suppose a query $q$ is compared with three normalized documents. Their dot products are 0.9, 0.7, and 0.2. Their squared Euclidean distances are therefore 0.2, 0.6, and 1.6.
-
-Dot product and cosine similarity rank the documents from 0.9 to 0.2. Euclidean distance ranks the same documents from 0.2 to 1.6. The ranking is unchanged because
+A larger dot product means a larger cosine similarity because
 
 $$
-\|q-x\|_2^2 = 2 - 2q^Tx
+\operatorname{cos}(q,x_i) = q^\top x_i.
 $$
 
-is a decreasing linear function of $q^Tx$.
-
-In plain language: every time the similarity score goes up, the distance goes down by a predictable amount.
-
-#### A concrete two-dimensional example
-
-Take the normalized query
+At the same time, a larger dot product gives a smaller squared Euclidean distance because
 
 $$
-q = (1,0)
+\|q-x_i\|_2^2
+=
+2 - 2q^\top x_i.
+$$
+
+For example, suppose two candidates have dot-product scores
+
+$$
+q^\top x_1 = 0.9
+$$
+
+and
+
+$$
+q^\top x_2 = 0.6.
+$$
+
+Their squared Euclidean distances are
+
+$$
+\|q-x_1\|_2^2
+=
+2 - 2(0.9)
+=
+0.2
+$$
+
+and
+
+$$
+\|q-x_2\|_2^2
+=
+2 - 2(0.6)
+=
+0.8.
+$$
+
+The first candidate has the larger dot product and the smaller Euclidean distance. Therefore, both metrics rank it as the better match.
+
+In general, for normalized vectors,
+
+$$
+\text{maximum dot product}
+\quad\Longleftrightarrow\quad
+\text{maximum cosine similarity}
+\quad\Longleftrightarrow\quad
+\text{minimum Euclidean distance}.
+$$
+
+The scores are not numerically identical, but the ranking is identical because one score is a monotonic transformation of the other.
+
+**A concrete two-dimensional example**
+
+Consider the normalized query vector
+
+$$
+q =
+\begin{bmatrix}
+1 \\
+0
+\end{bmatrix}
 $$
 
 and two normalized candidates
 
 $$
-a = (0.8,0.6)\; , \; b = (0.6,0.8)
+a =
+\begin{bmatrix}
+0.8 \\
+0.6
+\end{bmatrix}
 $$
 
-Both candidates have length one because
+and
 
 $$
-0.8^2 + 0.6^2 = 1
+b =
+\begin{bmatrix}
+0.6 \\
+0.8
+\end{bmatrix}.
+$$
+
+Both candidate vectors have unit length because
+
+$$
+0.8^2 + 0.6^2 = 1.
 $$
 
 Their dot products with the query are
 
 $$
-q^Ta = 0.8\; , \; q^Tb = 0.6
-$$
-
-Because all vectors are normalized, these values are also their cosine similarities. Both dot product and cosine similarity prefer $a$.
-
-Now compute squared Euclidean distance:
-
-$$
-\|q-a\|_2^2 = (1-0.8)^2 + (0-0.6)^2 = 0.4
-$$
-
-$$
-\|q-b\|_2^2 = (1-0.6)^2 + (0-0.8)^2 = 0.8
-$$
-
-Euclidean distance also prefers $a$ because $0.4 < 0.8$.
-
-This is not a coincidence. Using the identity above,
-
-$$
-2 - 2(0.8) = 0.4
+q^\top a = 0.8
 $$
 
 and
 
 $$
-2 - 2(0.6) = 0.8
+q^\top b = 0.6.
 $$
 
-The Euclidean distances are simply transformed versions of the dot-product scores.
+Since the vectors are normalized, these values are also their cosine similarities.
 
-#### The geometric reason
-
-Before normalization, a vector has both a direction and a length. The dot product contains both pieces of information:
+Now calculate their squared Euclidean distances:
 
 $$
-x^Ty = \|x\|_2\|y\|_2\cos\theta
+\|q-a\|_2^2
+=
+2 - 2(0.8)
+=
+0.4
 $$
 
-Here, $\theta$ is the angle between the two vectors. A large dot product may come from a small angle, large vector lengths, or both.
-
-Normalization removes the length term. Every nonzero vector is replaced by
+and
 
 $$
-\hat{x} = \frac{x}{\|x\|_2}
+\|q-b\|_2^2
+=
+2 - 2(0.6)
+=
+0.8.
 $$
 
-and therefore
+All three metrics agree that \(a\) is more similar to \(q\):
+
+- \(a\) has the larger dot product;
+- \(a\) has the larger cosine similarity;
+- \(a\) has the smaller Euclidean distance.
+
+**Geometric intuition**
+
+Before normalization, two vectors can differ in both length and direction. After normalization, every nonzero vector is moved onto the unit sphere. All vectors now have the same length, so magnitude can no longer influence the comparison.
+
+The dot product can be written as
 
 $$
-\|\hat{x}\|_2 = 1
+x^\top y
+=
+\|x\|_2\|y\|_2\cos\theta,
 $$
 
-All normalized vectors lie on the unit sphere. Since every vector now has the same length, vectors can differ only by direction.
+where \(\theta\) is the angle between the vectors.
 
 For unit vectors,
 
 $$
-x^Ty = \cos\theta
+x^\top y = \cos\theta.
 $$
 
-and
+Substituting this into the distance formula gives
 
 $$
-\|x-y\|_2^2 = 2 - 2\cos\theta
+\|x-y\|_2^2
+=
+2 - 2\cos\theta.
 $$
 
-When the angle becomes smaller, cosine similarity becomes larger and Euclidean distance becomes smaller. All three metrics are therefore tracking the same angular relationship.
+This explains the geometry:
 
-A useful picture is to imagine points on a circle. Cosine similarity measures how closely their directions align. Euclidean distance measures the straight chord between them. On a fixed circle, a smaller angle always produces a shorter chord, so the two rankings must agree.
+- a small angle gives a large cosine value and a small Euclidean distance;
+- a large angle gives a small cosine value and a large Euclidean distance.
 
-#### Why the equivalence fails without normalization
+On the unit sphere, the three metrics are therefore measuring the same angular separation in different ways.
+
+**Why the equivalence fails without normalization**
+
+Without normalization, vector length can change the result.
 
 Consider
 
 $$
-q = (1,0)\; , \; a = (10,10)\; , \; b = (2,0)
+q =
+\begin{bmatrix}
+1 \\
+0
+\end{bmatrix},
+\qquad
+a =
+\begin{bmatrix}
+10 \\
+10
+\end{bmatrix},
+\qquad
+b =
+\begin{bmatrix}
+2 \\
+0
+\end{bmatrix}.
 $$
 
 The raw dot products are
 
 $$
-q^Ta = 10\; , \; q^Tb = 2
+q^\top a = 10
 $$
 
-Raw dot product prefers $a$ because $a$ has a very large length.
-
-Cosine similarity gives a different answer:
+and
 
 $$
-\cos(q,a) = \frac{10}{\sqrt{200}} \approx 0.707
+q^\top b = 2.
 $$
 
-$$
-\cos(q,b) = 1
-$$
+Raw dot product prefers \(a\) because \(a\) has a much larger norm.
 
-Cosine similarity prefers $b$ because $b$ points in exactly the same direction as $q$.
-
-Euclidean distance also prefers $b$:
+However, \(b\) points in exactly the same direction as \(q\), so
 
 $$
-\|q-a\|_2 = \sqrt{181}
+\operatorname{cos}(q,b) = 1.
 $$
 
+For \(a\),
+
 $$
-\|q-b\|_2 = 1
+\operatorname{cos}(q,a)
+=
+\frac{10}{\sqrt{10^2+10^2}}
+\approx 0.707.
 $$
 
-The disagreement occurs because the vectors do not have equal lengths. Raw dot product rewards the large magnitude of $a$, while cosine similarity ignores magnitude.
+Cosine similarity therefore prefers \(b\).
+
+This disagreement occurs because raw dot product contains both magnitude and alignment:
+
+$$
+x^\top y
+=
+\|x\|_2\|y\|_2\cos\theta.
+$$
+
+A large norm can produce a large dot product even when the direction is not the closest match. Normalization removes this magnitude term.
+
+**Practical implication for embedding retrieval**
+
+Suppose both the query embedding and all document embeddings are normalized before retrieval:
+
+```python
+query = query / np.linalg.norm(query)
+
+documents = documents / np.linalg.norm(
+    documents,
+    axis=1,
+    keepdims=True,
+)
+```
+
+The dot-product scores are
+
+```python
+dot_scores = documents @ query
+```
+
+Because all vectors have unit length, these are also cosine-similarity scores.
+
+The Euclidean distances are
+
+```python
+euclidean_distances = np.linalg.norm(
+    documents - query,
+    axis=1,
+)
+```
+
+Sorting `dot_scores` from largest to smallest gives the same ranking as sorting `euclidean_distances` from smallest to largest.
+
+This is why a vector database can sometimes use an inner-product index for cosine-similarity retrieval: normalize all embeddings first, then maximum inner product search and maximum cosine similarity search become mathematically equivalent.
+
+This equivalence has several conditions:
+
+- both query and candidate vectors must be normalized;
+- zero vectors cannot be normalized because their norm is zero;
+- normalization removes any information stored in vector magnitude;
+- approximate search, quantization, and floating-point error may still create small implementation differences.
+
+The main idea is:
+
+> Before normalization, both magnitude and direction can affect similarity. After normalization, magnitude is fixed, so dot product, cosine similarity, and Euclidean distance become different transformations of the same angular relationship.
 
 #### Practical consequence for retrieval
 
