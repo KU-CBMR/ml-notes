@@ -288,8 +288,13 @@ For the previous example, `item A` and `item B` both have cosine similarity `1` 
 
 Euclidean distance is:
 
+<!--
 $$
 \lVert x-y \rVert_2
+$$ -->
+
+$$
+\|x-y\|_2
 $$
 
 It asks: “How far must I move through the coordinate space to go from one point to the other?”
