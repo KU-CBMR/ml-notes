@@ -426,7 +426,7 @@ $$
 
 **Why do they produce the same ranking?**
 
-Suppose a normalized query vector \(q\) is compared with many normalized candidate vectors \(x_i\).
+Suppose a normalized query vector $q$ is compared with many normalized candidate vectors $x_i$.
 
 A larger dot product means a larger cosine similarity because
 
@@ -542,7 +542,7 @@ $$
 x^\top y = \|x\|_2\|y\|_2\cos\theta,
 $$
 
-where \(\theta\) is the angle between the vectors.
+where $\theta$ is the angle between the vectors.
 
 For unit vectors,
 
@@ -1303,7 +1303,7 @@ $$
 These numbers say:
 
 - 3 units along the $x$-axis;
-- 4 units along the $y$)-axis.
+- 4 units along the $y$-axis.
 
 Reconstructing gives
 
@@ -1333,13 +1333,13 @@ The projection keeps everything the plane can represent and discards everything 
 
 #### 2.3.7 Least squares is projection disguised as regression
 
-In linear regression, we try to predict a target vector \(y\) using features stored in a matrix \(X\):
+In linear regression, we try to predict a target vector $y$ using features stored in a matrix $X$:
 
 $$
 X\beta \approx y.
 $$
 
-The coefficient vector \(\beta\) chooses how to combine the columns of \(X\).
+The coefficient vector $\beta$ chooses how to combine the columns of $X$.
 
 Every possible prediction has the form
 
@@ -1347,11 +1347,11 @@ $$
 \hat{y} = X\beta.
 $$
 
-Therefore, all possible predictions live inside the **column space of \(X\)**.
+Therefore, all possible predictions live inside the **column space of $X$**.
 
-Think of the columns of \(X\) as building blocks. By changing \(\beta\), we can mix those columns in different amounts, but we cannot leave the space they span.
+Think of the columns of $X$ as building blocks. By changing $\beta$, we can mix those columns in different amounts, but we cannot leave the space they span.
 
-Usually, the true target \(y\) does not lie exactly inside that space.
+Usually, the true target $y$ does not lie exactly inside that space.
 
 ```text
 target y
@@ -1364,7 +1364,7 @@ target y
   ŷ
 ```
 
-Least squares chooses the point \(\hat{y}\) in the prediction space that is closest to \(y\).
+Least squares chooses the point $\hat{y}$ in the prediction space that is closest to $y$.
 
 That is exactly an orthogonal projection:
 
@@ -1378,13 +1378,13 @@ $$
 r = y - X\hat{\beta}.
 $$
 
-At the best solution, the residual is perpendicular to every column of \(X\):
+At the best solution, the residual is perpendicular to every column of $X$:
 
 $$
 X^\top r = 0.
 $$
 
-Substituting the definition of \(r\) gives
+Substituting the definition of $r$ gives
 
 $$
 X^\top(y-X\hat{\beta}) = 0.
@@ -1426,7 +1426,7 @@ This means every possible prediction lies on the diagonal line
 [0,0], [1,1], [2,2], [3,3], ...
 ```
 
-The target \([2,3]\) is not on that line.
+The target $[2,3]$ is not on that line.
 
 Its projection onto the line is
 
@@ -1669,7 +1669,7 @@ If you push it in one direction, it may stretch a lot. If you push it in another
 
 A matrix behaves similarly. It has preferred input directions.
 
-For each preferred direction \(v_i\),
+For each preferred direction $v_i$,
 
 $$
 Av_i = \sigma_i u_i.
@@ -1677,10 +1677,10 @@ $$
 
 This equation says:
 
-1. start with the input direction \(v_i\);
-2. apply the matrix \(A\);
-3. the result points along \(u_i\);
-4. its length is multiplied by \(\sigma_i\).
+1. start with the input direction $v_i$;
+2. apply the matrix $A$;
+3. the result points along $u_i$;
+4. its length is multiplied by $\sigma_i$.
 
 The three objects have distinct roles:
 
@@ -1690,7 +1690,7 @@ vᵢ        preferred input direction
 uᵢ        resulting output direction
 ```
 
-The singular value \(\sigma_i\) is always nonnegative.
+The singular value $\sigma_i$ is always nonnegative.
 
 If
 
@@ -1718,15 +1718,15 @@ the direction disappears completely.
 
 ---
 
-#### 2.4.2 What \(V^\top\), \(\Sigma\), and \(U\) actually do
+#### 2.4.2 What $V^\top$, $\Sigma$, and $U$ actually do
 
-The matrix \(V\) contains the preferred input directions:
+The matrix $V$ contains the preferred input directions:
 
 $$
 V = [v_1\ v_2\ \cdots].
 $$
 
-Applying \(V^\top\) to an input vector asks:
+Applying $V^\top$ to an input vector asks:
 
 > How much of the input lies along each preferred direction?
 
@@ -1738,7 +1738,7 @@ ordinary input coordinates
 coordinates along preferred directions
 ```
 
-The diagonal matrix \(\Sigma\) then scales each coordinate separately:
+The diagonal matrix $\Sigma$ then scales each coordinate separately:
 
 ```text
 direction 1 × σ₁
@@ -1747,7 +1747,7 @@ direction 3 × σ₃
 ...
 ```
 
-Finally, \(U\) converts those scaled coordinates into the output directions:
+Finally, $U$ converts those scaled coordinates into the output directions:
 
 ```text
 scaled preferred coordinates
@@ -1763,9 +1763,9 @@ $$
 
 can be read from right to left:
 
-1. \(V^\top x\): describe \(x\) using important input directions;
-2. \(\Sigma V^\top x\): scale each direction by its strength;
-3. \(U\Sigma V^\top x\): reconstruct the final output.
+1. $V^\top x$: describe $x$ using important input directions;
+2. $\Sigma V^\top x$: scale each direction by its strength;
+3. $U\Sigma V^\top x$: reconstruct the final output.
 
 This is not merely a factorization trick. It reveals how the matrix acts geometrically.
 
@@ -1791,7 +1791,7 @@ $$
 [3x_1,x_2].
 $$
 
-It stretches the horizontal direction by \(3\) and leaves the vertical direction unchanged.
+It stretches the horizontal direction by $3$ and leaves the vertical direction unchanged.
 
 The important input directions are already the coordinate axes:
 
@@ -1829,7 +1829,7 @@ A more general matrix first rotates the preferred directions away from the coord
 
 Imagine drawing every unit vector in two dimensions. Their endpoints form a unit circle.
 
-Now apply the same matrix \(A\) to every point on the circle.
+Now apply the same matrix $A$ to every point on the circle.
 
 A general linear transformation turns the circle into an ellipse.
 
@@ -1909,9 +1909,9 @@ $$
 \begin{bmatrix}2\\4\end{bmatrix} = 2\begin{bmatrix}1\\2\end{bmatrix}.
 $$
 
-Although the matrix is \(2\times2\), it contains only one independent direction.
+Although the matrix is $2\times2$, it contains only one independent direction.
 
-Therefore, its rank is \(1\).
+Therefore, its rank is $1$.
 
 SVD reveals this with one positive singular value and one zero singular value.
 
@@ -1936,7 +1936,7 @@ $$
 F = 1.8C + 32.
 $$
 
-After subtracting the mean from each feature, the constant \(32\) disappears, leaving
+After subtracting the mean from each feature, the constant $32$ disappears, leaving
 
 $$
 F_{\text{centered}} = 1.8C_{\text{centered}}.
@@ -2018,13 +2018,13 @@ $$
 A = U\Sigma V^\top.
 $$
 
-Suppose we keep only the first \(k\) singular directions:
+Suppose we keep only the first $k$ singular directions:
 
 $$
 A_k = U_k\Sigma_kV_k^\top.
 $$
 
-This is a rank-\(k\) approximation.
+This is a rank-$k$ approximation.
 
 Conceptually, we discard the weakest directions:
 
@@ -2040,9 +2040,9 @@ The approximation keeps the transformations that matter most and ignores weaker 
 
 This is closely related to projection:
 
-1. \(V_k^\top\) projects the input onto the top \(k\) input directions;
-2. \(\Sigma_k\) scales those retained directions;
-3. \(U_k\) reconstructs the result in the output space.
+1. $V_k^\top$ projects the input onto the top $k$ input directions;
+2. $\Sigma_k$ scales those retained directions;
+3. $U_k$ reconstructs the result in the output space.
 
 So low-rank SVD is not unrelated to projection. It is a projection onto the matrix's strongest directions, followed by scaling and reconstruction.
 
@@ -2077,11 +2077,11 @@ Discarding smaller values may remove:
 
 The approximation becomes blurrier, but the main content can remain recognizable.
 
-SVD has a special mathematical guarantee: among all rank-\(k\) matrices, truncated SVD gives the closest approximation under common matrix-distance measures.
+SVD has a special mathematical guarantee: among all rank-$k$ matrices, truncated SVD gives the closest approximation under common matrix-distance measures.
 
 The intuitive reason is:
 
-> If only \(k\) directions may be kept, the best choice is to keep the \(k\) strongest ones.
+> If only $k$ directions may be kept, the best choice is to keep the $k$ strongest ones.
 
 ---
 
@@ -2099,11 +2099,11 @@ Storing the full matrix requires
 1,000,000 numbers
 ```
 
-A rank-\(k\) SVD stores:
+A rank-$k$ SVD stores:
 
-- \(U_k\): \(1000\times k\) numbers;
-- \(\Sigma_k\): \(k\) numbers;
-- \(V_k^\top\): \(k\times1000\) numbers.
+- $U_k$: $1000\times k$ numbers;
+- $\Sigma_k$: $k$ numbers;
+- $V_k^\top$: $k\times1000$ numbers.
 
 The total is
 
@@ -2111,7 +2111,7 @@ $$
 1000k + k + 1000k = 2001k.
 $$
 
-For \(k=20\), this is
+For $k=20$, this is
 
 $$
 2001(20) = 40020.
@@ -2119,7 +2119,7 @@ $$
 
 Instead of one million numbers, we store about forty thousand.
 
-That is roughly \(4\%\) of the original amount.
+That is roughly $4\%$ of the original amount.
 
 The trade-off is that the reconstructed image is approximate.
 
@@ -2167,7 +2167,7 @@ $$
 \Delta W = BA.
 $$
 
-If \(B\) and \(A\) have a small inner dimension, then \(\Delta W\) is low rank.
+If $B$ and $A$ have a small inner dimension, then $\Delta W$ is low rank.
 
 Instead of training every entry in a huge matrix, LoRA trains a limited number of update directions.
 
@@ -2191,13 +2191,13 @@ SVD asks more generally:
 
 > What are the strongest input-output directions of this matrix?
 
-If \(X\) is a centered data matrix, applying SVD gives
+If $X$ is a centered data matrix, applying SVD gives
 
 $$
 X = U\Sigma V^\top.
 $$
 
-The columns of \(V\) are the principal directions used by PCA.
+The columns of $V$ are the principal directions used by PCA.
 
 The singular values are related to how much variance each principal direction explains.
 
@@ -2247,7 +2247,7 @@ Therefore, after finding dominant directions, ask:
 
 #### 2.4.14 Singular-vector signs are arbitrary
 
-Suppose one SVD component uses vectors \(u_i\) and \(v_i\).
+Suppose one SVD component uses vectors $u_i$ and $v_i$.
 
 Its contribution is
 
