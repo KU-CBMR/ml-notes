@@ -585,23 +585,21 @@ $$
 q^\top b = 2.
 $$
 
-Raw dot product prefers \(a\) because \(a\) has a much larger norm.
+Raw dot product prefers $a$ because $a$ has a much larger norm.
 
-However, \(b\) points in exactly the same direction as \(q\), so
+However, $b$ points in exactly the same direction as $q$, so
 
 $$
 \operatorname{cos}(q,b) = 1.
 $$
 
-For \(a\),
+For $a$,
 
 $$
 \operatorname{cos}(q,a) = \frac{10}{\sqrt{10^2+10^2}} \approx 0.707.
 $$
 
 Cosine similarity therefore prefers $b$.
-
-# \(b\)
 
 This disagreement occurs because raw dot product contains both magnitude and alignment:
 
