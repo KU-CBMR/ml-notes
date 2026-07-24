@@ -1071,26 +1071,26 @@ $$
 u_2 = [10,0].
 $$
 
-They represent the same direction, but \(u_2\) is ten times longer.
+They represent the same direction, but $u_2$ is ten times longer.
 
-If we incorrectly use the unit-vector formula with \(u_2\), then
+If we incorrectly use the unit-vector formula with $u_2$, then
 
 $$
 x^\top u_2 = 3(10) + 2(0) = 30.
 $$
 
-Multiplying again by \(u_2\) gives
+Multiplying again by $u_2$ gives
 
 $$
 30[10,0] = [300,0].
 $$
 
-That is obviously not the horizontal part of \([3,2]\). The direction vector was counted twice:
+That is obviously not the horizontal part of $[3,2]$. The direction vector was counted twice:
 
 - once inside the dot product;
-- once again when multiplying by \(u\).
+- once again when multiplying by $u$.
 
-The general formula corrects for the length of \(u\):
+The general formula corrects for the length of $u$:
 
 $$
 \operatorname{proj}_u(x) = \frac{x^\top u}{u^\top u}u.
@@ -1138,7 +1138,7 @@ removes the arbitrary scale of the direction vector.
 
 This gives an important rule:
 
-> Projection depends on the direction of \(u\), not on how long we happened to draw \(u\).
+> Projection depends on the direction of $u$, not on how long we happened to draw $u$.
 
 ---
 
