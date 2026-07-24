@@ -1606,7 +1606,7 @@ This one idea connects:
 
 ---
 
-### 2.4 SVD finds the strongest directions inside a matrix
+<!-- ### 2.4 SVD finds the strongest directions inside a matrix
 
 Projection assumes that we have already chosen a useful direction or subspace.
 
@@ -2387,7 +2387,889 @@ approximate matrix
 
 The main idea is:
 
-> A large matrix may look complicated in ordinary coordinates, while becoming simple when expressed in the right directions.
+> A large matrix may look complicated in ordinary coordinates, while becoming simple when expressed in the right directions. -->
+
+### 2.4 SVD decomposes a matrix into ranked patterns
+
+Before studying the formula, first understand what problem SVD solves.
+
+A matrix may contain thousands or millions of numbers, but those numbers are often highly related. An image contains neighboring pixels with similar values. A user-item rating table contains groups of users with similar tastes. A neural-network weight matrix may perform most of its useful work through a relatively small number of directions.
+
+SVD asks:
+
+> Can this large, complicated matrix be explained using a smaller number of simple patterns?
+
+It then answers three practical questions:
+
+```text
+What are the main patterns inside the matrix?
+How strong is each pattern?
+How much information is lost if weak patterns are removed?
+```
+
+The most useful mental model is:
+
+```text
+complicated matrix
+        ↓ SVD
+simple patterns ordered from strongest to weakest
+        ↓ keep only the strongest patterns
+compression, dimensionality reduction, denoising, or analysis
+```
+
+SVD is therefore not mainly about memorizing “rotate, scale, rotate.” Its central purpose is to reveal the hidden structure of a matrix.
+
+---
+
+#### 2.4.1 A matrix can contain many numbers but few real patterns
+
+Suppose a grayscale image has shape
+
+```text
+1000 × 1000
+```
+
+It contains one million pixel values.
+
+However, those one million values are not one million completely independent facts:
+
+- neighboring pixels are often similar;
+- large areas may share the same background;
+- edges create repeated horizontal or vertical structure;
+- lighting changes many pixels together;
+- symmetric objects repeat similar patterns.
+
+The same idea appears in a dataset.
+
+Suppose three columns store the same distance in different units:
+
+```text
+distance in meters
+distance in centimeters
+distance in millimeters
+```
+
+There are three columns, but only one underlying quantity. The columns contain repeated information.
+
+SVD tries to discover this kind of redundancy.
+
+It asks:
+
+> How many genuinely independent patterns are needed to explain most of this matrix?
+
+If the answer is much smaller than the raw number of rows or columns, the matrix is approximately low rank.
+
+---
+
+#### 2.4.2 SVD separates a matrix into simple pattern layers
+
+The standard SVD formula is
+
+$$
+A = U\Sigma V^\top.
+$$
+
+However, another equivalent form is often easier to understand:
+
+$$
+A = \sigma_1u_1v_1^\top + \sigma_2u_2v_2^\top + \sigma_3u_3v_3^\top + \cdots.
+$$
+
+This says that the original matrix is built by adding many simple pattern matrices:
+
+```text
+original matrix
+=
+first pattern
++
+second pattern
++
+third pattern
++
+...
+```
+
+Each pattern has the form
+
+$$
+\sigma_i u_i v_i^\top.
+$$
+
+Its three parts have different roles:
+
+```text
+uᵢ      how the pattern varies across rows
+vᵢ      how the pattern varies across columns
+σᵢ      how strong the pattern is
+```
+
+The vectors $u_i$ and $v_i$ describe the shape of one pattern. The singular value $\sigma_i$ tells us how much that pattern contributes to the original matrix.
+
+SVD orders the singular values from largest to smallest:
+
+$$
+\sigma_1 \ge \sigma_2 \ge \sigma_3 \ge \cdots \ge 0.
+$$
+
+Therefore:
+
+```text
+σ₁u₁v₁ᵀ   strongest pattern
+σ₂u₂v₂ᵀ   second strongest pattern
+σ₃u₃v₃ᵀ   third strongest pattern
+...
+```
+
+This ordering is the key reason SVD is useful. It does not merely break a matrix into arbitrary pieces. It places the most important pieces first.
+
+---
+
+#### 2.4.3 What does one simple pattern look like?
+
+Consider two column vectors:
+
+$$
+u = \begin{bmatrix}1\\2\\3\end{bmatrix}
+$$
+
+and
+
+$$
+v = \begin{bmatrix}2\\1\end{bmatrix}.
+$$
+
+Their outer product is
+
+$$
+uv^\top = \begin{bmatrix}2&1\\4&2\\6&3\end{bmatrix}.
+$$
+
+Notice the structure:
+
+- the second column is always one half of the first;
+- every row follows the same column pattern;
+- the whole matrix is controlled by only two short vectors.
+
+This is a rank-one pattern.
+
+A rank-one matrix is very simple because every row and column follows one shared relationship.
+
+SVD represents a complicated matrix as a sum of such simple rank-one patterns:
+
+```text
+complex matrix
+=
+rank-one pattern
++
+rank-one pattern
++
+rank-one pattern
++
+...
+```
+
+The first few patterns often capture broad, repeated structure. Later patterns capture smaller details.
+
+---
+
+#### 2.4.4 A tiny numerical example
+
+Consider the matrix
+
+$$
+A = \begin{bmatrix}3&0\\0&1\end{bmatrix}.
+$$
+
+It can be written as the sum of two simple pattern matrices:
+
+$$
+A = \begin{bmatrix}3&0\\0&0\end{bmatrix} + \begin{bmatrix}0&0\\0&1\end{bmatrix}.
+$$
+
+The first part can be written as
+
+$$
+\begin{bmatrix}3&0\\0&0\end{bmatrix} = 3\begin{bmatrix}1\\0\end{bmatrix}\begin{bmatrix}1&0\end{bmatrix}.
+$$
+
+The second part can be written as
+
+$$
+\begin{bmatrix}0&0\\0&1\end{bmatrix} = 1\begin{bmatrix}0\\1\end{bmatrix}\begin{bmatrix}0&1\end{bmatrix}.
+$$
+
+Therefore,
+
+$$
+A = 3u_1v_1^\top + 1u_2v_2^\top.
+$$
+
+SVD has found two independent patterns:
+
+```text
+pattern 1: horizontal structure, strength 3
+pattern 2: vertical structure, strength 1
+```
+
+The first pattern is three times stronger than the second.
+
+If we are allowed to keep only one pattern, SVD keeps the strongest one:
+
+$$
+A_1 = \begin{bmatrix}3&0\\0&0\end{bmatrix}.
+$$
+
+This is no longer exactly equal to $A$, but it preserves the dominant behavior.
+
+That is the basic idea of low-rank approximation:
+
+> Keep the strongest patterns and discard weaker ones.
+
+---
+
+#### 2.4.5 Why keeping the strongest patterns is useful
+
+Real data often looks like
+
+```text
+main structure
++
+smaller details
++
+noise
+```
+
+SVD sorts the patterns by strength, so we can choose how much structure to retain.
+
+Keeping only the strongest patterns may provide:
+
+**Compression**
+
+A large matrix can be stored using a few shorter vectors instead of every original entry.
+
+**Dimensionality reduction**
+
+Many correlated features can be replaced by a smaller number of combined directions.
+
+**Denoising**
+
+Weak, irregular patterns may contain noise. Removing them can sometimes reveal cleaner structure.
+
+**Matrix analysis**
+
+The singular values show whether the matrix has many independent directions or only a few dominant ones.
+
+**Numerically stable computation**
+
+SVD is also useful for least squares, pseudoinverses, and diagnosing nearly redundant features.
+
+All of these uses come from one ability:
+
+> SVD separates strong matrix structure from weak matrix structure.
+
+---
+
+#### 2.4.6 Low-rank approximation is a controlled loss of information
+
+The full decomposition is
+
+$$
+A = U\Sigma V^\top.
+$$
+
+Suppose we keep only the first $k$ singular patterns:
+
+$$
+A_k = U_k\Sigma_kV_k^\top.
+$$
+
+Equivalently,
+
+$$
+A_k = \sum_{i=1}^{k}\sigma_i u_i v_i^\top.
+$$
+
+This is called a rank-$k$ approximation.
+
+Conceptually:
+
+```text
+keep:
+σ₁, σ₂, ..., σₖ
+
+discard:
+σₖ₊₁, σₖ₊₂, ...
+```
+
+The value $k$ controls the trade-off:
+
+```text
+small k    → smaller representation, more information loss
+large k    → larger representation, less information loss
+full rank  → nearly exact reconstruction
+```
+
+The important fact is that truncated SVD is not an arbitrary approximation.
+
+Among all matrices of rank at most $k$, truncated SVD gives the closest approximation to $A$ under common matrix-error measures.
+
+The intuition is straightforward:
+
+> If only $k$ patterns may be kept, keep the $k$ strongest patterns.
+
+---
+
+#### 2.4.7 Image compression makes the purpose concrete
+
+A grayscale image is a matrix:
+
+```text
+rows       → vertical pixel positions
+columns    → horizontal pixel positions
+values     → pixel brightness
+```
+
+SVD decomposes the image into pattern layers:
+
+```text
+image
+=
+strongest pattern
++
+second strongest pattern
++
+third strongest pattern
++
+...
+```
+
+The interpretation is not exact for every image, but typically:
+
+```text
+early patterns     → broad shapes, large bright and dark regions
+middle patterns    → edges and medium-sized details
+later patterns     → fine texture, tiny variations, and some noise
+```
+
+Suppose the image has shape
+
+```text
+1000 × 1000
+```
+
+The original image stores
+
+```text
+1,000,000 numbers
+```
+
+A rank-$k$ approximation stores:
+
+- $U_k$: $1000k$ numbers;
+- $\Sigma_k$: $k$ numbers;
+- $V_k^\top$: $1000k$ numbers.
+
+The total is
+
+$$
+1000k + k + 1000k = 2001k.
+$$
+
+For $k=20$,
+
+$$
+2001(20) = 40020.
+$$
+
+Instead of one million numbers, we store about forty thousand.
+
+The reconstructed image will not be exact, but its main shapes may remain visible.
+
+```text
+rank 1       → extremely blurry, only the strongest structure
+rank 10      → broad shapes become visible
+rank 50      → more edges and textures return
+full rank    → original image up to numerical error
+```
+
+SVD turns rank into a compression knob.
+
+---
+
+#### 2.4.8 Singular values are an importance ladder
+
+The singular values tell us how much each pattern contributes:
+
+$$
+\sigma_1 \ge \sigma_2 \ge \sigma_3 \ge \cdots.
+$$
+
+Imagine these singular values:
+
+```text
+100, 52, 21, 3, 0.8, 0.1
+```
+
+The first three directions dominate the matrix. Keeping only them may preserve most of the structure.
+
+Now imagine:
+
+```text
+10, 9.7, 9.3, 8.9, 8.5, 8.1
+```
+
+There is no sharp drop. Many directions have similar strength, so aggressive compression will lose more information.
+
+A singular-value plot helps answer:
+
+> Is this matrix controlled mostly by a few patterns, or are many patterns equally important?
+
+A steep drop suggests approximate low rank. A slow decline suggests that many directions matter.
+
+---
+
+#### 2.4.9 Rank counts independent patterns
+
+The rank of a matrix is the number of independent directions or patterns it contains.
+
+In exact SVD language:
+
+> Rank is the number of nonzero singular values.
+
+Consider
+
+$$
+A = \begin{bmatrix}1&2\\2&4\end{bmatrix}.
+$$
+
+The second column is twice the first:
+
+$$
+\begin{bmatrix}2\\4\end{bmatrix} = 2\begin{bmatrix}1\\2\end{bmatrix}.
+$$
+
+The matrix has two columns, but they do not carry two independent pieces of information.
+
+It contains only one independent pattern, so its rank is $1$.
+
+SVD reveals this through:
+
+```text
+one positive singular value
+one zero singular value
+```
+
+The zero singular value means that one input direction is completely lost by the matrix.
+
+---
+
+#### 2.4.10 Exact rank and numerical rank are different in practice
+
+In exact mathematics, a singular value is either zero or nonzero.
+
+In floating-point computation, a theoretically zero value may appear as
+
+```text
+0.0000000000003
+```
+
+because of numerical error.
+
+Real data also contains noise, so redundant directions may produce tiny singular values rather than exact zeros.
+
+Therefore, practical code often uses a tolerance:
+
+```text
+large singular value   → active direction
+tiny singular value    → effectively inactive direction
+```
+
+This produces the **numerical rank**.
+
+Numerical rank depends on:
+
+- floating-point precision;
+- matrix scale;
+- noise level;
+- how much approximation error the application can tolerate.
+
+So rank is sometimes not just a count. It is also a modeling decision about which directions are meaningful enough to keep.
+
+---
+
+#### 2.4.11 What $U$, $\Sigma$, and $V^\top$ mean
+
+Now return to the compact formula:
+
+$$
+A = U\Sigma V^\top.
+$$
+
+For
+
+$$
+A \in \mathbb{R}^{m\times n},
+$$
+
+the components have the following roles:
+
+```text
+V       important patterns in the input or column space
+Σ       strengths of those patterns
+U       corresponding patterns in the output or row space
+```
+
+If we use the matrix as a transformation
+
+$$
+y = Ax,
+$$
+
+then
+
+$$
+Ax = U\Sigma V^\top x.
+$$
+
+Read the operations from right to left.
+
+First,
+
+$$
+V^\top x
+$$
+
+asks how much of the input $x$ lies along each preferred input direction.
+
+Then,
+
+$$
+\Sigma V^\top x
+$$
+
+scales each of those directions according to its singular value.
+
+Finally,
+
+$$
+U\Sigma V^\top x
+$$
+
+reconstructs the result using the corresponding output directions.
+
+The data flow is:
+
+```text
+input vector
+    ↓ Vᵀ
+coordinates along preferred input directions
+    ↓ Σ
+each coordinate scaled by its singular value
+    ↓ U
+output vector reconstructed in the output space
+```
+
+This is the origin of the phrase:
+
+```text
+rotate or reflect
+        ↓
+scale
+        ↓
+rotate or reflect again
+```
+
+That geometric description explains how a matrix transforms vectors. The pattern description explains why SVD is useful. They are two views of the same decomposition.
+
+---
+
+#### 2.4.12 Why a unit circle becomes an ellipse
+
+Imagine all unit vectors in two dimensions. Their endpoints form a circle.
+
+Now apply the same matrix $A$ to every vector.
+
+SVD says that the matrix:
+
+1. chooses special perpendicular input directions;
+2. scales each direction by a singular value;
+3. places the scaled directions into the output space.
+
+As a result, the unit circle becomes an ellipse.
+
+```text
+unit circle
+    ↓ apply A
+ellipse
+```
+
+The ellipse's principal directions correspond to the singular vectors. Its principal semi-axis lengths are the singular values.
+
+For example:
+
+```text
+σ₁ = 5   → one direction is stretched to length 5
+σ₂ = 1   → the perpendicular direction keeps length 1
+```
+
+The result is a long, narrow ellipse.
+
+If
+
+$$
+\sigma_1 = \sigma_2,
+$$
+
+every direction is scaled equally, so the circle remains a circle.
+
+If
+
+$$
+\sigma_2 = 0,
+$$
+
+one direction disappears, so the ellipse collapses into a line.
+
+This geometric picture gives a second interpretation:
+
+> Singular values measure how strongly the matrix acts along its preferred directions.
+
+---
+
+#### 2.4.13 SVD and projection solve different parts of the problem
+
+Projection assumes that a useful direction has already been chosen:
+
+```text
+given a direction
+        ↓
+keep the part of the vector inside it
+```
+
+SVD discovers useful directions from the matrix:
+
+```text
+given a matrix
+      ↓
+find its strongest independent directions
+      ↓
+order them by importance
+```
+
+Low-rank SVD combines the two ideas:
+
+```text
+use SVD to discover strong directions
+                  ↓
+project onto the top k directions
+                  ↓
+discard weak directions
+                  ↓
+reconstruct an approximation
+```
+
+A useful distinction is:
+
+> Projection uses directions; SVD discovers and ranks directions.
+
+---
+
+#### 2.4.14 SVD and PCA are closely related
+
+PCA asks:
+
+> Which directions preserve the most variation among centered data samples?
+
+SVD asks more generally:
+
+> What are the strongest patterns or input-output directions of this matrix?
+
+For a centered data matrix $X$,
+
+$$
+X = U\Sigma V^\top.
+$$
+
+The columns of $V$ are the principal directions used by PCA.
+
+Projecting samples onto the first $k$ columns of $V$ produces a lower-dimensional representation.
+
+Therefore, PCA can be computed using SVD.
+
+The viewpoints are slightly different:
+
+```text
+PCA   → analyze variation in centered data
+SVD   → decompose any matrix into ranked patterns
+```
+
+PCA is an important application of SVD.
+
+---
+
+#### 2.4.15 Why low rank appears in machine learning
+
+Low-rank structure appears when many observations are controlled by a smaller number of hidden factors.
+
+**Recommender systems**
+
+A user-item rating matrix may have millions of entries, but preferences may depend on fewer latent factors:
+
+```text
+action preference
+comedy preference
+price sensitivity
+brand loyalty
+difficulty preference
+```
+
+A low-rank model represents each user and item using short factor vectors.
+
+**PCA and dimensionality reduction**
+
+Hundreds of correlated features can sometimes be summarized by a much smaller number of principal directions.
+
+**Image and model compression**
+
+Large matrices can be approximated using a smaller number of singular patterns.
+
+**LoRA**
+
+A large weight update is represented as
+
+$$
+\Delta W = BA.
+$$
+
+When the inner dimension is small, $\Delta W$ is low rank.
+
+The assumption is that fine-tuning does not need to change a large model independently in every possible direction. A smaller set of update directions may be enough.
+
+**Least squares and pseudoinverses**
+
+SVD can detect weak or redundant feature directions and avoid unstable division by extremely small values.
+
+All of these examples use the same idea:
+
+> The raw matrix may be large, while its useful behavior may be controlled by a much smaller subspace.
+
+---
+
+#### 2.4.16 Strong patterns are not automatically meaningful patterns
+
+A large singular value means a pattern is strong in the matrix.
+
+It does not mean the pattern is automatically useful, causal, or understandable.
+
+For images, a strong pattern might represent:
+
+- overall brightness;
+- background color;
+- camera exposure.
+
+For text, it might represent:
+
+- document length;
+- punctuation frequency;
+- formatting conventions.
+
+For user data, it might represent:
+
+- activity level;
+- popularity;
+- missing-value patterns.
+
+SVD finds strong linear structure. It does not understand the task.
+
+After finding dominant directions, ask:
+
+- What real examples score highly on this direction?
+- What examples score negatively?
+- Does this pattern help prediction or retrieval?
+- Is it useful signal, bias, or nuisance variation?
+
+---
+
+#### 2.4.17 The signs of singular vectors are arbitrary
+
+One SVD pattern is
+
+$$
+\sigma_i u_i v_i^\top.
+$$
+
+If both singular vectors change sign,
+
+$$
+u_i' = -u_i
+$$
+
+and
+
+$$
+v_i' = -v_i,
+$$
+
+then
+
+$$
+\sigma_i u_i'(v_i')^\top = \sigma_i u_i v_i^\top.
+$$
+
+The reconstructed matrix does not change.
+
+Therefore, two SVD implementations may return singular vectors with opposite signs while representing the same solution.
+
+Do not attach meaning to the sign alone.
+
+What matters is:
+
+- the line or subspace represented by the vector;
+- the singular value;
+- the reconstructed matrix;
+- coordinates interpreted consistently.
+
+---
+
+#### 2.4.18 The complete SVD mental model
+
+Start with the practical purpose:
+
+```text
+a matrix contains many mixed patterns
+                  ↓
+SVD separates those patterns
+                  ↓
+orders them from strongest to weakest
+                  ↓
+allows us to keep only the strongest ones
+```
+
+Then remember the pattern formula:
+
+$$
+A = \sigma_1u_1v_1^\top + \sigma_2u_2v_2^\top + \cdots.
+$$
+
+Each term is one simple rank-one pattern.
+
+```text
+uᵢ      row-side shape
+vᵢ      column-side shape
+σᵢ      pattern strength
+```
+
+Finally, remember the transformation view:
+
+```text
+Vᵀ   → measure the input along preferred directions
+Σ    → scale those directions
+U    → reconstruct the output
+```
+
+The most important sentence is:
+
+> SVD takes a complicated matrix, separates it into simple independent patterns, ranks those patterns by strength, and lets us keep only the most important ones when an approximation is acceptable.
 
 ### 2.5 Eigenvectors and PCA identify stable directions
 
