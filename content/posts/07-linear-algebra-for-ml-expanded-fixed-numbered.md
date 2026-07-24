@@ -1198,7 +1198,7 @@ For example:
 - one plane is a two-dimensional subspace;
 - a collection of several feature directions forms a higher-dimensional subspace.
 
-Imagine a three-dimensional vector floating above the floor. Projecting it onto the floor keeps its horizontal \(x\)- and \(y\)-components but removes its vertical component.
+Imagine a three-dimensional vector floating above the floor. Projecting it onto the floor keeps its horizontal \(x\)- and $y$-components but removes its vertical component.
 
 ```text
 3D vector
@@ -1206,7 +1206,7 @@ Imagine a three-dimensional vector floating above the floor. Projecting it onto 
 2D shadow on the floor
 ```
 
-Now suppose the columns of a matrix \(Q\) are orthonormal direction vectors:
+Now suppose the columns of a matrix $Q$ are orthonormal direction vectors:
 
 $$
 Q = [q_1\ q_2\ \cdots\ q_k].
@@ -1231,7 +1231,7 @@ $$
 Q^\top x
 $$
 
-computes how much of \(x\) lies along each basis direction.
+computes how much of $x$ lies along each basis direction.
 
 The result is a list of coordinates:
 
@@ -1262,7 +1262,7 @@ projected vector in the original space
 
 A useful memory aid is:
 
-> \(Q^\top\) compresses into subspace coordinates; \(Q\) reconstructs from those coordinates.
+> $Q^\top$ compresses into subspace coordinates; $Q$ reconstructs from those coordinates.
 
 ---
 
@@ -1274,7 +1274,7 @@ $$
 x = [3,4,5].
 $$
 
-We want to project it onto the horizontal \(xy\)-plane.
+We want to project it onto the horizontal $xy$-plane.
 
 Choose the two basis directions
 
@@ -1302,8 +1302,8 @@ $$
 
 These numbers say:
 
-- 3 units along the \(x\)-axis;
-- 4 units along the \(y\)-axis.
+- 3 units along the $x$-axis;
+- 4 units along the $y$)-axis.
 
 Reconstructing gives
 
@@ -1311,7 +1311,7 @@ $$
 QQ^\top x = [3,4,0].
 $$
 
-The vertical component \(5\) has been removed.
+The vertical component $5$ has been removed.
 
 The residual is
 
